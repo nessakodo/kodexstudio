@@ -10,6 +10,8 @@ import ClientsSection from '@/components/sections/ClientsSection';
 import ContactSection from '@/components/sections/ContactSection';
 import { useKodexTerminal } from '@/hooks/useKodexTerminal';
 import { downloadResume } from '@/lib/utils';
+import { Article } from '@/types';
+import { hasNotionCredentials } from '@/services/notionService';
 
 export default function Home() {
   const [bootComplete, setBootComplete] = useState(false);
