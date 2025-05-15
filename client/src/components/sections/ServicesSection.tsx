@@ -89,9 +89,16 @@ export default function ServicesSection({ onClose }: ServicesSectionProps) {
         </p>
         <div className="text-right">
           <a 
-            href="https://calendly.com/nessakodo/custom-security-inquiry" 
-            target="_blank" 
-            rel="noopener noreferrer"
+            href="#contact" 
+            onClick={(e) => {
+              e.preventDefault();
+              if (onClose) {
+                onClose();
+                setTimeout(() => {
+                  document.querySelector('button[data-section="contact"]')?.click();
+                }, 100);
+              }
+            }}
             className="glass-button px-5 py-2 rounded text-center inline-flex items-center justify-center gap-2"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

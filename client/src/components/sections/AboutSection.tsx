@@ -153,10 +153,12 @@ export default function AboutSection({ onClose }: AboutSectionProps) {
           <div className="glass-panel border border-cyber-blue/20 rounded-xl p-6 text-center">
             <div className="mx-auto mb-6 flex justify-center">
               <div className="w-32 h-32 rounded-full border-2 border-cyber-blue/30 p-1 flex items-center justify-center">
-                <div className="bg-cyber-blue/10 w-full h-full rounded-full flex items-center justify-center">
-                  <svg className="w-16 h-16 text-cyber-blue/90" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M20.42,10.18L12.71,2.3a1,1,0,0,0-1.42,0L3.58,10.19A2,2,0,0,0,3,11.62V20a2,2,0,0,0,1.89,2H19.15A2,2,0,0,0,21,20V11.62A2.07,2.07,0,0,0,20.42,10.18ZM12,17a2,2,0,1,1,2-2A2,2,0,0,1,12,17Z"/>
-                  </svg>
+                <div className="bg-cyber-blue/10 w-full h-full rounded-full overflow-hidden">
+                  <img 
+                    src="/assets/kodo.jpg" 
+                    alt="Nessa Kodo" 
+                    className="w-full h-full object-cover"
+                  />
                 </div>
               </div>
             </div>
