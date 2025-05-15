@@ -10,9 +10,9 @@ export default function ServicesSection({ onClose }: ServicesSectionProps) {
     <section className="glass-panel border border-cyber-blue/20 backdrop-blur-xl p-6 my-8 animate-fadeIn">
       <div className="flex justify-between items-center mb-4 pb-2 border-b border-cyber-blue/10">
         <div className="flex items-center">
-          <span className="text-xs text-yellow-400 font-plex mr-1">~/</span>
-          <span className="text-xs text-yellow-400 font-plex mr-2">services —</span>
-          <h2 className="text-cyber-highlight font-orbitron text-xl tracking-wide">
+          <span className="text-xs text-cyber-blue/70 font-plex mr-1">~/</span>
+          <span className="text-xs text-cyber-blue/70 font-plex mr-2">services —</span>
+          <h2 className="text-yellow-400 font-orbitron text-xl tracking-wide">
             Service Offerings
           </h2>
         </div>

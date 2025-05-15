@@ -82,8 +82,8 @@ export default function WritingsSection({ onClose }: WritingsSectionProps) {
       <section className="glass-panel border border-cyber-blue/20 backdrop-blur-xl p-6 my-8 animate-fadeIn">
         <div className="flex justify-between items-center mb-4 pb-2 border-b border-cyber-blue/10">
           <div className="flex items-center">
-            <span className="text-xs text-yellow-400 font-plex mr-2">~/</span>
-            <span className="text-xs text-yellow-400 font-plex mr-2">writings —</span>
+            <span className="text-xs text-cyber-blue/70 font-plex mr-2">~/</span>
+            <span className="text-xs text-cyber-blue/70 font-plex mr-2">writings —</span>
             <button 
               onClick={() => setActiveArticle(null)}
               className="text-xs text-cyber-blue/80 hover:text-cyber-blue font-plex mr-2 flex items-center gap-2 transition-colors glass-button py-1 px-2 rounded-md"
@@ -93,7 +93,7 @@ export default function WritingsSection({ onClose }: WritingsSectionProps) {
               </svg>
               back
             </button>
-            <h2 className="text-cyber-blue font-orbitron text-xl truncate">
+            <h2 className="text-yellow-400 font-orbitron text-xl truncate">
               {currentArticle.title}
             </h2>
           </div>
@@ -200,9 +200,9 @@ export default function WritingsSection({ onClose }: WritingsSectionProps) {
     <section className="glass-panel border border-cyber-blue/20 backdrop-blur-xl p-6 my-8 animate-fadeIn">
       <div className="flex justify-between items-center mb-4 pb-2 border-b border-cyber-blue/10">
         <div className="flex items-center">
-          <span className="text-xs text-yellow-400 font-plex mr-1">~/</span>
-          <span className="text-xs text-yellow-400 font-plex mr-2">writings —</span>
-          <h2 className="text-cyber-highlight font-orbitron text-xl tracking-wide">
+          <span className="text-xs text-cyber-blue/70 font-plex mr-1">~/</span>
+          <span className="text-xs text-cyber-blue/70 font-plex mr-2">writings —</span>
+          <h2 className="text-yellow-400 font-orbitron text-xl tracking-wide">
             Writings & Blog
           </h2>
         </div>
