@@ -1,6 +1,7 @@
 import Parser from 'rss-parser';
 import { Article } from '@/types';
 import { articles as localArticles } from '@/data/writings';
+import { fetchNotionArticles as fetchFromNotion, getNotionArticleById } from './notionService';
 
 // Initialize the RSS parser
 const parser = new Parser();
@@ -100,24 +101,28 @@ function createTagsFromContent(content: string): string[] {
   return foundTerms.slice(0, 5); // Limit to 5 tags max
 }
 
-// Function to fetch articles from Notion (stub for now - implement with API key)
-export async function fetchNotionArticles(): Promise<Article[]> {
-  // This would be implemented with the Notion API when we have the API key
-  // For now, return the local articles marked as from Notion
-  return localArticles.filter(article => article.source === 'notion');
-}
-
 // Main function to aggregate articles from all sources
 export async function fetchAllArticles(): Promise<Article[]> {
   try {
-    // Local articles (already have these)
-    const storedArticles = localArticles;
+    // Try to fetch from Notion first
+    let notionArticles: Article[] = [];
+    try {
+      notionArticles = await fetchFromNotion();
+    } catch (err) {
+      console.error("Error fetching from Notion:", err);
+    }
     
-    // This would be implemented with actual RSS feeds and Notion API
-    // Currently, we'll just use the mock data we've already created
+    // Local articles as fallback/supplement
+    const storedArticles = localArticles.filter(article => article.source !== 'notion');
     
-    // Return combined and sorted by date (newest first)
-    return storedArticles.sort((a, b) => {
+    // TODO: In the future, we could fetch from RSS feeds here:
+    // const mediumArticles = await fetchRssFeeds('https://medium.com/feed/@nessakodo');
+    // const devtoArticles = await fetchRssFeeds('https://dev.to/feed/nessakodo');
+    
+    // Combine all sources and sort by date (newest first)
+    const allArticles = [...notionArticles, ...storedArticles];
+    
+    return allArticles.sort((a, b) => {
       const dateA = new Date(a.date);
       const dateB = new Date(b.date);
       return dateB.getTime() - dateA.getTime();
@@ -130,8 +135,25 @@ export async function fetchAllArticles(): Promise<Article[]> {
 
 // Function to get a single article by ID
 export async function getArticleById(id: string): Promise<Article | undefined> {
-  // For now, just search in our local articles
-  return localArticles.find(article => article.id === id);
+  try {
+    // If it looks like a Notion ID (long alphanumeric string), try fetching from Notion
+    if (id.length > 30) {
+      try {
+        const notionArticle = await getNotionArticleById(id);
+        if (notionArticle) {
+          return notionArticle;
+        }
+      } catch (err) {
+        console.error("Error fetching article from Notion:", err);
+      }
+    }
+    
+    // Fallback to local articles
+    return localArticles.find(article => article.id === id);
+  } catch (error) {
+    console.error('Error fetching article:', error);
+    return undefined;
+  }
 }
 
 // Example usage:

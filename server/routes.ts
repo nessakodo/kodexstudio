@@ -70,6 +70,101 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ message: 'Error submitting contact form' });
     }
   });
+  
+  // Notion integration API endpoints
+  app.get('/api/notion/articles', async (req, res) => {
+    try {
+      // Check if notion credentials are available
+      if (!process.env.NOTION_INTEGRATION_SECRET || !process.env.NOTION_PAGE_URL) {
+        return res.status(500).json({ 
+          error: "Notion credentials not configured", 
+          message: "Please set the NOTION_INTEGRATION_SECRET and NOTION_PAGE_URL environment variables"
+        });
+      }
+      
+      // Find the Articles database
+      const articlesDb = await findDatabaseByTitle("Articles");
+      
+      if (!articlesDb) {
+        return res.status(404).json({
+          error: "Articles database not found", 
+          message: "Please run the setup-notion.ts script to create the database"
+        });
+      }
+      
+      // Get articles from the database
+      const articles = await getArticles(articlesDb.id);
+      
+      // Transform the articles to match the Article type in client/src/types.ts
+      const transformedArticles = articles.map((article: any) => ({
+        id: article.notionId,
+        title: article.title,
+        description: article.description,
+        date: article.date,
+        readTime: article.readTime,
+        category: article.category,
+        source: 'notion',
+        content: article.content,
+        tags: article.tags,
+        imageUrl: article.imageUrl
+      }));
+      
+      res.json(transformedArticles);
+    } catch (error) {
+      console.error("Error fetching Notion articles:", error);
+      res.status(500).json({ error: "Failed to fetch articles from Notion" });
+    }
+  });
+  
+  app.get('/api/notion/articles/:id', async (req, res) => {
+    try {
+      const { id } = req.params;
+      
+      // Check if notion credentials are available
+      if (!process.env.NOTION_INTEGRATION_SECRET || !process.env.NOTION_PAGE_URL) {
+        return res.status(500).json({ 
+          error: "Notion credentials not configured", 
+          message: "Please set the NOTION_INTEGRATION_SECRET and NOTION_PAGE_URL environment variables"
+        });
+      }
+      
+      // Find the Articles database
+      const articlesDb = await findDatabaseByTitle("Articles");
+      
+      if (!articlesDb) {
+        return res.status(404).json({
+          error: "Articles database not found", 
+          message: "Please run the setup-notion.ts script to create the database"
+        });
+      }
+      
+      // Get the article by ID
+      const article = await getArticleById(articlesDb.id, id);
+      
+      if (!article) {
+        return res.status(404).json({ error: "Article not found" });
+      }
+      
+      // Transform the article to match the Article type in client/src/types.ts
+      const transformedArticle = {
+        id: article.notionId,
+        title: article.title,
+        description: article.description,
+        date: article.date,
+        readTime: article.readTime,
+        category: article.category,
+        source: 'notion',
+        content: article.content,
+        tags: article.tags,
+        imageUrl: article.imageUrl
+      };
+      
+      res.json(transformedArticle);
+    } catch (error) {
+      console.error("Error fetching Notion article:", error);
+      res.status(500).json({ error: "Failed to fetch article from Notion" });
+    }
+  });
 
   const httpServer = createServer(app);
 
