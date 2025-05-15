@@ -24,22 +24,22 @@
   --ring: 240 4.9% 83.9%;
   --radius: 0.5rem;
   
-  /* Updated Kodex theme to match screenshots */
-  --cyber-black: 240 20% 4%;
-  --cyber-dark: 240 20% 10%;
-  --cyber-panel-bg: 240 25% 8%;
+  /* Updated Kodex theme with muted blue colors */
+  --cyber-black: 225 25% 7%; /* Slightly bluer black for better contrast */
+  --cyber-dark: 225 25% 12%; /* Slightly darker for better contrast */
+  --cyber-panel-bg: 225 25% 10%;
   --cyber-panel-opacity: 0.45;
-  --cyber-blue: 180 79% 58%;
-  --cyber-purple: 281 78% 50%;
-  --cyber-text: 240 100% 95%;
-  --terminal-green: 180 79% 58%;
-  --terminal-dim: 180 30% 50%;
-  --terminal-prompt: 180 79% 58%;
-  --error-red: 348 100% 61%;
+  --cyber-blue: 195 65% 55%; /* Muted blue color as requested */
+  --cyber-purple: 281 70% 45%; /* Slightly muted purple */
+  --cyber-text: 225 30% 95%;
+  --terminal-green: 174 65% 50%; /* Slightly muted green */
+  --terminal-dim: 180 30% 45%;
+  --terminal-prompt: 195 65% 55%;
+  --error-red: 348 90% 60%;
   
   /* Additional theme colors */
-  --cyber-blue-dark: 180 79% 30%;
-  --cyber-blue-light: 180 79% 70%;
+  --cyber-blue-dark: 195 65% 30%;
+  --cyber-blue-light: 195 65% 70%;
 }
 
 @layer base {
@@ -64,24 +64,30 @@
   
   /* Glass panel effect */
   .glass-panel {
-    @apply bg-cyber-panel backdrop-blur-xl border border-white/10 rounded-xl;
+    @apply bg-cyber-panel/70 backdrop-blur-xl border border-cyber-blue/10 rounded-xl;
+    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 0, 0, 0.3);
   }
   
   /* Glass button effect - based on reference image */
   .glass-button {
-    @apply border border-cyber-blue/40 bg-black/50 backdrop-blur-md transition-all duration-300 text-cyber-blue;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    @apply border border-cyber-blue/30 bg-cyber-panel/60 backdrop-blur-md transition-all duration-300 text-cyber-blue/90;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     outline: none;
   }
   
   .glass-button:hover {
-    @apply border-cyber-blue bg-black/70;
-    box-shadow: 0 0 10px rgba(15, 180, 244, 0.3);
+    @apply border-cyber-blue/50 bg-cyber-blue/5;
+    box-shadow: 0 0 12px rgba(15, 180, 244, 0.2);
   }
   
   .glass-button:active {
-    @apply border-cyber-blue/80 bg-cyber-blue/10;
-    box-shadow: 0 0 6px rgba(15, 180, 244, 0.2);
+    @apply border-cyber-blue/60 bg-cyber-blue/10;
+    box-shadow: 0 0 16px rgba(15, 180, 244, 0.3);
+  }
+  
+  .glass-button:focus {
+    @apply border-cyber-blue/50;
+    box-shadow: 0 0 12px rgba(15, 180, 244, 0.25);
   }
   
   /* Terminal cursor effect */
@@ -174,6 +180,21 @@
   100% { transform: translateY(100vh); }
 }
 
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes moveUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 8px rgba(15, 180, 244, 0.2); }
+  50% { box-shadow: 0 0 15px rgba(15, 180, 244, 0.4); }
+}
+
 @layer components {
   .animate-pulse-glow {
     animation: pulse-glow 3s infinite;
@@ -189,5 +210,17 @@
 
   .animate-matrix-rain {
     animation: matrix-rain 20s linear infinite;
+  }
+  
+  .animate-fadeIn {
+    animation: fadeIn 0.5s ease-out;
+  }
+  
+  .animate-moveUp {
+    animation: moveUp 0.5s ease-out;
+  }
+  
+  .animate-glowPulse {
+    animation: glowPulse 3s infinite;
   }
 }
