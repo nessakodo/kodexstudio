@@ -160,9 +160,9 @@ export default function Home() {
       <BootSequence onComplete={() => setBootComplete(true)} />
       
       {/* Main Container (hidden until boot complete) */}
-      <div className={`container mx-auto px-4 py-8 max-w-6xl min-h-screen flex flex-col transition-opacity duration-500 ${bootComplete ? 'opacity-100' : 'opacity-0'}`}>
+      <div className={`container mx-auto px-4 py-6 max-w-6xl min-h-screen flex flex-col transition-opacity duration-500 ${bootComplete ? 'opacity-100' : 'opacity-0'}`}>
         {/* Header / Hero */}
-        <header className="pt-8 md:pt-16 text-center mb-12">
+        <header className="pt-6 md:pt-10 text-center mb-8">
           <h1 className="font-orbitron font-bold text-4xl sm:text-5xl md:text-6xl tracking-wider mb-4 animate-fadeInUp">
             <span className="bg-gradient-to-r from-white/90 via-cyber-blue to-blue-400 bg-clip-text text-transparent drop-shadow-sm">KODEX STUDIO</span>
           </h1>
@@ -195,7 +195,7 @@ export default function Home() {
           history={history}
           onCommandSubmit={handleCommand}
           inputRef={inputRef}
-          className="mb-8"
+          className="mb-6"
         />
         
         {/* Active Content Section */}
@@ -214,7 +214,7 @@ export default function Home() {
         )}
         
         {/* Footer - improved spacing and removed period */}
-        <footer className="mt-6 pt-5 pb-4 border-t border-cyber-blue/10">
+        <footer className="mt-4 pt-4 pb-3 border-t border-cyber-blue/10">
           <div className="flex flex-col md:flex-row items-center justify-between">
             <div className="flex items-center mb-4 md:mb-0">
               <div className="flex items-center text-xs font-plex">
