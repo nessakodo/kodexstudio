@@ -12,38 +12,40 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
   const [bootPhase, setBootPhase] = useState<'pre' | 'loading' | 'security' | 'final'>('pre');
   
   const bootSystem = useCallback(async () => {
-    // Clear any existing text (prevents duplications if component remounts)
+    // Prevent duplications and start fresh
     setText([]);
     setProgress(0);
     
-    // Initial delay
-    await new Promise<void>(resolve => setTimeout(resolve, 200));
+    // No initial delay - start immediately for better UX
     
-    // Boot sequence with progressive phases
+    // Optimized boot sequence with precise timing
     setBootPhase('pre');
     const bootSequence = [
-      { text: "> System check: [OK]", phase: 'pre', progress: 15 },
-      { text: "> INITIALIZING KODEX OS v3.6.2", phase: 'pre', progress: 30 },
-      { text: "> Loading UI components...", phase: 'pre', progress: 45 },
-      { text: "> Constructing glassmorphic interface...", phase: 'pre', progress: 60 },
-      { text: "> SECURITY PROTOCOL ENGAGED", phase: 'security', progress: 80 },
-      { text: "> KODEX STUDIO READY", phase: 'final', progress: 100 }
+      { text: "> System check: [OK]", phase: 'pre', progress: 15, delay: 180 },
+      { text: "> INITIALIZING KODEX OS v3.6.2", phase: 'pre', progress: 30, delay: 230 },
+      { text: "> Loading UI components...", phase: 'pre', progress: 45, delay: 220 },
+      { text: "> Constructing glassmorphic interface...", phase: 'pre', progress: 60, delay: 230 },
+      { text: "> SECURITY PROTOCOL ENGAGED", phase: 'security', progress: 80, delay: 230 },
+      { text: "> KODEX STUDIO READY", phase: 'final', progress: 100, delay: 200 }
     ];
     
-    // Process each boot step sequentially
+    // Process each boot step with optimized timing
     for (const step of bootSequence) {
       await new Promise<void>(resolve => {
-        setTimeout(() => {
-          setText(prev => [...prev, step.text]);
-          setProgress(step.progress);
-          
-          // Update boot phase when needed
-          if (step.phase !== bootPhase) {
-            setBootPhase(step.phase as any);
-          }
-          
-          resolve();
-        }, 250); // Slightly faster for better UX
+        // Using requestAnimationFrame for smoother rendering
+        requestAnimationFrame(() => {
+          setTimeout(() => {
+            setText(prev => [...prev, step.text]);
+            setProgress(step.progress);
+            
+            // Update boot phase when needed
+            if (step.phase !== bootPhase) {
+              setBootPhase(step.phase as any);
+            }
+            
+            resolve();
+          }, step.delay); // Variable timing for more natural feel
+        });
       });
     }
     

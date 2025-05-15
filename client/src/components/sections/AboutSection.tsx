@@ -157,7 +157,7 @@ export default function AboutSection({ onClose }: AboutSectionProps) {
                   <img 
                     src="/assets/female-silhouette.svg" 
                     alt="Nessa Kodo" 
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover optimize-img"
                   />
                 </div>
               </div>
