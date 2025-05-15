@@ -11,7 +11,7 @@ export default function AboutSection({ onClose }: AboutSectionProps) {
         <div className="flex items-center">
           <span className="text-xs text-cyber-blue/70 font-plex mr-1">~/</span>
           <span className="text-xs text-cyber-blue/70 font-plex mr-2">whois —</span>
-          <h2 className="text-yellow-400 font-orbitron text-xl tracking-wide">
+          <h2 className="text-white font-orbitron text-xl tracking-wide">
             Nessa Kodo
           </h2>
         </div>
@@ -146,21 +146,7 @@ export default function AboutSection({ onClose }: AboutSectionProps) {
             </div>
           </div>
           
-          <div className="flex justify-start gap-4 mb-4">
-            <div>
-              <h3 className="text-cyber-blue mb-3 font-plex text-sm font-medium">CURRENT ROLES</h3>
-              <div className="space-y-2 text-sm">
-                <p className="text-white/90 font-medium m-0">Business Dev @ PDS Research</p>
-                <p className="text-white/60 text-xs m-0">Security infrastructure, drone technology</p>
-                
-                <p className="text-white/90 font-medium m-0 mt-4">AI Student Association</p>
-                <p className="text-white/60 text-xs m-0">Educational collaborations, program funding</p>
-                
-                <p className="text-white/90 font-medium m-0 mt-4">KODEX.STUDIO</p>
-                <p className="text-white/60 text-xs m-0">Founder & Principal Consultant</p>
-              </div>
-            </div>
-          </div>
+
         </div>
         
         <div className="md:col-span-1">
@@ -179,6 +165,20 @@ export default function AboutSection({ onClose }: AboutSectionProps) {
             <p className="text-white/60 text-xs font-plex uppercase tracking-wide mb-6">
               CYBERSECURITY SPECIALIST
             </p>
+            
+            <div className="text-left mb-6">
+              <h3 className="text-cyber-blue mb-3 font-plex text-sm font-medium text-center">CURRENT ROLES</h3>
+              <div className="space-y-2 text-sm">
+                <p className="text-white/90 font-medium m-0">Business Dev @ PDS Research</p>
+                <p className="text-white/60 text-xs m-0">Security infrastructure, drone technology</p>
+                
+                <p className="text-white/90 font-medium m-0 mt-4">AI Student Association</p>
+                <p className="text-white/60 text-xs m-0">Educational collaborations, program funding</p>
+                
+                <p className="text-white/90 font-medium m-0 mt-4">KODEX.STUDIO</p>
+                <p className="text-white/60 text-xs m-0">Founder & Principal Consultant</p>
+              </div>
+            </div>
             
             <div className="flex flex-col space-y-4">
               <button 

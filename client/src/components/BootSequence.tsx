@@ -57,6 +57,14 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
     bootSystem();
   }, [bootSystem]);
   
+  // Auto-scroll to bottom whenever text is updated
+  useEffect(() => {
+    const terminalOutput = document.getElementById('terminal-output');
+    if (terminalOutput) {
+      terminalOutput.scrollTop = terminalOutput.scrollHeight;
+    }
+  }, [text]);
+  
   return (
     <div 
       className={`fixed inset-0 bg-cyber-black z-50 flex flex-col items-center justify-center transition-opacity duration-500 ${isComplete ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
@@ -91,13 +99,13 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
             </div>
           </div>
           
-          <div className="p-6 font-plex text-sm md:text-base max-h-[35vh] overflow-y-auto">
+          <div id="terminal-output" className="p-6 font-plex text-sm md:text-base max-h-[35vh] overflow-y-auto">
             {text.map((line, index) => (
               <div key={index} className={`mb-2 ${
                 line.startsWith('$') ? 'text-white/90' : 
                 line.startsWith('>') ? (
                   line.includes('ERROR') || line.includes('FAILED') ? 'text-red-400' :
-                  line.includes('SECURITY') ? 'text-yellow-400' :
+                  line.includes('SECURITY') ? 'text-white' :
                   line.includes('READY') || line.includes('COMPLETE') ? 'text-cyber-blue' :
                   line.includes('INITIALIZING') ? 'text-cyber-blue' :
                   'text-cyber-blue/80'
