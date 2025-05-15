@@ -9,8 +9,8 @@ export default function AboutSection({ onClose }: AboutSectionProps) {
     <section className="glass-panel border border-cyber-blue/20 backdrop-blur-xl p-6 my-8 animate-fadeIn">
       <div className="flex justify-between items-center mb-4 pb-2 border-b border-cyber-blue/10">
         <div className="flex items-center">
-          <span className="text-xs text-cyber-accent/80 font-plex mr-1">~/</span>
-          <span className="text-xs text-cyber-accent/80 font-plex mr-2">whois —</span>
+          <span className="text-xs text-yellow-400 font-plex mr-1">~/</span>
+          <span className="text-xs text-yellow-400 font-plex mr-2">whois —</span>
           <h2 className="text-cyber-highlight font-orbitron text-xl tracking-wide">
             Nessa Kodo
           </h2>
