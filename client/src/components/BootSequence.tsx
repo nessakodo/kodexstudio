@@ -125,7 +125,7 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
             </div>
           </div>
           
-          <div className="p-6 font-plex text-sm md:text-base max-h-[50vh] overflow-y-auto">
+          <div className="p-6 font-plex text-sm md:text-base max-h-[35vh] overflow-y-auto">
             {text.map((line, index) => (
               <div key={index} className={`mb-2 ${
                 line.startsWith('$') ? 'text-white/90' : 
