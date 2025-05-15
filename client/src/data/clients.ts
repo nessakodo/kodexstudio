@@ -12,7 +12,10 @@ export const clients: Client[] = [
       "PCI-DSS compliance achieved",
       "Zero downtime during implementation"
     ],
-    caseStudyUrl: "/assets/case-studies/kodex-portfolio.pdf"
+    caseStudyUrl: "https://drive.google.com/uc?export=download&id=YOUR_PORTFOLIO_FILE_ID"
+    // Update the above URL with your Google Drive file ID when you have it
+    // To get file ID: Upload PDF to Drive, right-click file, select "Get link", and extract the ID from URL
+    // Full URL format: https://drive.google.com/uc?export=download&id=YOUR_FILE_ID
   },
   {
     id: "meditech",
@@ -25,7 +28,8 @@ export const clients: Client[] = [
       "400% faster data access with enhanced security",
       "Secure API integration with 12 partner systems"
     ],
-    caseStudyUrl: "/assets/case-studies/kodex-resume.pdf"
+    caseStudyUrl: "https://drive.google.com/uc?export=download&id=YOUR_RESUME_FILE_ID"
+    // Update the above URL with your Google Drive file ID when you have it
   }
 ];
 
