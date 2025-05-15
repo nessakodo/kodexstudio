@@ -75,14 +75,14 @@ export default function ServicesSection({ onClose }: ServicesSectionProps) {
                     }, 100);
                   }
                 }}
-                className="glass-button px-5 py-2.5 rounded text-center inline-flex items-center justify-center gap-2 w-full"
+                className="glass-button px-4 py-2.5 rounded text-center inline-flex items-center justify-center gap-2 w-full min-h-[45px]"
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
                 </svg>
                 {service.tier === 'Starter' ? 'Choose Starter Plan' : 
                   service.tier === 'Pro' ? 'Select Pro Plan' : 
-                  service.tier === 'Premium' ? 'Request Premium Package' : 
+                  service.tier === 'Premium' ? 'Get Premium Plan' : 
                   'Discuss Your Project'}
               </a>
             </div>
@@ -102,26 +102,29 @@ export default function ServicesSection({ onClose }: ServicesSectionProps) {
               e.preventDefault();
               if (onClose) {
                 onClose();
-                setTimeout(() => {
-                  const contactButton = document.querySelector('button[data-section="contact"]') as HTMLButtonElement;
-                  if (contactButton) {
-                    contactButton.click();
-                    
-                    // Wait for contact form to load and then prefill message
-                    setTimeout(() => {
-                      const messageField = document.querySelector('#message') as HTMLTextAreaElement;
-                      if (messageField) {
-                        messageField.value = "I'm interested in discussing a custom security solution for my organization.";
-                        // Trigger change event to update form state
-                        const event = new Event('input', { bubbles: true });
-                        messageField.dispatchEvent(event);
-                      }
-                    }, 300);
-                  }
-                }, 100);
+                // Find and click contact button directly without unnecessary delay
+                const contactButton = document.querySelector('button[data-section="contact"]') as HTMLButtonElement;
+                if (contactButton) {
+                  contactButton.click();
+                  
+                  // Wait only a small amount for DOM to update
+                  setTimeout(() => {
+                    const messageField = document.querySelector('#message') as HTMLTextAreaElement;
+                    if (messageField) {
+                      messageField.value = "I'm interested in discussing a custom security solution for my organization.";
+                      
+                      // Trigger change event to update form state
+                      const event = new Event('input', { bubbles: true });
+                      messageField.dispatchEvent(event);
+                      
+                      // Focus the message field to provide feedback to the user
+                      messageField.focus();
+                    }
+                  }, 50);
+                }
               }
             }}
-            className="glass-button px-5 py-2 rounded text-center inline-flex items-center justify-center gap-2"
+            className="glass-button px-4 py-2.5 rounded text-center inline-flex items-center justify-center gap-2 min-h-[45px]"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>

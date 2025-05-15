@@ -12,39 +12,38 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
   const [bootPhase, setBootPhase] = useState<'pre' | 'loading' | 'security' | 'final'>('pre');
   
   const bootSystem = useCallback(async () => {
-    // Initial delay
-    await new Promise<void>(resolve => setTimeout(resolve, 300));
+    // Clear any existing text (prevents duplications if component remounts)
+    setText([]);
+    setProgress(0);
     
-    // Pre-boot phase - optimized & fluid
+    // Initial delay
+    await new Promise<void>(resolve => setTimeout(resolve, 200));
+    
+    // Boot sequence with progressive phases
     setBootPhase('pre');
-    const preBootSequence = [
-      "> System check: [OK]",
-      "> INITIALIZING KODEX OS v3.6.2",
-      "> Loading UI components...",
-      "> Constructing glassmorphic interface...",
-      "> SECURITY PROTOCOL ENGAGED",
-      "> KODEX STUDIO READY"
+    const bootSequence = [
+      { text: "> System check: [OK]", phase: 'pre', progress: 15 },
+      { text: "> INITIALIZING KODEX OS v3.6.2", phase: 'pre', progress: 30 },
+      { text: "> Loading UI components...", phase: 'pre', progress: 45 },
+      { text: "> Constructing glassmorphic interface...", phase: 'pre', progress: 60 },
+      { text: "> SECURITY PROTOCOL ENGAGED", phase: 'security', progress: 80 },
+      { text: "> KODEX STUDIO READY", phase: 'final', progress: 100 }
     ];
     
-    // Process all boot sequence items with progressive boot phases
-    for (let i = 0; i < preBootSequence.length; i++) {
-      await new Promise<void>((resolve) => {
+    // Process each boot step sequentially
+    for (const step of bootSequence) {
+      await new Promise<void>(resolve => {
         setTimeout(() => {
-          setText(prev => [...prev, preBootSequence[i]]);
+          setText(prev => [...prev, step.text]);
+          setProgress(step.progress);
           
-          // Update progress based on current item
-          const progress = 10 + ((i + 1) / preBootSequence.length * 90);
-          setProgress(progress);
-          
-          // Update boot phase at key points
-          if (i === 4) { // SECURITY PROTOCOL ENGAGED
-            setBootPhase('security');
-          } else if (i === 5) { // KODEX STUDIO READY
-            setBootPhase('final');
+          // Update boot phase when needed
+          if (step.phase !== bootPhase) {
+            setBootPhase(step.phase as any);
           }
           
           resolve();
-        }, 300); // Slightly longer delay for smoother reading
+        }, 250); // Slightly faster for better UX
       });
     }
     
@@ -52,8 +51,8 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
     setTimeout(() => {
       setIsComplete(true);
       onComplete();
-    }, 1200);
-  }, [onComplete]);
+    }, 800);
+  }, [onComplete, bootPhase]);
   
   useEffect(() => {
     bootSystem();

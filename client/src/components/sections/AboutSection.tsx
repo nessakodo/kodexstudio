@@ -171,14 +171,14 @@ export default function AboutSection({ onClose }: AboutSectionProps) {
             <div className="text-left mb-6">
               <h3 className="text-cyber-blue mb-3 font-plex text-sm font-medium text-center">CURRENT ROLES</h3>
               <div className="space-y-2 text-sm">
-                <p className="text-white/90 font-medium m-0">Business Dev @ PDS Research</p>
-                <p className="text-white/60 text-xs m-0">Security infrastructure, drone technology</p>
+                <p className="text-white/90 font-medium m-0">Founder & Principal Consultant</p>
+                <p className="text-white/60 text-xs m-0">KODEX.STUDIO — Cybersecurity Consulting</p>
                 
-                <p className="text-white/90 font-medium m-0 mt-4">Outreach Officer @ AI Student Association</p>
-                <p className="text-white/60 text-xs m-0">Educational collaborations, program funding</p>
+                <p className="text-white/90 font-medium m-0 mt-4">Business Development Manager</p>
+                <p className="text-white/60 text-xs m-0">PDS Research — Security & Drone Technologies</p>
                 
-                <p className="text-white/90 font-medium m-0 mt-4">KODEX.STUDIO</p>
-                <p className="text-white/60 text-xs m-0">Founder & Principal Consultant</p>
+                <p className="text-white/90 font-medium m-0 mt-4">Outreach Officer</p>
+                <p className="text-white/60 text-xs m-0">AI Student Association — Educational Initiatives</p>
               </div>
             </div>
             
