@@ -6,6 +6,39 @@ interface ServicesSectionProps {
 }
 
 export default function ServicesSection({ onClose }: ServicesSectionProps) {
+  // Function to handle the "Discuss Your Project" button click
+  const handleCustomProjectClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    
+    // First close this section if onClose is provided
+    if (onClose) {
+      onClose();
+    }
+    
+    // Then find and click the contact button after a short delay
+    setTimeout(() => {
+      const contactButton = document.querySelector('button[data-section="contact"]') as HTMLButtonElement;
+      if (contactButton) {
+        contactButton.click();
+        
+        // Set a message in the contact form after the section has loaded
+        setTimeout(() => {
+          const messageField = document.querySelector('#message') as HTMLTextAreaElement;
+          if (messageField) {
+            messageField.value = "I'm interested in discussing a custom security solution for my organization.";
+            
+            // Dispatch input event to update form state
+            const event = new Event('input', { bubbles: true });
+            messageField.dispatchEvent(event);
+            
+            // Focus the message field
+            messageField.focus();
+          }
+        }, 200);
+      }
+    }, 150);
+  };
+
   return (
     <section className="glass-panel border border-cyber-blue/20 backdrop-blur-xl p-6 my-8 animate-fadeIn">
       <div className="flex justify-between items-center mb-4 pb-2 border-b border-cyber-blue/10">
@@ -65,16 +98,8 @@ export default function ServicesSection({ onClose }: ServicesSectionProps) {
             <div className="text-center mt-auto">
               <a 
                 href={service.contactLink}
-                onClick={(e) => {
-                  if (service.contactLink === '#contact' && onClose) {
-                    e.preventDefault();
-                    onClose();
-                    setTimeout(() => {
-                      const contactButton = document.querySelector('button[data-section="contact"]') as HTMLButtonElement;
-                      if (contactButton) contactButton.click();
-                    }, 100);
-                  }
-                }}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="glass-button px-4 py-2.5 rounded text-center inline-flex items-center justify-center gap-2 w-full min-h-[45px]"
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -98,39 +123,7 @@ export default function ServicesSection({ onClose }: ServicesSectionProps) {
         <div className="text-right">
           <a 
             href="#" 
-            onClick={(e) => {
-              e.preventDefault();
-              
-              // Close the current section
-              if (onClose) {
-                onClose();
-              }
-              
-              // Give time for the section to close
-              setTimeout(() => {
-                // Direct method: find and trigger the contact button directly
-                const contactButton = document.querySelector('button[data-section="contact"]') as HTMLButtonElement;
-                if (contactButton) {
-                  // Click the contact button to switch sections
-                  contactButton.click();
-                  
-                  // Set contact message after a small delay
-                  setTimeout(() => {
-                    const messageField = document.querySelector('#message') as HTMLTextAreaElement;
-                    if (messageField) {
-                      messageField.value = "I'm interested in discussing a custom security solution for my organization.";
-                      
-                      // Dispatch input event to update form state
-                      const event = new Event('input', { bubbles: true });
-                      messageField.dispatchEvent(event);
-                      
-                      // Focus the message field
-                      messageField.focus();
-                    }
-                  }, 200);
-                }
-              }, 150);
-            }}
+            onClick={handleCustomProjectClick}
             className="glass-button px-4 py-2.5 rounded text-center inline-flex items-center justify-center gap-2 min-h-[45px]"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
