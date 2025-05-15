@@ -15,41 +15,35 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
     // Initial delay
     await new Promise<void>(resolve => setTimeout(resolve, 300));
     
-    // Pre-boot phase - match screenshot exactly
+    // Pre-boot phase - shortened version
     setBootPhase('pre');
     const preBootSequence = [
-      "$ sudo ./initialize_kodex.sh",
-      "$ sudo ./initialize_kodex.sh",
+      "sudo ./initialize_kodex.sh",
       "> System check: [OK]",
       "> INITIALIZING KODEX OS v3.6.2",
-      "> System check: [OK]",
-      "> INITIALIZING KODEX OS v3.6.2",
-      "> Constructing glassmorphic interface...",
-      "> Constructing glassmorphic interface...",
-      "> Establishing secure connection...",
-      "> Establishing secure connection...",
-      "> Loading UI components..."
+      "> Loading UI components...",
+      "> Constructing glassmorphic interface..."
     ];
     
     for (let i = 0; i < preBootSequence.length; i++) {
       await new Promise<void>((resolve) => {
         setTimeout(() => {
           setText(prev => [...prev, preBootSequence[i]]);
-          setProgress(5 + ((i + 1) / preBootSequence.length * 65));
+          setProgress(10 + ((i + 1) / preBootSequence.length * 60));
           resolve();
-        }, i === 0 ? 200 : 250);
+        }, 200);
       });
     }
     
     // Security phase - simplified
     setBootPhase('security');
-    setText(prev => [...prev, "", "> SECURITY PROTOCOL ENGAGED"]);
+    setText(prev => [...prev, "> SECURITY PROTOCOL ENGAGED"]);
     setProgress(75);
-    await new Promise<void>(resolve => setTimeout(resolve, 500));
+    await new Promise<void>(resolve => setTimeout(resolve, 300));
     
     // Final phase
     setBootPhase('final');
-    setText(prev => [...prev, "", "> KODEX STUDIO READY"]);
+    setText(prev => [...prev, "> KODEX STUDIO READY"]);
     setProgress(100);
     
     // Short delay before completing
@@ -113,7 +107,7 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
               </div>
             ))}
             {bootPhase === 'final' && (
-              <div className="text-green-400 mt-2 animate-pulse">$ _</div>
+              <div className="text-cyber-blue mt-2 animate-pulse">_</div>
             )}
           </div>
           

@@ -45,6 +45,17 @@ export default function Home() {
       step: 0
     });
     
+    // Add initial welcome message with instructions
+    addToHistory({
+      output: (
+        <div className="mb-3">
+          <p className="text-cyan-400 mb-1">Starting guided tour of KODEX.STUDIO</p>
+          <p className="text-cyan-300/80 text-sm mb-1">Press <span className="bg-cyber-blue/20 px-2 py-0.5 rounded">SPACE</span> to continue to each step</p>
+          <p className="text-white/60 text-sm">Tour will auto-continue in 8 seconds if no key is pressed</p>
+        </div>
+      )
+    });
+    
     // Set the active section to about (first step)
     setActiveSection("about");
   };
@@ -152,14 +163,27 @@ export default function Home() {
       }
     };
     
+    // Auto-continue timer for walkthrough
+    let autoContinueTimer: ReturnType<typeof setTimeout> | null = null;
+    
+    if (walkthrough.active) {
+      // Set a timer to auto-continue after 8 seconds if no key is pressed
+      autoContinueTimer = setTimeout(() => {
+        handleWalkthroughClick();
+      }, 8000);
+    }
+    
     // Add event listener
     window.addEventListener('keydown', handleKeyPress);
     
     // Cleanup
     return () => {
       window.removeEventListener('keydown', handleKeyPress);
+      if (autoContinueTimer) {
+        clearTimeout(autoContinueTimer);
+      }
     };
-  }, [walkthrough.active, handleWalkthroughClick, setActiveSection, addToHistory, focusInput]);
+  }, [walkthrough.active, walkthrough.step, handleWalkthroughClick, setActiveSection, addToHistory, focusInput]);
   
   // Add a command handler for walkthrough - use a regular function to avoid dependency issues
   function handleCommand(e: React.KeyboardEvent<HTMLInputElement>) {
