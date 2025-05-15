@@ -10,127 +10,28 @@ import ClientsSection from '@/components/sections/ClientsSection';
 import ContactSection from '@/components/sections/ContactSection';
 import { useKodexTerminal } from '@/hooks/useKodexTerminal';
 import { downloadResume } from '@/lib/utils';
-import { WalkthroughStep, TerminalCommand } from '@/types';
 
 export default function Home() {
   const [bootComplete, setBootComplete] = useState(false);
   
-  // Define walkthrough steps
-  const walkthroughSteps: WalkthroughStep[] = [
-    {
-      message: "Welcome to the guided tour of KODEX.STUDIO. Let's start by exploring who Nessa Kodo is...",
-      command: "nessa-kodo"
-    },
-    {
-      message: "Next, let's look at some of the key projects in the portfolio...",
-      command: "projects"
-    },
-    {
-      message: "Now for the services offered to clients...",
-      command: "services"
-    },
-    {
-      message: "Finally, here's how to get in touch for project inquiries...",
-      command: "contact"
-    }
-  ];
-  
-  // Define terminal commands
-  const commands: TerminalCommand[] = [
-    {
-      name: "help",
-      description: "Show list of available commands",
-      action: function() {
-        setActiveSection(null);
-      }
-    },
-    {
-      name: "walkthrough",
-      description: "Step-by-step guided tour",
-      action: function() {
-        startWalkthrough();
-      }
-    },
-    {
-      name: "nessa-kodo",
-      description: "About section + downloadable resume",
-      action: function() {
-        setActiveSection("about");
-      }
-    },
-    {
-      name: "projects",
-      description: "Interactive portfolio",
-      action: function() {
-        setActiveSection("projects");
-      }
-    },
-    {
-      name: "services",
-      description: "Freelance offerings with tiers",
-      action: function() {
-        setActiveSection("services");
-      }
-    },
-    {
-      name: "writings",
-      description: "Auto-pulled blog content",
-      action: function() {
-        setActiveSection("writings");
-      }
-    },
-    {
-      name: "clients",
-      description: "Case studies & testimonials",
-      action: function() {
-        setActiveSection("clients");
-      }
-    },
-    {
-      name: "contact",
-      description: "Project form + scope generator",
-      action: function() {
-        setActiveSection("contact");
-      }
-    },
-    {
-      name: "resume",
-      description: "Trigger resume download",
-      action: function() {
-        downloadResume();
-      }
-    },
-    {
-      name: "clear",
-      description: "Clear terminal output",
-      action: function() {
-        clearHistory();
-      }
-    }
-  ];
-  
+  // Use the terminal hook
   const {
     input,
     setInput,
     history,
     activeSection,
     setActiveSection,
-    walkthrough,
     inputRef,
     focusInput,
-    handleCommandSubmit,
-    clearHistory,
-    startWalkthrough,
-    advanceWalkthrough
-  } = useKodexTerminal(commands, walkthroughSteps);
+    handleCommandSubmit
+  } = useKodexTerminal();
   
-  // Focus the terminal input when clicking anywhere in the terminal container
+  // When the boot is complete, focus the terminal
   useEffect(() => {
     if (bootComplete) {
       focusInput();
     }
   }, [bootComplete, focusInput]);
-  
   const renderActiveSection = () => {
     switch (activeSection) {
       case 'about':
@@ -191,7 +92,7 @@ export default function Home() {
         {walkthrough.active && walkthrough.step < walkthroughSteps.length - 1 && (
           <div className="my-4 flex justify-center">
             <button
-              onClick={advanceWalkthrough}
+              onClick={() => advanceWalkthrough(walkthroughSteps)}
               className="border border-cyber-blue px-4 py-1 rounded-md transition duration-300 hover:bg-cyber-blue/10"
             >
               Continue Tour

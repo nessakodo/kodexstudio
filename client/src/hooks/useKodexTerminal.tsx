@@ -1,29 +1,14 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { TerminalHistory, TerminalCommand, WalkthroughStep } from '@/types';
-import { sleep } from '@/lib/utils';
+import { TerminalHistory } from '@/types';
 
-export function useKodexTerminal(
-  commands: TerminalCommand[],
-  walkthroughSteps: WalkthroughStep[]
-) {
+export function useKodexTerminal() {
   const [input, setInput] = useState('');
   const [history, setHistory] = useState<TerminalHistory[]>([]);
   const [activeSection, setActiveSection] = useState<string | null>(null);
-  const [walkthrough, setWalkthrough] = useState({
-    active: false,
-    step: 0
-  });
-  
   const inputRef = useRef<HTMLInputElement>(null);
-  const commandsMap = useRef<Map<string, TerminalCommand>>(new Map());
   
-  // Initialize commands map
+  // Show welcome message when terminal mounts
   useEffect(() => {
-    const map = new Map<string, TerminalCommand>();
-    commands.forEach(cmd => map.set(cmd.name, cmd));
-    commandsMap.current = map;
-    
-    // Initial welcome message
     setHistory([
       {
         output: (
@@ -34,194 +19,127 @@ export function useKodexTerminal(
         )
       }
     ]);
-  }, [commands]);
+  }, []);
   
+  // Focus the input when requested
   const focusInput = useCallback(() => {
     if (inputRef.current) {
       inputRef.current.focus();
     }
   }, []);
   
-  const hideAllSections = useCallback(() => {
-    setActiveSection(null);
-  }, []);
-  
-  const executeCommand = useCallback((commandName: string) => {
-    const command = commandsMap.current.get(commandName);
-    
-    if (command) {
-      // Execute the command action
-      command.action();
+  // Handle command submissions
+  const handleCommandSubmit = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      const cmd = input.trim().toLowerCase();
       
-      // Add the command output to history
-      setHistory((prev) => [
+      if (!cmd) return;
+      
+      // Add command to history
+      setHistory(prev => [
         ...prev,
         {
-          input: commandName,
-          output: (
-            <div className="mb-4">
-              <div>Executing command: {commandName}</div>
-            </div>
-          )
+          input: cmd,
+          output: <></>
         }
       ]);
       
-      return true;
-    }
-    
-    setHistory((prev) => [
-      ...prev,
-      {
-        input: commandName,
-        output: (
-          <div className="mb-4 text-error-red">
-            Command not recognized: {commandName}
-          </div>
-        )
-      }
-    ]);
-    
-    return false;
-  }, []);
-  
-  const clearHistory = useCallback(() => {
-    setHistory([
-      {
-        output: (
-          <div className="mb-4">
-            <p className="text-terminal-green">Terminal cleared. Type help for available commands.</p>
-          </div>
-        )
-      }
-    ]);
-  }, []);
-  
-  const handleCommandSubmit = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      const commandName = input.trim().toLowerCase();
+      // Process command
+      let cmdOutput;
       
-      if (commandName) {
-        // Add command to history
-        setHistory((prev) => [
-          ...prev,
+      // Simple command processing
+      if (cmd === 'help') {
+        cmdOutput = (
+          <div className="mb-4">
+            <p className="text-terminal-green mb-2">Available commands:</p>
+            <ul className="space-y-1">
+              <li><span className="text-cyber-blue">help</span> <span className="ml-4 text-cyber-text/70">Show list of available commands</span></li>
+              <li><span className="text-cyber-blue">walkthrough</span> <span className="ml-4 text-cyber-text/70">Step-by-step guided tour</span></li>
+              <li><span className="text-cyber-blue">nessa-kodo</span> <span className="ml-4 text-cyber-text/70">About section + downloadable resume</span></li>
+              <li><span className="text-cyber-blue">projects</span> <span className="ml-4 text-cyber-text/70">Interactive portfolio</span></li>
+              <li><span className="text-cyber-blue">services</span> <span className="ml-4 text-cyber-text/70">Freelance offerings with tiers</span></li>
+              <li><span className="text-cyber-blue">writings</span> <span className="ml-4 text-cyber-text/70">Auto-pulled blog content</span></li>
+              <li><span className="text-cyber-blue">clients</span> <span className="ml-4 text-cyber-text/70">Case studies & testimonials</span></li>
+              <li><span className="text-cyber-blue">contact</span> <span className="ml-4 text-cyber-text/70">Project form + scope generator</span></li>
+              <li><span className="text-cyber-blue">resume</span> <span className="ml-4 text-cyber-text/70">Trigger resume download</span></li>
+              <li><span className="text-cyber-blue">clear</span> <span className="ml-4 text-cyber-text/70">Clear terminal output</span></li>
+            </ul>
+          </div>
+        );
+      } else if (cmd === 'clear') {
+        // Clear history
+        setHistory([
           {
-            input: commandName,
-            output: <></>
+            output: (
+              <div className="mb-4">
+                <p className="text-terminal-green">Terminal cleared. Type help for available commands.</p>
+              </div>
+            )
           }
         ]);
         
-        // Execute the command
-        executeCommand(commandName);
-        
-        // Clear input
+        // Reset input and return early - we've already updated history
         setInput('');
-      }
-    }
-  }, [input, executeCommand]);
-  
-  const startWalkthrough = useCallback(async () => {
-    hideAllSections();
-    
-    setHistory((prev) => [
-      ...prev,
-      {
-        output: (
-          <div className="mb-4 text-terminal-green">
-            Starting guided tour...
+        return;
+      } else if (cmd === 'nessa-kodo') {
+        setActiveSection('about');
+        cmdOutput = <div className="mb-4">Loading about section...</div>;
+      } else if (cmd === 'projects') {
+        setActiveSection('projects');
+        cmdOutput = <div className="mb-4">Loading projects section...</div>;
+      } else if (cmd === 'services') {
+        setActiveSection('services');
+        cmdOutput = <div className="mb-4">Loading services section...</div>;
+      } else if (cmd === 'writings') {
+        setActiveSection('writings');
+        cmdOutput = <div className="mb-4">Loading writings section...</div>;
+      } else if (cmd === 'clients') {
+        setActiveSection('clients');
+        cmdOutput = <div className="mb-4">Loading clients section...</div>;
+      } else if (cmd === 'contact') {
+        setActiveSection('contact');
+        cmdOutput = <div className="mb-4">Loading contact section...</div>;
+      } else if (cmd === 'walkthrough') {
+        // Hide current section first
+        setActiveSection(null);
+        
+        // Simple walkthrough
+        cmdOutput = (
+          <div className="mb-4">
+            <p className="text-terminal-green">Starting guided tour. First, let's look at the about section...</p>
+            <p className="mt-2">Type <span className="text-cyber-blue">nessa-kodo</span> or click the walkthrough button.</p>
           </div>
-        )
+        );
+      } else {
+        // Command not recognized
+        cmdOutput = (
+          <div className="mb-4 text-error-red">
+            Command not recognized: {cmd}
+          </div>
+        );
       }
-    ]);
-    
-    setWalkthrough({
-      active: true,
-      step: 0
-    });
-    
-    // Start first step with a delay
-    await sleep(500);
-    
-    if (walkthroughSteps.length > 0) {
-      const firstStep = walkthroughSteps[0];
       
-      setHistory((prev) => [
+      // Add command output to history
+      setHistory(prev => [
         ...prev,
         {
-          output: (
-            <div className="mb-2 text-terminal-green">
-              {firstStep.message}
-            </div>
-          )
+          output: cmdOutput
         }
       ]);
       
-      // Execute the first command
-      executeCommand(firstStep.command);
+      // Clear input
+      setInput('');
     }
-  }, [executeCommand, hideAllSections, walkthroughSteps]);
-  
-  const advanceWalkthrough = useCallback(async () => {
-    if (!walkthrough.active) return;
-    
-    const nextStep = walkthrough.step + 1;
-    
-    if (nextStep < walkthroughSteps.length) {
-      const step = walkthroughSteps[nextStep];
-      
-      setHistory((prev) => [
-        ...prev,
-        {
-          output: (
-            <div className="mb-2 text-terminal-green">
-              {step.message}
-            </div>
-          )
-        }
-      ]);
-      
-      // Execute the command for this step
-      executeCommand(step.command);
-      
-      // Update step
-      setWalkthrough((prev) => ({
-        ...prev,
-        step: nextStep
-      }));
-    } else {
-      // End of walkthrough
-      setHistory((prev) => [
-        ...prev,
-        {
-          output: (
-            <div className="mb-4 mt-4 text-terminal-green">
-              Tour complete! Feel free to explore more using the terminal commands.
-            </div>
-          )
-        }
-      ]);
-      
-      setWalkthrough({
-        active: false,
-        step: 0
-      });
-    }
-  }, [walkthrough, walkthroughSteps, executeCommand]);
+  }, [input]);
   
   return {
     input,
     setInput,
     history,
-    setHistory,
     activeSection,
     setActiveSection,
-    walkthrough,
     inputRef,
     focusInput,
-    hideAllSections,
-    executeCommand,
-    clearHistory,
-    handleCommandSubmit,
-    startWalkthrough,
-    advanceWalkthrough
+    handleCommandSubmit
   };
 }
