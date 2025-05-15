@@ -1,14 +1,37 @@
 import { downloadResume } from '@/lib/utils';
 
-export default function AboutSection() {
+interface AboutSectionProps {
+  onClose?: () => void;
+}
+
+export default function AboutSection({ onClose }: AboutSectionProps) {
   return (
     <section className="glass-panel border border-cyber-blue/20 backdrop-blur-xl p-6 my-8 animate-fadeIn">
       <div className="flex justify-between items-center mb-4 pb-2 border-b border-cyber-blue/10">
-        <h2 className="text-cyber-blue font-orbitron text-2xl">
-          Nessa Kodo
-        </h2>
-        <div className="text-xs text-cyber-text/40 font-plex">
-          CYBERSECURITY SPECIALIST
+        <div className="flex items-center">
+          <span className="text-xs text-cyber-blue/60 font-plex mr-2">~/</span>
+          <span className="text-xs text-cyber-blue/60 font-plex mr-2">whois —</span>
+          <h2 className="text-cyber-blue font-orbitron text-xl">
+            Nessa Kodo
+          </h2>
+        </div>
+        
+        <div className="flex items-center">
+          <div className="text-xs text-cyber-text/40 font-plex mr-4">
+            CYBERSECURITY SPECIALIST
+          </div>
+          {onClose && (
+            <button 
+              onClick={onClose}
+              className="text-cyber-text/40 hover:text-cyber-blue transition-colors"
+              aria-label="Close"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          )}
         </div>
       </div>
       
@@ -160,7 +183,7 @@ export default function AboutSection() {
             <div className="flex flex-col space-y-4">
               <button 
                 onClick={downloadResume}
-                className="glass-button w-full py-2.5 px-4 rounded flex items-center justify-center gap-2 text-cyber-blue hover:text-white transition-colors"
+                className="glass-button w-full py-2.5 px-4 rounded flex items-center justify-center gap-2"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>

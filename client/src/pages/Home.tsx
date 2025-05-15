@@ -206,11 +206,6 @@ export default function Home() {
           <div className="flex flex-col md:flex-row items-center justify-between">
             <div className="flex items-center gap-3 mb-4 md:mb-0">
               <p className="text-sm text-cyber-blue/60 font-plex">kodex ~$ Displaying projects information.</p>
-              <div className="flex items-center gap-x-1">
-                <span className="w-2 h-2 bg-cyber-blue rounded-full animate-pulse"></span>
-                <span className="w-2 h-2 bg-cyber-blue/60 rounded-full animate-pulse" style={{ animationDelay: '300ms' }}></span>
-                <span className="w-2 h-2 bg-cyber-blue/30 rounded-full animate-pulse" style={{ animationDelay: '600ms' }}></span>
-              </div>
             </div>
             
             <div className="flex items-center">

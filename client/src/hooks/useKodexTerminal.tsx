@@ -116,27 +116,32 @@ export function useKodexTerminal() {
         setActiveSection('about');
         cmdOutput = <div className="mb-4">
           <p className="text-cyber-blue">Fetching identity data...</p>
-          <div className="flex items-center mt-2 gap-x-1">
-            <span className="w-2 h-2 bg-cyber-blue rounded-full animate-pulse"></span>
-            <span className="w-2 h-2 bg-cyber-blue/60 rounded-full animate-pulse" style={{ animationDelay: '300ms' }}></span>
-            <span className="w-2 h-2 bg-cyber-blue/30 rounded-full animate-pulse" style={{ animationDelay: '600ms' }}></span>
-          </div>
         </div>;
       } else if (cmd === 'projects') {
         setActiveSection('projects');
-        cmdOutput = <div className="mb-4">Loading projects section...</div>;
+        cmdOutput = <div className="mb-4">
+          <p className="text-cyber-blue">Accessing project repository...</p>
+        </div>;
       } else if (cmd === 'services') {
         setActiveSection('services');
-        cmdOutput = <div className="mb-4">Loading services section...</div>;
+        cmdOutput = <div className="mb-4">
+          <p className="text-cyber-blue">Loading service offerings...</p>
+        </div>;
       } else if (cmd === 'writings') {
         setActiveSection('writings');
-        cmdOutput = <div className="mb-4">Loading writings section...</div>;
+        cmdOutput = <div className="mb-4">
+          <p className="text-cyber-blue">Loading published articles...</p>
+        </div>;
       } else if (cmd === 'clients') {
         setActiveSection('clients');
-        cmdOutput = <div className="mb-4">Loading clients section...</div>;
+        cmdOutput = <div className="mb-4">
+          <p className="text-cyber-blue">Gathering client testimonials...</p>
+        </div>;
       } else if (cmd === 'contact') {
         setActiveSection('contact');
-        cmdOutput = <div className="mb-4">Loading contact section...</div>;
+        cmdOutput = <div className="mb-4">
+          <p className="text-cyber-blue">Opening communication channels...</p>
+        </div>;
       } else if (cmd === 'walkthrough') {
         // Simply show a message - walkthrough will be handled by the parent component
         cmdOutput = (

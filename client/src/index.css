@@ -67,22 +67,21 @@
     @apply bg-cyber-panel backdrop-blur-xl border border-white/10 rounded-xl;
   }
   
-  /* Glass button effect */
+  /* Glass button effect - based on reference image */
   .glass-button {
-    @apply border border-cyber-blue/30 bg-cyber-blue/5 backdrop-blur-md transition-all duration-300;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    @apply border border-cyber-blue/40 bg-black/50 backdrop-blur-md transition-all duration-300 text-cyber-blue;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    outline: none;
   }
   
   .glass-button:hover {
-    @apply border-cyber-blue/50 bg-cyber-blue/20 shadow-[0_0_15px_rgba(15,180,244,0.3)];
-    transform: translateY(-1px);
+    @apply border-cyber-blue bg-black/70;
+    box-shadow: 0 0 10px rgba(15, 180, 244, 0.3);
   }
   
   .glass-button:active {
-    @apply border-cyber-blue/60 bg-cyber-blue/30;
-    transform: translateY(0);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    @apply border-cyber-blue/80 bg-cyber-blue/10;
+    box-shadow: 0 0 6px rgba(15, 180, 244, 0.2);
   }
   
   /* Terminal cursor effect */

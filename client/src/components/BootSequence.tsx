@@ -106,14 +106,8 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
       </div>
       
       <div className="max-w-3xl w-full px-4 z-10">
-        <h1 className="font-orbitron font-bold text-4xl md:text-6xl tracking-wide text-cyber-blue mb-12 md:mb-16 text-center relative">
-          <span className="opacity-90">KODEX</span>
-          <span className="opacity-70">.</span>
-          <span className="opacity-80">STUDIO</span>
-          <span className="ml-1 animate-type-cursor">_</span>
-          
-          <div className="absolute -top-12 -left-12 w-32 h-32 border border-cyber-blue/30 rounded-full opacity-20 animate-pulse-glow" style={{ animationDelay: '0.5s' }}></div>
-          <div className="absolute -bottom-8 -right-8 w-24 h-24 border border-cyber-blue/20 rounded-full opacity-10 animate-pulse-glow" style={{ animationDelay: '1.2s' }}></div>
+        <h1 className="font-orbitron font-bold text-4xl md:text-6xl tracking-wide mb-12 md:mb-16 text-center relative animate-fadeIn">
+          <span className="bg-gradient-to-r from-white/90 via-cyber-blue to-blue-400 bg-clip-text text-transparent drop-shadow-sm">KODEX STUDIO</span>
         </h1>
         
         <div className="w-full border border-cyber-blue/20 rounded-xl overflow-hidden bg-black/50 backdrop-blur-xl shadow-[0_0_25px_rgba(15,180,244,0.1)]">
