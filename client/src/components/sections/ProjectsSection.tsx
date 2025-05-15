@@ -11,7 +11,7 @@ export default function ProjectsSection({ onClose }: ProjectsSectionProps) {
         <div className="flex items-center">
           <span className="text-xs text-cyber-blue/70 font-plex mr-1">~/</span>
           <span className="text-xs text-cyber-blue/70 font-plex mr-2">projects —</span>
-          <h2 className="text-yellow-400 font-orbitron text-xl tracking-wide">
+          <h2 className="text-white font-orbitron text-xl tracking-wide">
             Project Portfolio
           </h2>
         </div>
