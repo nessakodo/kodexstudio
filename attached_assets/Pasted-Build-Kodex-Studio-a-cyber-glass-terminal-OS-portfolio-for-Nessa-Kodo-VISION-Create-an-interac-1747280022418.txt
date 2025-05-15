@@ -1,0 +1,211 @@
+Build Kodex Studio — a cyber-glass terminal OS portfolio for Nessa Kodo
+
+🌟 VISION
+Create an interactive, animated personal site that fuses:
+
+Cyber-aesthetic terminal UX
+
+Glassmorphic visual design
+
+Secure, minimalist elegance
+
+A guided onboarding flow via command interface
+
+The site should feel like a bespoke operating system for creative cybersecurity work — intuitive, immersive, and clean — where users explore services, projects, and writings through terminal commands, or start with an interactive walkthrough.
+
+🧠 FUNCTIONAL SPECIFICATIONS
+🖥 HOMEPAGE STRUCTURE (UX-FIRST FLOW)
+1. BOOT-UP SEQUENCE (3–5 seconds)
+bash
+Copy
+Edit
+> [SYSTEM] Initializing kodex-studio.sh...
+> Establishing secure connection...
+> Preparing creative systems interface...
+Typing animation with glow flicker
+
+Subtle matrix-style katakana rain animation begins behind (low opacity)
+
+2. HERO TRANSITION
+Fade into the main interface:
+
+Large animated title:
+KODEX.STUDIO
+
+Font: Orbitron, Unica One, or Satoshi Black
+
+Animation: type-in effect, liquid gradient fill, or pulse-glow
+
+Subheadline below:
+
+markdown
+Copy
+Edit
+The Cyber-Somatic Lab of Nessa Kodo  
+> Mindful | Tactical | Technical
+Prompt text:
+
+vbnet
+Copy
+Edit
+Type `help` to explore — or try `> walkthrough` to auto-tour the studio.
+🔍 TERMINAL INTERFACE
+Glassmorphic terminal container with subtle blur
+
+Cursor: white, thin vertical bar |, right-aligned
+
+Tab autocomplete + optional animation on output
+
+Supported commands:
+bash
+Copy
+Edit
+> help         – Show list of available commands
+> walkthrough  – Step-by-step guided tour (auto-reveal sections)
+> nessa-kodo   – About section + downloadable resume
+> projects     – Interactive portfolio
+> services     – Freelance offerings with tiers
+> writings     – Auto-pulled blog content
+> clients      – Case studies & testimonials
+> contact      – Project form + scope generator
+> resume       – Trigger resume download
+🎨 UI / AESTHETIC DESIGN
+✅ Glassmorphic Panels
+background: rgba(12, 12, 20, 0.45)
+
+backdrop-filter: blur(16px)
+
+Rounded corners (8–10px)
+
+Border: rgba(255,255,255,0.08)
+
+✅ Matrix Rain (Background)
+Katakana glyphs, increased letter + line spacing
+
+Slower fall, spread out across full width
+
+Opacity: 0.05–0.1
+
+Never obstructs content
+
+✅ Fonts
+Title: Orbitron or futuristic variant
+
+Body: IBM Plex Mono, Space Grotesk, or Inter
+
+Minimum body size: 16px with generous line height (1.5x)
+
+🧩 CONTENT COMPONENTS
+> walkthrough
+Auto-reveal flow: Nessa-Kodo → Projects → Services → Contact
+
+Optional narrated text in terminal (animated typing)
+
+> projects
+Grid of animated, glassmorphic cards
+
+“Built With” tags animate on hover
+
+Emojis removed
+
+> services
+Visual pricing tiers: Starter, Pro, Premium
+
+Cards load via config or backend
+
+> writings
+Pull from Notion + RSS (Dev.to, Medium, Hashnode)
+
+Includes:
+
+Search bar
+
+Tag filters
+
+Terminal-like preview cards
+
+> contact
+Two-column layout: intake form + scope generator
+
+All buttons styled like Download Resume (outlined + glowing)
+
+Embed Calendly modal
+
+⚙️ TECH STACK
+Frontend: React + TailwindCSS + Framer Motion
+
+Backend: Supabase (Auth, DB, Edge Functions)
+
+APIs: Notion API, Dev.to RSS, Calendly, GitHub (if used)
+
+Deploy: Replit Core (Repl-based) + Custom Domain
+
+🌐 DOMAIN + DEPLOYMENT SETUP (Replit Core + Hostinger/GoDaddy)
+✅ 1. Build on Replit Core
+Use React (or Vite + Tailwind) project
+
+Preview via Replit-generated .repl.co URL
+
+✅ 2. Set Up Custom Domain
+Open Replit Project > Settings > “Custom Domain”
+
+Enter your domain (e.g. kodex.studio)
+
+Replit will show A Record IP or CNAME target
+
+✅ 3. Configure DNS (GoDaddy or Hostinger)
+In your domain provider:
+
+A Record
+
+Host: @
+
+Points to: Replit’s IP
+
+TTL: default (600)
+
+CNAME
+
+Host: www
+
+Points to: cname.replit.dev
+
+Allow 10–30 min for propagation. Replit will issue SSL automatically.
+
+✅ 4. Final Deployment Steps
+Push all assets to main
+
+Configure Replit Secrets for:
+
+Notion API
+
+Supabase URL + Key
+
+Calendly API (if applicable)
+
+Verify terminal, resume download, and walkthrough work
+
+Test on mobile, desktop, and with reduced motion
+
+✅ PERFORMANCE & ACCESSIBILITY
+Fully mobile responsive
+
+WCAG 2.1 AA contrast + focus states
+
+SEO optimized (semantic headings + meta)
+
+Animations respect prefers-reduced-motion
+
+✅ FINAL POLISH
+No emojis site-wide
+
+All buttons outlined + glow-on-hover
+
+Terminal spacing and prompt flow must feel real
+
+Letter spacing + padding must be clean (16–24px blocks)
+
+Matrix rain must never block text — subtle + aesthetic only
+
+
+Let’s launch this beautifully. Kodex is ready to boot.
