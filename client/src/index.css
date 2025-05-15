@@ -32,14 +32,21 @@
   --cyber-blue: 195 65% 55%; /* Muted blue color as requested */
   --cyber-purple: 281 70% 45%; /* Slightly muted purple */
   --cyber-text: 225 30% 95%;
-  --terminal-green: 174 65% 50%; /* Slightly muted green */
+  
+  /* New complementary colors */
+  --cyber-highlight: 210 80% 75%; /* Lighter blue for highlights - replaces aqua */
+  --cyber-accent: 200 65% 65%; /* Secondary complementary color */
+  
+  /* Terminal colors */
+  --terminal-green: 174 65% 50%; 
   --terminal-dim: 180 30% 45%;
   --terminal-prompt: 195 65% 55%;
   --error-red: 348 90% 60%;
   
-  /* Additional theme colors */
+  /* Blue variations */
   --cyber-blue-dark: 195 65% 30%;
   --cyber-blue-light: 195 65% 70%;
+  --cyber-blue-softer: 200 60% 65%; /* Softer blue for welcome messages */
 }
 
 @layer base {
@@ -137,14 +144,17 @@
 @layer utilities {
   .font-orbitron {
     font-family: 'Orbitron', sans-serif;
+    letter-spacing: 0.075em; /* Increased letter spacing for Orbitron */
   }
   
   .font-plex {
     font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 0.02em; /* Subtle letter spacing */
   }
   
   .font-space {
     font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: 0.03em; /* Light letter spacing */
   }
 }
 

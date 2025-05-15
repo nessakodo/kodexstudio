@@ -13,58 +13,55 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
   
   const bootSystem = useCallback(async () => {
     // Initial delay
-    await new Promise<void>(resolve => setTimeout(resolve, 400));
+    await new Promise<void>(resolve => setTimeout(resolve, 300));
     
-    // Pre-boot phase
+    // Pre-boot phase - simplified
     setBootPhase('pre');
     const preBootSequence = [
       "$ sudo ./initialize_kodex.sh",
-      "> System check: [OK]",
-      "> Establishing secure environment..."
+      "> System check: [OK]"
     ];
     
     for (let i = 0; i < preBootSequence.length; i++) {
       await new Promise<void>((resolve) => {
         setTimeout(() => {
           setText(prev => [...prev, preBootSequence[i]]);
-          setProgress(5 + ((i + 1) / preBootSequence.length * 15));
+          setProgress(5 + ((i + 1) / preBootSequence.length * 20));
           resolve();
-        }, i === 0 ? 300 : 700);
+        }, i === 0 ? 200 : 400);
       });
     }
     
-    // Main loading phase
+    // Main loading phase - reduced commands for faster loading
     setBootPhase('loading');
     setText(prev => [...prev, "", "> INITIALIZING KODEX OS v3.6.2"]);
-    await new Promise<void>(resolve => setTimeout(resolve, 800));
+    await new Promise<void>(resolve => setTimeout(resolve, 500));
     
+    // Reduced boot sequence to 3 key operations
     const bootSequence = [
-      "> Constructing glassmorphic interface modules...",
-      "> Calibrating neural response patterns...",
-      "> Establishing secure connection tunnels...",
-      "> Compiling reactive UI components...",
-      "> Loading cyberspace visualization engine..."
+      "> Constructing glassmorphic interface...",
+      "> Establishing secure connection...",
+      "> Loading UI components..."
     ];
     
     for (let i = 0; i < bootSequence.length; i++) {
       await new Promise<void>((resolve) => {
         setTimeout(() => {
           setText(prev => [...prev, bootSequence[i]]);
-          setProgress(20 + ((i + 1) / bootSequence.length * 40));
+          setProgress(25 + ((i + 1) / bootSequence.length * 50));
           resolve();
-        }, 600);
+        }, 450);
       });
     }
     
-    // Security phase
+    // Security phase - simplified
     setBootPhase('security');
     setText(prev => [...prev, "", "> SECURITY PROTOCOL ENGAGED"]);
-    await new Promise<void>(resolve => setTimeout(resolve, 800));
+    await new Promise<void>(resolve => setTimeout(resolve, 500));
     
+    // Reduced security sequence
     const securitySequence = [
       "> Generating encryption keys...",
-      "> Validating digital signatures...",
-      "> Establishing zero-knowledge protocol...",
       "> Secure handshake complete."
     ];
     
@@ -72,9 +69,9 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
       await new Promise<void>((resolve) => {
         setTimeout(() => {
           setText(prev => [...prev, securitySequence[i]]);
-          setProgress(60 + ((i + 1) / securitySequence.length * 30));
+          setProgress(75 + ((i + 1) / securitySequence.length * 20));
           resolve();
-        }, 600);
+        }, 450);
       });
     }
     

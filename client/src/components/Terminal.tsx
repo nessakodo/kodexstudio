@@ -67,10 +67,10 @@ export default function Terminal({
         </p>
       </div>
       
-      {/* Terminal output */}
+      {/* Terminal output - fixed height with scroll */}
       <div 
         ref={outputRef}
-        className="flex-grow overflow-y-auto mb-4 min-h-[200px] md:min-h-[300px] max-h-[50vh] font-plex"
+        className="h-[300px] overflow-y-auto mb-4 font-plex"
       >
         {history.map((entry, index) => (
           <div key={index} className="mb-4">
