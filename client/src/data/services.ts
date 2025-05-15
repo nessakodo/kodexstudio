@@ -26,7 +26,7 @@ export const services: Service[] = [
       "CI/CD Security Integration",
       "Maintenance & Support"
     ],
-    contactLink: "#contact",
+    contactLink: "https://calendly.com/nessakodo/custom-security-inquiry",
     highlighted: true
   },
   {
