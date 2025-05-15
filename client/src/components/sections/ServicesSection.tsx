@@ -123,8 +123,9 @@ export default function ServicesSection({ onClose }: ServicesSectionProps) {
         </p>
         <div className="text-right">
           <a 
-            href="#" 
-            onClick={handleCustomProjectClick}
+            href="https://calendly.com/nessakodo/kodex-studio-information-call" 
+            target="_blank"
+            rel="noopener noreferrer"
             className="glass-button px-4 py-2.5 rounded text-center inline-flex items-center justify-center gap-2 min-h-[45px]"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

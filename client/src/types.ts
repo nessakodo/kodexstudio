@@ -39,6 +39,7 @@ export interface Client {
   icon: string;
   description: string;
   results: string[];
+  caseStudyUrl?: string;
 }
 
 export interface Testimonial {
