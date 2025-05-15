@@ -108,20 +108,11 @@ export default function ServicesSection({ onClose }: ServicesSectionProps) {
               
               // Give time for the section to close
               setTimeout(() => {
-                // Use terminal command simulation for maximum compatibility
-                const terminalInput = document.querySelector('input[placeholder*="command"]') as HTMLInputElement;
-                if (terminalInput) {
-                  // Set the terminal input value and focus it
-                  terminalInput.value = "contact";
-                  terminalInput.focus();
-                  
-                  // Simulate Enter key press
-                  const enterEvent = new KeyboardEvent('keydown', {
-                    key: 'Enter',
-                    code: 'Enter',
-                    bubbles: true
-                  });
-                  terminalInput.dispatchEvent(enterEvent);
+                // Direct method: find and trigger the contact button directly
+                const contactButton = document.querySelector('button[data-section="contact"]') as HTMLButtonElement;
+                if (contactButton) {
+                  // Click the contact button to switch sections
+                  contactButton.click();
                   
                   // Set contact message after a small delay
                   setTimeout(() => {

@@ -410,7 +410,7 @@ export default function ContactSection({ onClose }: ContactSectionProps) {
           <div>
             <h3 className="font-orbitron text-lg mb-4 text-cyber-highlight tracking-wide">Book a Consultation</h3>
             <a 
-              href="https://calendly.com/nessakodo/custom-security-inquiry"
+              href="https://calendly.com/nessakodo/kodex-studio-information-call"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-gradient-to-r from-cyber-accent/30 to-cyber-accent/20 hover:from-cyber-accent/40 hover:to-cyber-accent/30 backdrop-blur-sm px-5 py-2.5 rounded-md text-center inline-flex items-center justify-center gap-2 w-full border border-cyber-accent/20 transition-all duration-200 shadow-sm shadow-cyber-accent/10 font-medium tracking-wide"

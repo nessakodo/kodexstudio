@@ -1,15 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="800px" height="800px" viewBox="0 0 800 800" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-  <title>Female Silhouette</title>
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background glow -->
+  <circle cx="256" cy="256" r="240" fill="url(#glowGradient)" />
+  
+  <!-- Head -->
+  <path d="M256 130C295.765 130 328 162.235 328 202C328 241.765 295.765 274 256 274C216.235 274 184 241.765 184 202C184 162.235 216.235 130 256 130Z" fill="#4dabf7" fill-opacity="0.7" />
+  
+  <!-- Hair -->
+  <path d="M328 202C328 162.235 295.765 130 256 130C216.235 130 184 162.235 184 202C184 202 198 180 256 180C314 180 328 202 328 202Z" fill="#5a67d8" fill-opacity="0.8" />
+  
+  <!-- Shoulders and upper body -->
+  <path d="M352 368V334C352 308.967 337.033 287.126 316.213 278.262C298.37 270.643 278.049 266 256 266C233.951 266 213.63 270.643 195.787 278.262C174.967 287.126 160 308.967 160 334V368C160 375.732 166.268 382 174 382H338C345.732 382 352 375.732 352 368Z" fill="#4dabf7" fill-opacity="0.6" />
+  
+  <!-- Neck -->
+  <path d="M236 274V300H276V274C269.583 276.667 262.417 276.667 256 276C249.583 276.667 242.417 276.667 236 274Z" fill="#4dabf7" fill-opacity="0.7" />
+  
+  <!-- Gradient definitions -->
   <defs>
-    <linearGradient x1="0%" y1="0%" x2="100%" y2="100%" id="gradient">
-      <stop stop-color="#6ae4ff" stop-opacity="0.4" offset="0%"></stop>
-      <stop stop-color="#a68cff" stop-opacity="0.3" offset="100%"></stop>
-    </linearGradient>
+    <radialGradient id="glowGradient" cx="0.5" cy="0.5" r="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#4c6fff" stop-opacity="0.15" />
+      <stop offset="1" stop-color="#111729" stop-opacity="0" />
+    </radialGradient>
   </defs>
-  <g stroke="none" fill="none">
-    <circle fill="url(#gradient)" cx="400" cy="400" r="400" opacity="0.3"></circle>
-    <path d="M400,160 C350,160 310,200 310,250 C310,300 340,340 400,340 C460,340 490,300 490,250 C490,200 450,160 400,160 Z" fill="#a68cff" opacity="0.7"></path>
-    <path d="M300,330 C280,360 250,380 250,430 C250,480 270,580 280,620 C290,660 320,700 400,700 C480,700 510,660 520,620 C530,580 550,480 550,430 C550,380 520,360 500,330 C500,330 470,380 400,380 C330,380 300,330 300,330 Z" fill="#a68cff" opacity="0.6"></path>
-  </g>
 </svg>
