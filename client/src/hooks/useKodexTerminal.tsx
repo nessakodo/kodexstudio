@@ -22,6 +22,16 @@ export function useKodexTerminal() {
   const [activeSection, setActiveSection] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   
+  // Function to directly navigate to contact section from any part of the app
+  const navigateToContact = useCallback(() => {
+    // First close any open section
+    setActiveSection(null);
+    // Then open contact section after a short delay
+    setTimeout(() => {
+      setActiveSection('contact');
+    }, 100);
+  }, []);
+  
   // Show welcome message when terminal mounts
   useEffect(() => {
     setHistory([
