@@ -93,7 +93,7 @@ export default function WritingsSection({ onClose }: WritingsSectionProps) {
               </svg>
               back
             </button>
-            <h2 className="text-yellow-400 font-orbitron text-xl truncate">
+            <h2 className="text-white font-orbitron text-lg truncate">
               {currentArticle.title}
             </h2>
           </div>
@@ -202,7 +202,7 @@ export default function WritingsSection({ onClose }: WritingsSectionProps) {
         <div className="flex items-center">
           <span className="text-xs text-cyber-blue/70 font-plex mr-1">~/</span>
           <span className="text-xs text-cyber-blue/70 font-plex mr-2">writings —</span>
-          <h2 className="text-yellow-400 font-orbitron text-xl tracking-wide">
+          <h2 className="text-white font-orbitron text-lg tracking-wide">
             Writings & Blog
           </h2>
         </div>

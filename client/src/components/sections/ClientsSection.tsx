@@ -11,7 +11,7 @@ export default function ClientsSection({ onClose }: ClientsSectionProps) {
         <div className="flex items-center">
           <span className="text-xs text-cyber-blue/70 font-plex mr-1">~/</span>
           <span className="text-xs text-cyber-blue/70 font-plex mr-2">clients —</span>
-          <h2 className="text-yellow-400 font-orbitron text-xl tracking-wide">
+          <h2 className="text-white font-orbitron text-lg tracking-wide">
             Clients & Case Studies
           </h2>
         </div>
