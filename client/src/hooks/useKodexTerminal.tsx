@@ -303,6 +303,7 @@ export function useKodexTerminal() {
     inputRef,
     focusInput,
     handleCommandSubmit,
-    addToHistory
+    addToHistory,
+    navigateToContact
   };
 }

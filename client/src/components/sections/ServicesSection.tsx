@@ -1,42 +1,43 @@
 import { services } from '@/data/services';
 import { cn } from '@/lib/utils';
+import { useKodexTerminal } from '@/hooks/useKodexTerminal';
 
 interface ServicesSectionProps {
   onClose?: () => void;
 }
 
 export default function ServicesSection({ onClose }: ServicesSectionProps) {
+  // Import the navigateToContact function from the terminal hook
+  const { navigateToContact } = useKodexTerminal();
+  
   // Function to handle the "Discuss Your Project" button click
   const handleCustomProjectClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     
-    // First close this section if onClose is provided
+    // Close this section if onClose is provided
     if (onClose) {
       onClose();
     }
     
-    // Then find and click the contact button after a short delay
+    // Use our direct navigation function after a small delay
     setTimeout(() => {
-      const contactButton = document.querySelector('button[data-section="contact"]') as HTMLButtonElement;
-      if (contactButton) {
-        contactButton.click();
-        
-        // Set a message in the contact form after the section has loaded
-        setTimeout(() => {
-          const messageField = document.querySelector('#message') as HTMLTextAreaElement;
-          if (messageField) {
-            messageField.value = "I'm interested in discussing a custom security solution for my organization.";
-            
-            // Dispatch input event to update form state
-            const event = new Event('input', { bubbles: true });
-            messageField.dispatchEvent(event);
-            
-            // Focus the message field
-            messageField.focus();
-          }
-        }, 200);
-      }
-    }, 150);
+      navigateToContact();
+      
+      // Set a message in the contact form after navigation
+      setTimeout(() => {
+        const messageField = document.querySelector('#message') as HTMLTextAreaElement;
+        if (messageField) {
+          messageField.value = "I'm interested in discussing a custom security solution for my organization.";
+          
+          // Dispatch input event to update form state
+          const event = new Event('input', { bubbles: true });
+          messageField.dispatchEvent(event);
+          
+          // Focus the message field
+          messageField.focus();
+        }
+      }, 200);
+    }, 100);
   };
 
   return (
