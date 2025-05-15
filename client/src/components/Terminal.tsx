@@ -62,14 +62,28 @@ export default function Terminal({
           <span className="font-mono bg-cyber-blue/15 text-cyber-blue px-1.5 py-0.5 rounded-md border border-cyber-blue/20">help</span> 
           <span>for all options</span>
         </p>
-        <p className="text-xs text-cyber-text/80 flex items-center gap-x-2 mt-1">
-          <span className="font-mono bg-cyber-blue/15 text-cyber-blue px-1.5 py-0.5 rounded-md border border-cyber-blue/20">Tab</span> 
-          <span>for auto-completion</span>
-        </p>
-        <p className="text-xs text-cyber-text/80 flex items-center gap-x-2 mt-1">
-          <span className="font-mono bg-cyber-blue/15 text-cyber-blue px-1.5 py-0.5 rounded-md border border-cyber-blue/20">Esc</span> 
-          <span>to close sections</span>
-        </p>
+        
+        {/* Desktop-only commands */}
+        {window.innerWidth > 768 && (
+          <>
+            <p className="text-xs text-cyber-text/80 flex items-center gap-x-2 mt-1">
+              <span className="font-mono bg-cyber-blue/15 text-cyber-blue px-1.5 py-0.5 rounded-md border border-cyber-blue/20">Tab</span> 
+              <span>for auto-completion</span>
+            </p>
+            <p className="text-xs text-cyber-text/80 flex items-center gap-x-2 mt-1">
+              <span className="font-mono bg-cyber-blue/15 text-cyber-blue px-1.5 py-0.5 rounded-md border border-cyber-blue/20">Esc</span> 
+              <span>to close sections</span>
+            </p>
+          </>
+        )}
+        
+        {/* Mobile-only tip */}
+        {window.innerWidth <= 768 && (
+          <p className="text-xs text-cyber-text/80 flex items-center gap-x-2 mt-1">
+            <span className="font-mono bg-cyber-blue/15 text-cyber-blue px-1.5 py-0.5 rounded-md border border-cyber-blue/20">walkthrough</span> 
+            <span>for guided tour</span>
+          </p>
+        )}
       </div>
       
       {/* Terminal output - fixed height with scroll */}

@@ -52,8 +52,22 @@ export default function Home() {
       output: (
         <div className="mb-3">
           <p className="text-cyan-400 mb-1">Starting guided tour of KODEX.STUDIO</p>
-          <p className="text-cyan-300/80 text-sm mb-1">Press <span className="bg-cyber-blue/20 px-2 py-0.5 rounded">SPACE</span> to continue to each step</p>
-          <p className="text-white/60 text-sm">Tour will auto-continue in 8 seconds if no key is pressed</p>
+          <p className="text-cyan-300/80 text-sm mb-1">
+            {window.innerWidth > 768 ? (
+              <>Press <span className="bg-cyber-blue/20 px-2 py-0.5 rounded">SPACE</span> to continue to each step</>
+            ) : (
+              <>Tap anywhere on screen to continue</>
+            )}
+          </p>
+          <p className="text-white/60 text-sm">Tour will auto-continue in 8 seconds</p>
+          <div className="mt-3">
+            <button 
+              onClick={handleWalkthroughClick}
+              className="glass-button px-4 py-1.5 text-sm rounded text-center items-center justify-center"
+            >
+              Continue Tour →
+            </button>
+          </div>
         </div>
       )
     });
@@ -110,10 +124,24 @@ export default function Home() {
         // Set the input value to match the command
         setInput(step.command);
         
-        // Add to history with the appropriate command
+        // Add to history with the appropriate command and continue button for mobile
         addToHistory({ 
           input: step.command,
-          output: <div className="mb-2 text-sm text-cyber-blue/80">{step.message}</div>
+          output: (
+            <div className="mb-2">
+              <div className="text-sm text-cyber-blue/80 mb-2">{step.message}</div>
+              
+              {/* Continue button visible especially for mobile */}
+              <div className="mt-2">
+                <button 
+                  onClick={handleWalkthroughClick}
+                  className="glass-button px-4 py-1.5 text-xs rounded text-center items-center justify-center"
+                >
+                  Continue Tour →
+                </button>
+              </div>
+            </div>
+          )
         });
         
         // Focus the input for the next command
