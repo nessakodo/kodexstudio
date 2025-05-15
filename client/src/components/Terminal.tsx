@@ -86,10 +86,10 @@ export default function Terminal({
         )}
       </div>
       
-      {/* Terminal output - fixed height with scroll */}
+      {/* Terminal output - adaptive height with scroll */}
       <div 
         ref={outputRef}
-        className="h-[300px] overflow-y-auto mb-4 font-plex"
+        className="h-[250px] md:h-[300px] overflow-y-auto mb-4 font-plex"
       >
         {history.map((entry, index) => (
           <div key={index} className="mb-4">
@@ -105,6 +105,48 @@ export default function Terminal({
           </div>
         ))}
       </div>
+      
+      {/* Mobile command shortcuts */}
+      {window.innerWidth <= 768 && (
+        <div className="mb-3 flex flex-wrap gap-2">
+          <button 
+            onClick={() => {
+              onInputChange("help");
+              onCommandSubmit({ key: 'Enter', preventDefault: () => {} } as React.KeyboardEvent<HTMLInputElement>);
+            }}
+            className="glass-button py-1 px-2 text-xs rounded"
+          >
+            help
+          </button>
+          <button 
+            onClick={() => {
+              onInputChange("walkthrough");
+              onCommandSubmit({ key: 'Enter', preventDefault: () => {} } as React.KeyboardEvent<HTMLInputElement>);
+            }}
+            className="glass-button py-1 px-2 text-xs rounded"
+          >
+            walkthrough
+          </button>
+          <button 
+            onClick={() => {
+              onInputChange("whois");
+              onCommandSubmit({ key: 'Enter', preventDefault: () => {} } as React.KeyboardEvent<HTMLInputElement>);
+            }}
+            className="glass-button py-1 px-2 text-xs rounded"
+          >
+            about
+          </button>
+          <button 
+            onClick={() => {
+              onInputChange("contact");
+              onCommandSubmit({ key: 'Enter', preventDefault: () => {} } as React.KeyboardEvent<HTMLInputElement>);
+            }}
+            className="glass-button py-1 px-2 text-xs rounded"
+          >
+            contact
+          </button>
+        </div>
+      )}
       
       {/* Terminal input */}
       <div className="flex items-center border border-cyber-blue/30 rounded-lg p-2.5 bg-gradient-to-r from-cyber-blue/10 to-cyber-blue/5 backdrop-blur-sm">
