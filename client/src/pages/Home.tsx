@@ -59,6 +59,11 @@ export default function Home() {
     handleCommandSubmit
   } = useKodexTerminal();
   
+  // Function to close active section and return to terminal
+  const handleCloseSection = () => {
+    setActiveSection(null);
+  };
+  
   // Function to handle walkthrough progression
   const handleWalkthroughClick = () => {
     const nextStep = walkthrough.step + 1;
@@ -109,17 +114,17 @@ export default function Home() {
   const renderActiveSection = () => {
     switch (activeSection) {
       case 'about':
-        return <AboutSection />;
+        return <AboutSection onClose={handleCloseSection} />;
       case 'projects':
-        return <ProjectsSection />;
+        return <ProjectsSection onClose={handleCloseSection} />;
       case 'services':
-        return <ServicesSection />;
+        return <ServicesSection onClose={handleCloseSection} />;
       case 'writings':
-        return <WritingsSection />;
+        return <WritingsSection onClose={handleCloseSection} />;
       case 'clients':
-        return <ClientsSection />;
+        return <ClientsSection onClose={handleCloseSection} />;
       case 'contact':
-        return <ContactSection />;
+        return <ContactSection onClose={handleCloseSection} />;
       default:
         return null;
     }
@@ -137,8 +142,8 @@ export default function Home() {
       <div className={`container mx-auto px-4 py-8 max-w-6xl min-h-screen flex flex-col transition-opacity duration-500 ${bootComplete ? 'opacity-100' : 'opacity-0'}`}>
         {/* Header / Hero */}
         <header className="pt-8 md:pt-16 text-center mb-12">
-          <h1 className="font-orbitron font-bold text-4xl sm:text-5xl md:text-6xl tracking-wider text-cyber-blue animate-pulse-glow mb-4 animate-fadeInUp">
-            KODEX.STUDIO_
+          <h1 className="font-orbitron font-bold text-4xl sm:text-5xl md:text-6xl tracking-wider mb-4 animate-fadeInUp">
+            <span className="bg-gradient-to-r from-white/90 via-cyber-blue to-blue-400 bg-clip-text text-transparent drop-shadow-sm">KODEX STUDIO</span>
           </h1>
           <p className="font-space text-lg md:text-xl mb-4 text-white/80 animate-fadeInUp delay-100">
             Cybersecurity & Creative Systems Design
