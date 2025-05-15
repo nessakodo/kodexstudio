@@ -40,14 +40,24 @@ export function useKodexTerminal() {
   // Auto-scroll to section when activated
   useEffect(() => {
     if (activeSection) {
-      // Short delay to allow component to render
+      // Short delay to allow component to render fully
       setTimeout(() => {
         const sectionElement = document.querySelector('section');
         if (sectionElement) {
-          // Scroll to the top of the section with smooth animation
-          sectionElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          // Get section header (first child with border-b)
+          const sectionHeader = sectionElement.querySelector('div[class*="border-b"]');
+          
+          // Calculate offset to ensure we see the section title at the top
+          const navbarHeight = 0; // No fixed navbar in this site
+          const offset = sectionHeader ? -20 : -40; // Negative value moves view slightly up
+
+          // Scroll to the section with proper positioning
+          window.scrollTo({
+            top: sectionElement.offsetTop + offset,
+            behavior: 'smooth'
+          });
         }
-      }, 100);
+      }, 150);
     }
   }, [activeSection]);
 
@@ -269,6 +279,11 @@ export function useKodexTerminal() {
     }
   }, [input, handleTabComplete]);
   
+  // Helper function to add entries to terminal history
+  const addToHistory = useCallback((entry: TerminalHistory) => {
+    setHistory(prev => [...prev, entry]);
+  }, []);
+  
   return {
     input,
     setInput,
@@ -277,6 +292,7 @@ export function useKodexTerminal() {
     setActiveSection,
     inputRef,
     focusInput,
-    handleCommandSubmit
+    handleCommandSubmit,
+    addToHistory
   };
 }

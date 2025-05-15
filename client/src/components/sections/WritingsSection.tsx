@@ -301,7 +301,7 @@ export default function WritingsSection({ onClose }: WritingsSectionProps) {
                 <div className="mt-auto text-right">
                   <button 
                     onClick={() => setActiveArticle(article.id)}
-                    className="glass-button py-1.5 px-4 rounded-md text-sm transition-all flex items-center gap-1.5 ml-auto hover:bg-cyber-blue/10"
+                    className="bg-gradient-to-r from-cyber-blue/30 to-cyber-blue/20 hover:from-cyber-blue/40 hover:to-cyber-blue/30 border border-cyber-blue/30 py-1.5 px-4 rounded-md text-sm transition-all flex items-center gap-1.5 ml-auto backdrop-blur-sm"
                   >
                     <span>Read More</span>
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

@@ -58,7 +58,8 @@ export default function Home() {
     setActiveSection,
     inputRef,
     focusInput,
-    handleCommandSubmit
+    handleCommandSubmit,
+    addToHistory
   } = useKodexTerminal();
   
   // Function to close active section and return to terminal
@@ -80,29 +81,74 @@ export default function Home() {
         step: nextStep
       });
       
-      // Set the active section based on the command
-      if (step.command === "nessa-kodo") setActiveSection("about");
-      else if (step.command === "projects") setActiveSection("projects");
-      else if (step.command === "services") setActiveSection("services");
-      else if (step.command === "writings") setActiveSection("writings");
-      else if (step.command === "clients") setActiveSection("clients");
-      else if (step.command === "contact") setActiveSection("contact");
+      // Close current section first
+      setActiveSection(null);
+      
+      // Short delay to ensure the section closes before opening the next one
+      setTimeout(() => {
+        // Set the active section based on the command
+        if (step.command === "nessa-kodo") setActiveSection("about");
+        else if (step.command === "projects") setActiveSection("projects");
+        else if (step.command === "services") setActiveSection("services");
+        else if (step.command === "writings") setActiveSection("writings");
+        else if (step.command === "clients") setActiveSection("clients");
+        else if (step.command === "contact") setActiveSection("contact");
+        
+        // Set the input value to match the command
+        setInput(step.command);
+        
+        // Add to history with the appropriate command
+        addToHistory({ 
+          input: step.command,
+          output: <div className="mb-2 text-sm text-cyber-blue/80">{step.message}</div>
+        });
+        
+        // Focus the input for the next command
+        setTimeout(focusInput, 300);
+      }, 300);
     } else {
       // End of walkthrough
       setWalkthrough({
         active: false,
         step: 0
       });
+      
+      // Add final message to history
+      addToHistory({
+        output: <div className="text-cyan-400 mb-2">Walkthrough complete! You can now explore on your own.</div>
+      });
+      
+      // Focus input
+      focusInput();
     }
-  }, [walkthrough.step, walkthroughSteps, setActiveSection]);
+  }, [walkthrough.step, walkthroughSteps, setActiveSection, setInput, addToHistory, focusInput]);
   
   // Effect to handle space key presses for walkthrough progression
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
       // If space is pressed and walkthrough is active, continue to next step
-      if (e.code === 'Space' && walkthrough.active && !activeSection) {
+      if (e.code === 'Space' && walkthrough.active) {
         e.preventDefault(); // Prevent page scrolling
         handleWalkthroughClick();
+      }
+      
+      // If escape is pressed during walkthrough, exit walkthrough
+      if (e.key === 'Escape' && walkthrough.active) {
+        setWalkthrough({
+          active: false,
+          step: 0
+        });
+        
+        // Close any open section
+        setActiveSection(null);
+        
+        // Add exit message to history
+        addToHistory({
+          output: <div className="text-yellow-400 mb-2">Walkthrough ended. Type 'help' to see available commands.</div>
+        });
+        
+        // Focus input
+        focusInput();
       }
     };
     
@@ -113,7 +159,7 @@ export default function Home() {
     return () => {
       window.removeEventListener('keydown', handleKeyPress);
     };
-  }, [walkthrough.active, activeSection, handleWalkthroughClick]);
+  }, [walkthrough.active, handleWalkthroughClick, setActiveSection, addToHistory, focusInput]);
   
   // Add a command handler for walkthrough - use a regular function to avoid dependency issues
   function handleCommand(e: React.KeyboardEvent<HTMLInputElement>) {
