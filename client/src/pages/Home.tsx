@@ -17,6 +17,8 @@ export default function Home() {
   const [bootComplete, setBootComplete] = useState(false);
   const [walkthrough, setWalkthrough] = useState({ active: false, step: 0 });
   
+
+  
   // Define walkthrough steps
   const walkthroughSteps = [
     {
