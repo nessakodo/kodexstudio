@@ -69,6 +69,11 @@
     @apply absolute -top-full animate-matrix-rain;
   }
   
+  /* Make matrix rain more visible during boot sequence */
+  .boot-active .matrix-column {
+    opacity: 0.4 !important;
+  }
+  
   /* Glass panel effect - optimized for performance */
   .glass-panel {
     @apply bg-cyber-panel/70 backdrop-blur-xl border border-cyber-blue/10 rounded-xl;

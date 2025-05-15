@@ -1,5 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
-import { typeSequence } from '@/lib/utils';
+import { useState, useEffect, useRef } from 'react';
 
 interface BootSequenceProps {
   onComplete: () => void;
@@ -11,54 +10,64 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
   const [isComplete, setIsComplete] = useState(false);
   const [bootPhase, setBootPhase] = useState<'pre' | 'loading' | 'security' | 'final'>('pre');
   
-  const bootSystem = useCallback(async () => {
-    // Prevent duplications and start fresh
-    setText([]);
-    setProgress(0);
+  // Use refs to prevent stale closures
+  const hasStartedRef = useRef(false);
+  
+  // Completely rewritten boot process to fix duplication
+  useEffect(() => {
+    // Prevent running twice
+    if (hasStartedRef.current) return;
+    hasStartedRef.current = true;
     
-    // No initial delay - start immediately for better UX
-    
-    // Optimized boot sequence with precise timing
-    setBootPhase('pre');
-    const bootSequence = [
-      { text: "> System check: [OK]", phase: 'pre', progress: 15, delay: 180 },
-      { text: "> INITIALIZING KODEX OS v3.6.2", phase: 'pre', progress: 30, delay: 230 },
-      { text: "> Loading UI components...", phase: 'pre', progress: 45, delay: 220 },
-      { text: "> Constructing glassmorphic interface...", phase: 'pre', progress: 60, delay: 230 },
-      { text: "> SECURITY PROTOCOL ENGAGED", phase: 'security', progress: 80, delay: 230 },
-      { text: "> KODEX STUDIO READY", phase: 'final', progress: 100, delay: 200 }
+    // Define boot sequence
+    const bootMessages = [
+      { text: "> System check: [OK]", phase: 'pre', progress: 15 },
+      { text: "> INITIALIZING KODEX OS v3.6.2", phase: 'pre', progress: 30 },
+      { text: "> Loading UI components...", phase: 'pre', progress: 45 },
+      { text: "> Constructing glassmorphic interface...", phase: 'pre', progress: 60 },
+      { text: "> SECURITY PROTOCOL ENGAGED", phase: 'security', progress: 80 },
+      { text: "> KODEX STUDIO READY", phase: 'final', progress: 100 }
     ];
     
-    // Process each boot step with optimized timing
-    for (const step of bootSequence) {
-      await new Promise<void>(resolve => {
-        // Using requestAnimationFrame for smoother rendering
-        requestAnimationFrame(() => {
-          setTimeout(() => {
-            setText(prev => [...prev, step.text]);
-            setProgress(step.progress);
-            
-            // Update boot phase when needed
-            if (step.phase !== bootPhase) {
-              setBootPhase(step.phase as any);
-            }
-            
-            resolve();
-          }, step.delay); // Variable timing for more natural feel
-        });
-      });
-    }
+    // Start with a clean slate
+    setText([]);
+    setProgress(0);
+    setBootPhase('pre');
     
-    // Short delay before completing
-    setTimeout(() => {
-      setIsComplete(true);
-      onComplete();
-    }, 800);
-  }, [onComplete, bootPhase]);
-  
-  useEffect(() => {
-    bootSystem();
-  }, [bootSystem]);
+    // Render each message sequentially with precise timing
+    let currentIndex = 0;
+    const processNextMessage = () => {
+      if (currentIndex < bootMessages.length) {
+        const message = bootMessages[currentIndex];
+        
+        // Update displayed messages with the exact set we want to show
+        setText(bootMessages.slice(0, currentIndex + 1).map(m => m.text));
+        setProgress(message.progress);
+        setBootPhase(message.phase as any);
+        
+        currentIndex++;
+        
+        // Schedule next message
+        setTimeout(processNextMessage, 500);
+      } else {
+        // All messages processed, finish boot sequence
+        setTimeout(() => {
+          setIsComplete(true);
+          setTimeout(() => {
+            onComplete();
+          }, 500);
+        }, 600);
+      }
+    };
+    
+    // Start the sequence
+    setTimeout(processNextMessage, 300);
+    
+    // Cleanup function (not really needed since we prevent double execution)
+    return () => {
+      hasStartedRef.current = false;
+    };
+  }, [onComplete]);
   
   // Auto-scroll to bottom whenever text is updated
   useEffect(() => {
@@ -70,7 +79,7 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
   
   return (
     <div 
-      className={`fixed inset-0 bg-cyber-black z-50 flex flex-col items-center justify-center transition-opacity duration-500 ${isComplete ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+      className={`fixed inset-0 bg-cyber-black z-50 flex flex-col items-center justify-center transition-opacity duration-500 boot-active ${isComplete ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
     >
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-full opacity-10">

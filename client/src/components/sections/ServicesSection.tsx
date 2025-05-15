@@ -96,32 +96,34 @@ export default function ServicesSection({ onClose }: ServicesSectionProps) {
           Need a tailored security solution? I work closely with clients to develop custom cybersecurity strategies that address your specific challenges and requirements.
         </p>
         <div className="text-right">
-          <a 
-            href="#contact" 
-            onClick={(e) => {
-              e.preventDefault();
+          <button 
+            onClick={() => {
               if (onClose) {
                 onClose();
-                // Find and click contact button directly without unnecessary delay
-                const contactButton = document.querySelector('button[data-section="contact"]') as HTMLButtonElement;
-                if (contactButton) {
-                  contactButton.click();
-                  
-                  // Wait only a small amount for DOM to update
-                  setTimeout(() => {
-                    const messageField = document.querySelector('#message') as HTMLTextAreaElement;
-                    if (messageField) {
-                      messageField.value = "I'm interested in discussing a custom security solution for my organization.";
-                      
-                      // Trigger change event to update form state
-                      const event = new Event('input', { bubbles: true });
-                      messageField.dispatchEvent(event);
-                      
-                      // Focus the message field to provide feedback to the user
-                      messageField.focus();
-                    }
-                  }, 50);
-                }
+                
+                // Direct approach to switch to contact section
+                setTimeout(() => {
+                  // Find and click contact button in the terminal interface
+                  const contactButton = document.querySelector('button[data-section="contact"]') as HTMLButtonElement;
+                  if (contactButton) {
+                    contactButton.click();
+                    
+                    // Fill in the contact form with a custom message
+                    setTimeout(() => {
+                      const messageField = document.querySelector('#message') as HTMLTextAreaElement;
+                      if (messageField) {
+                        messageField.value = "I'm interested in discussing a custom security solution for my organization.";
+                        
+                        // Trigger change event to update form state
+                        const event = new Event('input', { bubbles: true });
+                        messageField.dispatchEvent(event);
+                        
+                        // Focus the message field to provide feedback to the user
+                        messageField.focus();
+                      }
+                    }, 100);
+                  }
+                }, 100);
               }
             }}
             className="glass-button px-4 py-2.5 rounded text-center inline-flex items-center justify-center gap-2 min-h-[45px]"
@@ -130,7 +132,7 @@ export default function ServicesSection({ onClose }: ServicesSectionProps) {
               <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
             </svg>
             Discuss Your Project
-          </a>
+          </button>
         </div>
       </div>
     </section>
