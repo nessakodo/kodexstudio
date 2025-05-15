@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface BootSequenceProps {
   onComplete: () => void;
@@ -9,9 +10,11 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
   const [progress, setProgress] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
   const [bootPhase, setBootPhase] = useState<'pre' | 'loading' | 'security' | 'final'>('pre');
+  const [showContinueButton, setShowContinueButton] = useState(false);
   
   // Use refs to prevent stale closures
   const hasStartedRef = useRef(false);
+  const isMobile = useIsMobile();
   
   // Completely rewritten boot process to fix duplication
   useEffect(() => {
@@ -50,13 +53,19 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
         // Schedule next message
         setTimeout(processNextMessage, 500);
       } else {
-        // All messages processed, finish boot sequence
-        setTimeout(() => {
-          setIsComplete(true);
+        // All messages processed
+        if (isMobile) {
+          // On mobile, show a continue button instead of auto-proceeding
+          setShowContinueButton(true);
+        } else {
+          // On desktop, finish boot sequence automatically
           setTimeout(() => {
-            onComplete();
-          }, 500);
-        }, 600);
+            setIsComplete(true);
+            setTimeout(() => {
+              onComplete();
+            }, 500);
+          }, 600);
+        }
       }
     };
     
@@ -153,9 +162,24 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
         </div>
       </div>
       
-      <p className="text-white/40 mt-12 text-center text-xs md:text-sm max-w-md px-4 font-plex relative z-10">
+      <p className="text-white/40 mt-8 text-center text-xs md:text-sm max-w-md px-4 font-plex relative z-10">
         "Technology cultivated with intention — respecting your autonomy, enhancing your capability."
       </p>
+      
+      {/* Continue button for mobile devices */}
+      {showContinueButton && (
+        <button 
+          onClick={() => {
+            setIsComplete(true);
+            setTimeout(() => onComplete(), 500);
+          }}
+          className="mt-6 glass-button py-2 px-6 rounded text-center text-white border border-cyber-blue/30 
+                    bg-cyber-blue/10 hover:bg-cyber-blue/20 transition-all duration-300 animate-fadeIn
+                    shadow-glow-sm"
+        >
+          Continue to Kodex Studio →
+        </button>
+      )}
     </div>
   );
 }
