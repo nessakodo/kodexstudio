@@ -4,6 +4,8 @@ export interface Project {
   description: string;
   image: string;
   technologies: string[];
+  githubUrl?: string;
+  demoUrl?: string;
 }
 
 export interface Service {
@@ -12,7 +14,7 @@ export interface Service {
   description: string;
   tier: 'Starter' | 'Pro' | 'Premium';
   features: string[];
-  price: string;
+  contactLink: string;
   highlighted?: boolean;
 }
 

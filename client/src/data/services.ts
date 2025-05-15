@@ -9,9 +9,10 @@ export const services: Service[] = [
     features: [
       "Vulnerability Assessment",
       "Basic Penetration Testing",
-      "Security Recommendations"
+      "Security Recommendations",
+      "Documentation & Reporting"
     ],
-    price: "$1,200"
+    contactLink: "https://calendly.com/nessakodo/security-audit-inquiry"
   },
   {
     id: "secure-development",
@@ -22,9 +23,10 @@ export const services: Service[] = [
       "Custom Security Architecture",
       "Advanced Penetration Testing",
       "Secure UI/UX Implementation",
-      "CI/CD Security Integration"
+      "CI/CD Security Integration",
+      "Maintenance & Support"
     ],
-    price: "$4,500",
+    contactLink: "https://calendly.com/nessakodo/secure-development-inquiry",
     highlighted: true
   },
   {
@@ -37,8 +39,9 @@ export const services: Service[] = [
       "Red Team Exercises",
       "Security Training & Workshops",
       "24/7 Incident Response",
-      "Quarterly Security Audits"
+      "Quarterly Security Audits",
+      "Dedicated Support Team"
     ],
-    price: "Custom"
+    contactLink: "https://calendly.com/nessakodo/enterprise-security-inquiry"
   }
 ];
