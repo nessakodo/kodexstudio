@@ -33,20 +33,20 @@
   --cyber-purple: 281 70% 45%; /* Slightly muted purple */
   --cyber-text: 225 30% 95%;
   
-  /* New complementary colors */
-  --cyber-highlight: 210 80% 75%; /* Lighter blue for highlights - replaces aqua */
-  --cyber-accent: 200 65% 65%; /* Secondary complementary color */
+  /* New complementary colors - removed aqua/green */
+  --cyber-highlight: 225 70% 75%; /* Deeper blue-purple for highlights */
+  --cyber-accent: 235 60% 70%; /* Complementary blue-purple */
   
-  /* Terminal colors */
-  --terminal-green: 174 65% 50%; 
-  --terminal-dim: 180 30% 45%;
-  --terminal-prompt: 195 65% 55%;
+  /* Terminal colors - removed green tones */
+  --terminal-command: 230 60% 60%; /* Purplish blue for commands */
+  --terminal-dim: 225 30% 45%;  
+  --terminal-prompt: 225 55% 65%;
   --error-red: 348 90% 60%;
   
   /* Blue variations */
-  --cyber-blue-dark: 195 65% 30%;
-  --cyber-blue-light: 195 65% 70%;
-  --cyber-blue-softer: 200 60% 65%; /* Softer blue for welcome messages */
+  --cyber-blue-dark: 225 65% 30%;
+  --cyber-blue-light: 225 65% 70%;
+  --cyber-blue-softer: 225 60% 65%; /* Softer blue for welcome messages */
 }
 
 @layer base {

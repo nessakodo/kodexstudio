@@ -67,7 +67,7 @@ export default function Home() {
   };
   
   // Function to handle walkthrough progression
-  const handleWalkthroughClick = () => {
+  const handleWalkthroughClick = useCallback(() => {
     const nextStep = walkthrough.step + 1;
     
     if (nextStep < walkthroughSteps.length) {
@@ -94,7 +94,26 @@ export default function Home() {
         step: 0
       });
     }
-  };
+  }, [walkthrough.step, walkthroughSteps, setActiveSection]);
+  
+  // Effect to handle space key presses for walkthrough progression
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      // If space is pressed and walkthrough is active, continue to next step
+      if (e.code === 'Space' && walkthrough.active && !activeSection) {
+        e.preventDefault(); // Prevent page scrolling
+        handleWalkthroughClick();
+      }
+    };
+    
+    // Add event listener
+    window.addEventListener('keydown', handleKeyPress);
+    
+    // Cleanup
+    return () => {
+      window.removeEventListener('keydown', handleKeyPress);
+    };
+  }, [walkthrough.active, activeSection, handleWalkthroughClick]);
   
   // Add a command handler for walkthrough - use a regular function to avoid dependency issues
   function handleCommand(e: React.KeyboardEvent<HTMLInputElement>) {
@@ -156,18 +175,17 @@ export default function Home() {
           
           {/* Removed security, ethical design, and digital sovereignty buttons as requested */}
           
-          <div className="glass-panel p-4 rounded-xl mb-6 max-w-2xl mx-auto text-left animate-fadeInUp delay-400">
-            <p className="text-white/80 text-sm mb-3">
+          {/* Subtitle without border as a cohesive subtitle, removing the glass panel */}
+          <div className="max-w-2xl mx-auto text-center animate-fadeInUp delay-400">
+            <p className="text-white/80 text-sm mb-1">
               Secure systems for the post-noise internet. Cybersecurity, development, and mindful tech consulting.
             </p>
-            <p className="text-cyber-blue-softer font-plex text-xs border-l-2 border-cyber-blue/30 pl-3 italic">
+            <p className="text-cyber-accent font-plex text-xs italic">
               "Technology that respects your autonomy and enhances your capability."
             </p>
           </div>
           
-          <p className="text-cyber-highlight text-sm mb-2 animate-fadeInUp delay-500">
-            Type <span className="font-plex bg-cyber-blue/10 px-2 py-0.5 rounded">help</span> to explore
-          </p>
+          {/* Removed "Type help to explore" as the command guide is self-explanatory */}
         </header>
         
         {/* Terminal Interface */}
@@ -183,14 +201,14 @@ export default function Home() {
         {/* Active Content Section */}
         {renderActiveSection()}
         
-        {/* Walkthrough Continue Button */}
+        {/* Walkthrough Continue Button - removed harsh border */}
         {walkthrough.active && walkthrough.step < walkthroughSteps.length - 1 && (
           <div className="my-4 flex justify-center">
             <button
               onClick={handleWalkthroughClick}
-              className="border border-cyber-blue px-4 py-1 rounded-md transition duration-300 hover:bg-cyber-blue/10"
+              className="bg-cyber-accent/10 text-cyber-accent px-5 py-1.5 rounded-md transition-all duration-300 hover:bg-cyber-accent/20"
             >
-              Continue Tour
+              Continue Tour (press space)
             </button>
           </div>
         )}

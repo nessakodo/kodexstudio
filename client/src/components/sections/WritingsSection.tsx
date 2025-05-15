@@ -295,7 +295,7 @@ export default function WritingsSection({ onClose }: WritingsSectionProps) {
                 <div className="mt-auto text-right">
                   <button 
                     onClick={() => setActiveArticle(article.id)}
-                    className="glass-button py-1.5 px-3 rounded text-sm"
+                    className="bg-cyber-accent/20 text-cyber-accent hover:bg-cyber-accent/30 py-1.5 px-4 rounded-md text-sm transition-colors"
                   >
                     Read More
                   </button>
@@ -306,32 +306,27 @@ export default function WritingsSection({ onClose }: WritingsSectionProps) {
         </div>
       </div>
       
-      <div className="mt-10 p-5 border border-cyber-blue/20 rounded-lg bg-cyber-blue/5">
-        <h3 className="text-lg font-orbitron text-cyber-blue mb-3">Blog Aggregation</h3>
-        <p className="text-white/80 mb-4">
-          Articles above are aggregated from multiple platforms including Notion, Medium, Hashnode, Dev.to and Substack.
-        </p>
-        <div className="flex flex-wrap justify-around gap-4 mt-6">
-          <div className="flex items-center gap-1.5 text-cyber-blue/70">
-            {getSourceIcon('notion')}
-            <span className="text-xs">Notion</span>
-          </div>
-          <div className="flex items-center gap-1.5 text-cyber-blue/70">
-            {getSourceIcon('medium')}
-            <span className="text-xs">Medium</span>
-          </div>
-          <div className="flex items-center gap-1.5 text-cyber-blue/70">
-            {getSourceIcon('hashnode')}
-            <span className="text-xs">Hashnode</span>
-          </div>
-          <div className="flex items-center gap-1.5 text-cyber-blue/70">
-            {getSourceIcon('devto')}
-            <span className="text-xs">Dev.to</span>
-          </div>
-          <div className="flex items-center gap-1.5 text-cyber-blue/70">
-            {getSourceIcon('substack')}
-            <span className="text-xs">Substack</span>
-          </div>
+      {/* Platform sources as subtle indicator instead of a block */}
+      <div className="mt-8 flex flex-wrap justify-center gap-6">
+        <div className="flex items-center gap-1.5 text-cyber-blue/70 hover:text-cyber-blue transition-colors">
+          {getSourceIcon('notion')}
+          <span className="text-xs">Notion</span>
+        </div>
+        <div className="flex items-center gap-1.5 text-cyber-blue/70 hover:text-cyber-blue transition-colors">
+          {getSourceIcon('medium')}
+          <span className="text-xs">Medium</span>
+        </div>
+        <div className="flex items-center gap-1.5 text-cyber-blue/70 hover:text-cyber-blue transition-colors">
+          {getSourceIcon('hashnode')}
+          <span className="text-xs">Hashnode</span>
+        </div>
+        <div className="flex items-center gap-1.5 text-cyber-blue/70 hover:text-cyber-blue transition-colors">
+          {getSourceIcon('devto')}
+          <span className="text-xs">Dev.to</span>
+        </div>
+        <div className="flex items-center gap-1.5 text-cyber-blue/70 hover:text-cyber-blue transition-colors">
+          {getSourceIcon('substack')}
+          <span className="text-xs">Substack</span>
         </div>
       </div>
     </section>
