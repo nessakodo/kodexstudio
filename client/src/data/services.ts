@@ -12,7 +12,7 @@ export const services: Service[] = [
       "Security Recommendations",
       "Documentation & Reporting"
     ],
-    contactLink: "#contact"
+    contactLink: "https://calendly.com/nessakodo/custom-security-inquiry"
   },
   {
     id: "secure-development",

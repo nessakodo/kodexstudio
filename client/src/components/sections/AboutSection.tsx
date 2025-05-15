@@ -174,7 +174,7 @@ export default function AboutSection({ onClose }: AboutSectionProps) {
                 <p className="text-white/90 font-medium m-0">Business Dev @ PDS Research</p>
                 <p className="text-white/60 text-xs m-0">Security infrastructure, drone technology</p>
                 
-                <p className="text-white/90 font-medium m-0 mt-4">AI Student Association</p>
+                <p className="text-white/90 font-medium m-0 mt-4">Outreach Officer @ AI Student Association</p>
                 <p className="text-white/60 text-xs m-0">Educational collaborations, program funding</p>
                 
                 <p className="text-white/90 font-medium m-0 mt-4">KODEX.STUDIO</p>

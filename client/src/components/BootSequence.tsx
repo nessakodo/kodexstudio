@@ -15,10 +15,9 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
     // Initial delay
     await new Promise<void>(resolve => setTimeout(resolve, 300));
     
-    // Pre-boot phase - shortened version
+    // Pre-boot phase - optimized
     setBootPhase('pre');
     const preBootSequence = [
-      "sudo ./initialize_kodex.sh",
       "> System check: [OK]",
       "> INITIALIZING KODEX OS v3.6.2",
       "> Loading UI components...",
@@ -35,7 +34,7 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
       });
     }
     
-    // Security phase - simplified
+    // Security and final phases
     setBootPhase('security');
     setText(prev => [...prev, "> SECURITY PROTOCOL ENGAGED"]);
     setProgress(75);
