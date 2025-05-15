@@ -12,7 +12,7 @@ export const services: Service[] = [
       "Security Recommendations",
       "Documentation & Reporting"
     ],
-    contactLink: "https://calendly.com/nessakodo/custom-security-inquiry"
+    contactLink: "https://calendly.com/nessakodo/kodex-studio-information-call"
   },
   {
     id: "secure-development",
@@ -26,7 +26,7 @@ export const services: Service[] = [
       "CI/CD Security Integration",
       "Maintenance & Support"
     ],
-    contactLink: "https://calendly.com/nessakodo/custom-security-inquiry",
+    contactLink: "https://calendly.com/nessakodo/kodex-studio-information-call",
     highlighted: true
   },
   {
@@ -42,6 +42,6 @@ export const services: Service[] = [
       "Quarterly Security Audits",
       "Dedicated Support Team"
     ],
-    contactLink: "https://calendly.com/nessakodo/custom-security-inquiry"
+    contactLink: "https://calendly.com/nessakodo/kodex-studio-information-call"
   }
 ];
