@@ -9,9 +9,9 @@ export default function ClientsSection({ onClose }: ClientsSectionProps) {
     <section className="glass-panel border border-cyber-blue/20 backdrop-blur-xl p-6 my-8 animate-fadeIn">
       <div className="flex justify-between items-center mb-4 pb-2 border-b border-cyber-blue/10">
         <div className="flex items-center">
-          <span className="text-xs text-cyber-blue/60 font-plex mr-2">~/</span>
-          <span className="text-xs text-cyber-blue/60 font-plex mr-2">clients —</span>
-          <h2 className="text-cyber-blue font-orbitron text-xl">
+          <span className="text-xs text-cyber-accent/80 font-plex mr-1">~/</span>
+          <span className="text-xs text-cyber-accent/80 font-plex mr-2">clients —</span>
+          <h2 className="text-cyber-highlight font-orbitron text-xl tracking-wide">
             Clients & Case Studies
           </h2>
         </div>
@@ -19,7 +19,7 @@ export default function ClientsSection({ onClose }: ClientsSectionProps) {
         {onClose && (
           <button 
             onClick={onClose}
-            className="text-cyber-text/40 hover:text-cyber-blue transition-colors"
+            className="bg-cyber-blue/10 hover:bg-cyber-blue/20 text-cyber-blue p-1 rounded-md transition-colors"
             aria-label="Close"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -38,7 +38,7 @@ export default function ClientsSection({ onClose }: ClientsSectionProps) {
                 <i className={`fas fa-${client.icon} text-cyber-blue/90 text-2xl`}></i>
               </div>
               <div>
-                <h3 className="font-orbitron text-lg text-cyber-blue/90">{client.name}</h3>
+                <h3 className="font-orbitron text-lg text-cyber-highlight tracking-wide">{client.name}</h3>
                 <p className="text-sm text-cyber-text/70">{client.industry}</p>
               </div>
             </div>
@@ -46,7 +46,7 @@ export default function ClientsSection({ onClose }: ClientsSectionProps) {
             <p className="mb-4 text-sm text-white/80">{client.description}</p>
             
             <div className="mb-4">
-              <h4 className="text-cyber-blue/90 text-sm mb-2">Key Results:</h4>
+              <h4 className="text-cyber-accent/90 text-sm mb-2 font-medium">Key Results:</h4>
               <ul className="text-sm space-y-2">
                 {client.results.map((result, index) => (
                   <li key={index} className="flex items-start">
