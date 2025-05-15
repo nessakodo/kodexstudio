@@ -82,11 +82,11 @@ export default function WritingsSection({ onClose }: WritingsSectionProps) {
       <section className="glass-panel border border-cyber-blue/20 backdrop-blur-xl p-6 my-8 animate-fadeIn">
         <div className="flex justify-between items-center mb-4 pb-2 border-b border-cyber-blue/10">
           <div className="flex items-center">
-            <span className="text-xs text-cyber-blue/60 font-plex mr-2">~/</span>
-            <span className="text-xs text-cyber-blue/60 font-plex mr-2">writings —</span>
+            <span className="text-xs text-yellow-400 font-plex mr-2">~/</span>
+            <span className="text-xs text-yellow-400 font-plex mr-2">writings —</span>
             <button 
               onClick={() => setActiveArticle(null)}
-              className="text-xs text-cyber-blue/80 hover:text-cyber-blue font-plex mr-2 flex items-center gap-2 transition-colors"
+              className="text-xs text-cyber-blue/80 hover:text-cyber-blue font-plex mr-2 flex items-center gap-2 transition-colors glass-button py-1 px-2 rounded-md"
             >
               <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="15 18 9 12 15 6"></polyline>
@@ -159,7 +159,13 @@ export default function WritingsSection({ onClose }: WritingsSectionProps) {
                     href={currentArticle.sourceUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="glass-button px-5 py-2 rounded text-center inline-flex items-center justify-center gap-2"
+                    className="glass-button px-5 py-2 rounded text-center inline-flex items-center justify-center gap-2 hover:bg-cyber-blue/10 hover:border-cyber-blue/50"
+                    onClick={(e) => {
+                      if (!currentArticle.sourceUrl) {
+                        e.preventDefault();
+                        alert('No external link available for this article.');
+                      }
+                    }}
                   >
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
@@ -295,9 +301,13 @@ export default function WritingsSection({ onClose }: WritingsSectionProps) {
                 <div className="mt-auto text-right">
                   <button 
                     onClick={() => setActiveArticle(article.id)}
-                    className="bg-cyber-accent/20 text-cyber-accent hover:bg-cyber-accent/30 py-1.5 px-4 rounded-md text-sm transition-colors"
+                    className="glass-button py-1.5 px-4 rounded-md text-sm transition-all flex items-center gap-1.5 ml-auto hover:bg-cyber-blue/10"
                   >
-                    Read More
+                    <span>Read More</span>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M5 12h14"></path>
+                      <path d="m12 5 7 7-7 7"></path>
+                    </svg>
                   </button>
                 </div>
               </div>
