@@ -97,10 +97,10 @@ export default {
         },
         "pulse-glow": {
           "0%, 100%": { 
-            filter: "brightness(1) drop-shadow(0 0 10px rgba(15, 244, 198, 0.7))"
+            filter: "brightness(1) drop-shadow(0 0 10px rgba(59, 232, 232, 0.7))"
           },
           "50%": { 
-            filter: "brightness(1.3) drop-shadow(0 0 20px rgba(15, 244, 198, 0.9))"
+            filter: "brightness(1.3) drop-shadow(0 0 20px rgba(59, 232, 232, 0.9))"
           }
         },
         "type-cursor": {

@@ -13,7 +13,7 @@
   --card-foreground: 0 0% 98%;
   --border: 240 3.7% 15.9%;
   --input: 240 3.7% 15.9%;
-  --primary: 160 100% 50%;
+  --primary: 180 79% 58%;
   --primary-foreground: 211 100% 99%;
   --secondary: 240 3.7% 15.9%;
   --secondary-foreground: 0 0% 98%;
@@ -24,17 +24,22 @@
   --ring: 240 4.9% 83.9%;
   --radius: 0.5rem;
   
-  /* Custom Kodex theme */
+  /* Updated Kodex theme to match screenshots */
   --cyber-black: 240 20% 4%;
   --cyber-dark: 240 20% 10%;
   --cyber-panel-bg: 240 25% 8%;
   --cyber-panel-opacity: 0.45;
-  --cyber-blue: 165 100% 50%;
+  --cyber-blue: 180 79% 58%;
   --cyber-purple: 281 78% 50%;
   --cyber-text: 240 100% 95%;
-  --terminal-green: 160 100% 50%;
-  --terminal-dim: 160 100% 50%;
+  --terminal-green: 180 79% 58%;
+  --terminal-dim: 180 30% 50%;
+  --terminal-prompt: 180 79% 58%;
   --error-red: 348 100% 61%;
+  
+  /* Additional theme colors */
+  --cyber-blue-dark: 180 79% 30%;
+  --cyber-blue-light: 180 79% 70%;
 }
 
 @layer base {
@@ -78,11 +83,11 @@
   }
   
   ::-webkit-scrollbar-thumb {
-    @apply bg-terminal-green/50 rounded-sm;
+    @apply bg-cyber-blue/50 rounded-sm;
   }
   
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-terminal-green/80;
+    @apply bg-cyber-blue/80;
   }
   
   /* Prefers reduced motion */
@@ -122,10 +127,10 @@
 
 @keyframes pulse-glow {
   0%, 100% { 
-    filter: brightness(1) drop-shadow(0 0 10px rgba(15, 244, 198, 0.7)); 
+    filter: brightness(1) drop-shadow(0 0 10px rgba(59, 232, 232, 0.7)); 
   }
   50% { 
-    filter: brightness(1.3) drop-shadow(0 0 20px rgba(15, 244, 198, 0.9)); 
+    filter: brightness(1.3) drop-shadow(0 0 20px rgba(59, 232, 232, 0.9)); 
   }
 }
 
