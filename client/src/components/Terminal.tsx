@@ -23,12 +23,17 @@ export default function Terminal({
 }: TerminalProps) {
   const outputRef = useRef<HTMLDivElement>(null);
   
-  // Scroll to bottom when history changes
+  // Always scroll to bottom when history changes or input changes
   useEffect(() => {
     if (outputRef.current) {
-      outputRef.current.scrollTop = outputRef.current.scrollHeight;
+      // Use a small timeout to ensure content is rendered before scrolling
+      setTimeout(() => {
+        if (outputRef.current) {
+          outputRef.current.scrollTop = outputRef.current.scrollHeight;
+        }
+      }, 50);
     }
-  }, [history]);
+  }, [history, input]);
   
   return (
     <div 

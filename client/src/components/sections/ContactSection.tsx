@@ -26,6 +26,15 @@ export default function ContactSection({ onClose }: ContactSectionProps) {
     message: ''
   });
   
+  const [formErrors, setFormErrors] = useState({
+    name: '',
+    email: '',
+    projectType: '',
+    message: ''
+  });
+  
+  const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  
   const [scopeSelections, setScopeSelections] = useState({
     goal: null as string | null,
     size: null as string | null,
@@ -35,6 +44,11 @@ export default function ContactSection({ onClose }: ContactSectionProps) {
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+    
+    // Clear error when field is modified
+    if (formErrors[name as keyof typeof formErrors]) {
+      setFormErrors(prev => ({ ...prev, [name]: '' }));
+    }
   };
   
   const handleScopeSelection = (category: 'goal' | 'size' | 'timeline', value: string) => {
@@ -44,10 +58,80 @@ export default function ContactSection({ onClose }: ContactSectionProps) {
     }));
   };
   
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const validateForm = () => {
+    let isValid = true;
+    const errors = {
+      name: '',
+      email: '',
+      projectType: '',
+      message: ''
+    };
+    
+    // Name validation
+    if (!formData.name.trim()) {
+      errors.name = 'Name is required';
+      isValid = false;
+    }
+    
+    // Email validation
+    if (!formData.email.trim()) {
+      errors.email = 'Email is required';
+      isValid = false;
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      errors.email = 'Email address is invalid';
+      isValid = false;
+    }
+    
+    // Project type validation
+    if (!formData.projectType) {
+      errors.projectType = 'Please select a project type';
+      isValid = false;
+    }
+    
+    // Message validation
+    if (!formData.message.trim()) {
+      errors.message = 'Project details are required';
+      isValid = false;
+    } else if (formData.message.trim().length < 10) {
+      errors.message = 'Please provide more details (at least 10 characters)';
+      isValid = false;
+    }
+    
+    setFormErrors(errors);
+    return isValid;
+  };
+  
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    // In a real app, this would send the data to the server
+    
+    if (!validateForm()) {
+      return;
+    }
+    
+    setFormStatus('submitting');
+    
+    try {
+      // Simulate API call with timeout
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      console.log('Form submitted:', formData);
+      setFormStatus('success');
+      
+      // Reset form after successful submission
+      setTimeout(() => {
+        setFormData({
+          name: '',
+          email: '',
+          projectType: '',
+          message: ''
+        });
+        setFormStatus('idle');
+      }, 5000);
+      
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setFormStatus('error');
+    }
   };
   
   const generateScope = () => {
@@ -83,65 +167,129 @@ export default function ContactSection({ onClose }: ContactSectionProps) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div>
           <h3 className="font-orbitron text-lg mb-4 text-cyber-blue/90">Project Inquiry</h3>
-          <form className="space-y-4" onSubmit={handleFormSubmit}>
-            <div>
-              <label htmlFor="name" className="block text-sm mb-1 text-white/80">Name</label>
-              <input 
-                type="text" 
-                id="name" 
-                name="name"
-                value={formData.name}
-                onChange={handleFormChange}
-                className="w-full bg-cyber-panel border border-cyber-blue/20 rounded-md px-4 py-2 focus:outline-none focus:border-cyber-blue/50"
-              />
-            </div>
-            
-            <div>
-              <label htmlFor="email" className="block text-sm mb-1 text-white/80">Email</label>
-              <input 
-                type="email" 
-                id="email" 
-                name="email"
-                value={formData.email}
-                onChange={handleFormChange}
-                className="w-full bg-cyber-panel border border-cyber-blue/20 rounded-md px-4 py-2 focus:outline-none focus:border-cyber-blue/50"
-              />
-            </div>
-            
-            <div>
-              <label htmlFor="projectType" className="block text-sm mb-1 text-white/80">Project Type</label>
-              <select 
-                id="projectType" 
-                name="projectType"
-                value={formData.projectType}
-                onChange={handleFormChange}
-                className="w-full bg-cyber-panel border border-cyber-blue/20 rounded-md px-4 py-2 focus:outline-none focus:border-cyber-blue/50 appearance-none"
+          {formStatus === 'success' ? (
+            <div className="bg-gradient-to-r from-green-900/30 to-green-800/20 border border-green-500/30 rounded-lg p-6 text-center animate-fadeIn">
+              <svg className="w-16 h-16 mx-auto text-green-500/80 mb-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+              <h4 className="text-xl font-orbitron text-green-400 mb-2">Message Sent!</h4>
+              <p className="text-white/80 mb-4">Thank you for your inquiry. We'll get back to you shortly.</p>
+              <button 
+                onClick={() => setFormStatus('idle')}
+                className="glass-button py-2 px-4 rounded-md mx-auto"
               >
-                {projectTypes.map(type => (
-                  <option key={type.value} value={type.value}>{type.label}</option>
-                ))}
-              </select>
+                Send Another Message
+              </button>
             </div>
-            
-            <div>
-              <label htmlFor="message" className="block text-sm mb-1 text-white/80">Project Details</label>
-              <textarea 
-                id="message" 
-                name="message"
-                value={formData.message}
-                onChange={handleFormChange}
-                rows={4} 
-                className="w-full bg-cyber-panel border border-cyber-blue/20 rounded-md px-4 py-2 focus:outline-none focus:border-cyber-blue/50"
-              ></textarea>
+          ) : formStatus === 'error' ? (
+            <div className="bg-gradient-to-r from-red-900/30 to-red-800/20 border border-red-500/30 rounded-lg p-6 text-center animate-fadeIn">
+              <svg className="w-16 h-16 mx-auto text-red-500/80 mb-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+              <h4 className="text-xl font-orbitron text-red-400 mb-2">Message Failed!</h4>
+              <p className="text-white/80 mb-4">There was a problem sending your message. Please try again.</p>
+              <button 
+                onClick={() => setFormStatus('idle')}
+                className="glass-button py-2 px-4 rounded-md mx-auto"
+              >
+                Try Again
+              </button>
             </div>
-            
-            <button 
-              type="submit" 
-              className="bg-gradient-to-r from-cyber-accent/30 to-cyber-accent/20 hover:from-cyber-accent/40 hover:to-cyber-accent/30 backdrop-blur-sm px-6 py-2.5 rounded-md text-center w-full sm:w-auto border border-cyber-accent/20 transition-all duration-200 shadow-sm shadow-cyber-accent/10 font-medium tracking-wide"
-            >
-              Send Message
-            </button>
-          </form>
+          ) : (
+            <form className="space-y-4" onSubmit={handleFormSubmit}>
+              <div>
+                <label htmlFor="name" className="block text-sm mb-1 text-white/80">Name</label>
+                <input 
+                  type="text" 
+                  id="name" 
+                  name="name"
+                  value={formData.name}
+                  onChange={handleFormChange}
+                  className={`w-full bg-cyber-panel border rounded-md px-4 py-2 focus:outline-none focus:border-cyber-blue/50 ${
+                    formErrors.name ? 'border-red-500/50' : 'border-cyber-blue/20'
+                  }`}
+                />
+                {formErrors.name && (
+                  <p className="text-red-400 text-xs mt-1">{formErrors.name}</p>
+                )}
+              </div>
+              
+              <div>
+                <label htmlFor="email" className="block text-sm mb-1 text-white/80">Email</label>
+                <input 
+                  type="email" 
+                  id="email" 
+                  name="email"
+                  value={formData.email}
+                  onChange={handleFormChange}
+                  className={`w-full bg-cyber-panel border rounded-md px-4 py-2 focus:outline-none focus:border-cyber-blue/50 ${
+                    formErrors.email ? 'border-red-500/50' : 'border-cyber-blue/20'
+                  }`}
+                />
+                {formErrors.email && (
+                  <p className="text-red-400 text-xs mt-1">{formErrors.email}</p>
+                )}
+              </div>
+              
+              <div>
+                <label htmlFor="projectType" className="block text-sm mb-1 text-white/80">Project Type</label>
+                <select 
+                  id="projectType" 
+                  name="projectType"
+                  value={formData.projectType}
+                  onChange={handleFormChange}
+                  className={`w-full bg-cyber-panel border rounded-md px-4 py-2 focus:outline-none focus:border-cyber-blue/50 appearance-none ${
+                    formErrors.projectType ? 'border-red-500/50' : 'border-cyber-blue/20'
+                  }`}
+                >
+                  {projectTypes.map(type => (
+                    <option key={type.value} value={type.value}>{type.label}</option>
+                  ))}
+                </select>
+                {formErrors.projectType && (
+                  <p className="text-red-400 text-xs mt-1">{formErrors.projectType}</p>
+                )}
+              </div>
+              
+              <div>
+                <label htmlFor="message" className="block text-sm mb-1 text-white/80">Project Details</label>
+                <textarea 
+                  id="message" 
+                  name="message"
+                  value={formData.message}
+                  onChange={handleFormChange}
+                  rows={4} 
+                  className={`w-full bg-cyber-panel border rounded-md px-4 py-2 focus:outline-none focus:border-cyber-blue/50 ${
+                    formErrors.message ? 'border-red-500/50' : 'border-cyber-blue/20'
+                  }`}
+                ></textarea>
+                {formErrors.message && (
+                  <p className="text-red-400 text-xs mt-1">{formErrors.message}</p>
+                )}
+              </div>
+              
+              <button 
+                type="submit" 
+                disabled={formStatus === 'submitting'}
+                className={`bg-gradient-to-r from-cyber-accent/30 to-cyber-accent/20 hover:from-cyber-accent/40 hover:to-cyber-accent/30 backdrop-blur-sm px-6 py-2.5 rounded-md text-center w-full sm:w-auto border border-cyber-accent/20 transition-all duration-200 shadow-sm shadow-cyber-accent/10 font-medium tracking-wide ${
+                  formStatus === 'submitting' ? 'opacity-70 cursor-not-allowed' : ''
+                }`}
+              >
+                {formStatus === 'submitting' ? (
+                  <span className="flex items-center justify-center">
+                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Sending...
+                  </span>
+                ) : 'Send Message'}
+              </button>
+            </form>
+          )}
         </div>
         
         <div>
