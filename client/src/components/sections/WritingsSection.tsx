@@ -251,7 +251,7 @@ export default function WritingsSection({ onClose }: WritingsSectionProps) {
           {filteredArticles.map(article => (
             <div 
               key={article.id}
-              className="glass-panel border border-cyber-blue/20 transition-all duration-300 overflow-hidden rounded-lg group"
+              className="glass-panel border border-cyber-blue/20 transition-all duration-300 overflow-hidden rounded-lg group h-[400px] flex flex-col"
             >
               {article.imageUrl && (
                 <div className="h-36 overflow-hidden relative">
@@ -274,8 +274,8 @@ export default function WritingsSection({ onClose }: WritingsSectionProps) {
                 </div>
               )}
               
-              <div className="p-5">
-                <h3 className="font-orbitron text-lg text-cyber-highlight mb-2 tracking-wide leading-tight">{article.title}</h3>
+              <div className="p-5 flex flex-col flex-grow">
+                <h3 className="font-orbitron text-lg text-cyber-highlight mb-4 tracking-wide leading-tight">{article.title}</h3>
                 <p className="text-sm text-cyber-text/80 mb-4 line-clamp-2">{article.description}</p>
                 
                 <div className="flex justify-between items-center text-xs text-cyber-text/60 mb-4">

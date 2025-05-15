@@ -32,7 +32,7 @@ export default function ClientsSection({ onClose }: ClientsSectionProps) {
       
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
         {clients.map(client => (
-          <div key={client.id} className="glass-panel border border-cyber-blue/20 p-6 rounded-lg">
+          <div key={client.id} className="glass-panel border border-cyber-blue/20 p-6 rounded-lg h-[350px] flex flex-col justify-between">
             <div className="flex items-center mb-4">
               <div className="w-16 h-16 rounded-full bg-cyber-blue/5 border border-cyber-blue/20 flex items-center justify-center mr-4">
                 <i className={`fas fa-${client.icon} text-cyber-blue/90 text-2xl`}></i>
