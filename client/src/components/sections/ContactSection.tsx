@@ -137,7 +137,7 @@ export default function ContactSection({ onClose }: ContactSectionProps) {
             
             <button 
               type="submit" 
-              className="glass-button px-6 py-2.5 rounded text-center w-full sm:w-auto"
+              className="bg-gradient-to-r from-cyber-accent/30 to-cyber-accent/20 hover:from-cyber-accent/40 hover:to-cyber-accent/30 backdrop-blur-sm px-6 py-2.5 rounded-md text-center w-full sm:w-auto border border-cyber-accent/20 transition-all duration-200 shadow-sm shadow-cyber-accent/10 font-medium tracking-wide"
             >
               Send Message
             </button>
@@ -145,7 +145,7 @@ export default function ContactSection({ onClose }: ContactSectionProps) {
         </div>
         
         <div>
-          <h3 className="font-orbitron text-lg mb-4 text-cyber-blue/90">Project Scope Generator</h3>
+          <h3 className="font-orbitron text-lg mb-4 text-cyber-highlight tracking-wide">Project Scope Generator</h3>
           <div className="glass-panel border border-cyber-blue/20 p-5 rounded-lg mb-6">
             <p className="text-sm mb-4 text-white/80">Answer a few questions to generate a preliminary project scope and estimate.</p>
             
@@ -156,10 +156,10 @@ export default function ContactSection({ onClose }: ContactSectionProps) {
                   {scopeOptions.goals.map(goal => (
                     <button
                       key={goal}
-                      className={`px-3 py-1 rounded-md text-xs transition-colors glass-button ${
+                      className={`px-3 py-1 rounded-md text-xs transition-all duration-200 border ${
                         scopeSelections.goal === goal 
-                          ? 'bg-cyber-blue/20 border-cyber-blue/30' 
-                          : ''
+                          ? 'bg-cyber-blue/20 border-cyber-blue/40 text-cyber-highlight' 
+                          : 'bg-cyber-panel/50 border-cyber-blue/10 hover:bg-cyber-blue/10 hover:border-cyber-blue/20'
                       }`}
                       onClick={() => handleScopeSelection('goal', goal)}
                     >
@@ -175,10 +175,10 @@ export default function ContactSection({ onClose }: ContactSectionProps) {
                   {scopeOptions.sizes.map(size => (
                     <button
                       key={size}
-                      className={`px-3 py-1 rounded-md text-xs transition-colors glass-button ${
+                      className={`px-3 py-1 rounded-md text-xs transition-all duration-200 border ${
                         scopeSelections.size === size 
-                          ? 'bg-cyber-blue/20 border-cyber-blue/30' 
-                          : ''
+                          ? 'bg-cyber-blue/20 border-cyber-blue/40 text-cyber-highlight' 
+                          : 'bg-cyber-panel/50 border-cyber-blue/10 hover:bg-cyber-blue/10 hover:border-cyber-blue/20'
                       }`}
                       onClick={() => handleScopeSelection('size', size)}
                     >
@@ -194,10 +194,10 @@ export default function ContactSection({ onClose }: ContactSectionProps) {
                   {scopeOptions.timelines.map(timeline => (
                     <button
                       key={timeline}
-                      className={`px-3 py-1 rounded-md text-xs transition-colors glass-button ${
+                      className={`px-3 py-1 rounded-md text-xs transition-all duration-200 border ${
                         scopeSelections.timeline === timeline 
-                          ? 'bg-cyber-blue/20 border-cyber-blue/30' 
-                          : ''
+                          ? 'bg-cyber-blue/20 border-cyber-blue/40 text-cyber-highlight' 
+                          : 'bg-cyber-panel/50 border-cyber-blue/10 hover:bg-cyber-blue/10 hover:border-cyber-blue/20'
                       }`}
                       onClick={() => handleScopeSelection('timeline', timeline)}
                     >
@@ -209,7 +209,7 @@ export default function ContactSection({ onClose }: ContactSectionProps) {
             </div>
             
             <button 
-              className="mt-6 glass-button px-5 py-2 rounded text-center w-full"
+              className="mt-6 bg-gradient-to-r from-cyber-blue/30 to-cyber-blue/20 hover:from-cyber-blue/40 hover:to-cyber-blue/30 backdrop-blur-sm px-5 py-2 rounded-md text-center w-full border border-cyber-blue/20 transition-all duration-200 font-medium tracking-wide"
               onClick={generateScope}
             >
               Generate Scope
@@ -217,12 +217,12 @@ export default function ContactSection({ onClose }: ContactSectionProps) {
           </div>
           
           <div>
-            <h3 className="font-orbitron text-lg mb-4 text-cyber-blue/90">Book a Consultation</h3>
+            <h3 className="font-orbitron text-lg mb-4 text-cyber-highlight tracking-wide">Book a Consultation</h3>
             <a 
               href="https://calendly.com/nessakodo/custom-security-inquiry"
               target="_blank"
               rel="noopener noreferrer"
-              className="glass-button px-5 py-2.5 rounded text-center inline-flex items-center justify-center gap-2 w-full bg-cyber-blue/5"
+              className="bg-gradient-to-r from-cyber-accent/30 to-cyber-accent/20 hover:from-cyber-accent/40 hover:to-cyber-accent/30 backdrop-blur-sm px-5 py-2.5 rounded-md text-center inline-flex items-center justify-center gap-2 w-full border border-cyber-accent/20 transition-all duration-200 shadow-sm shadow-cyber-accent/10 font-medium tracking-wide"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>

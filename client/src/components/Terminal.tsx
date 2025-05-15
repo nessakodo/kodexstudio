@@ -51,18 +51,18 @@ export default function Terminal({
       </div>
       
       {/* Command guide */}
-      <div className="bg-cyber-blue/5 border border-cyber-blue/10 rounded-lg p-3 mb-4 font-plex text-sm">
-        <h3 className="text-cyber-blue mb-2">⟠ Command Guide:</h3>
-        <p className="text-xs text-cyber-text/70 flex items-center gap-x-2">
-          <span className="font-mono bg-cyber-blue/10 text-cyber-blue px-1.5 py-0.5 rounded">help</span> 
+      <div className="bg-gradient-to-r from-cyber-blue/10 to-cyber-blue/5 border border-cyber-blue/20 rounded-lg p-3 mb-4 font-plex text-sm backdrop-blur-sm">
+        <h3 className="text-cyber-highlight font-medium tracking-wide mb-2">⟠ Command Guide:</h3>
+        <p className="text-xs text-cyber-text/80 flex items-center gap-x-2">
+          <span className="font-mono bg-cyber-blue/15 text-cyber-blue px-1.5 py-0.5 rounded-md border border-cyber-blue/20">help</span> 
           <span>for all options</span>
         </p>
-        <p className="text-xs text-cyber-text/70 flex items-center gap-x-2 mt-1">
-          <span className="font-mono bg-cyber-blue/10 text-cyber-blue px-1.5 py-0.5 rounded">Tab</span> 
+        <p className="text-xs text-cyber-text/80 flex items-center gap-x-2 mt-1">
+          <span className="font-mono bg-cyber-blue/15 text-cyber-blue px-1.5 py-0.5 rounded-md border border-cyber-blue/20">Tab</span> 
           <span>for auto-completion</span>
         </p>
-        <p className="text-xs text-cyber-text/70 flex items-center gap-x-2 mt-1">
-          <span className="font-mono bg-cyber-blue/10 text-cyber-blue px-1.5 py-0.5 rounded">Esc</span> 
+        <p className="text-xs text-cyber-text/80 flex items-center gap-x-2 mt-1">
+          <span className="font-mono bg-cyber-blue/15 text-cyber-blue px-1.5 py-0.5 rounded-md border border-cyber-blue/20">Esc</span> 
           <span>to close sections</span>
         </p>
       </div>
