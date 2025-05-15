@@ -135,8 +135,51 @@ export default function ContactSection({ onClose }: ContactSectionProps) {
   };
   
   const generateScope = () => {
-    console.log('Generating scope with:', scopeSelections);
-    // In a real app, this would generate a project scope
+    // Only generate if we have at least one selection
+    if (!scopeSelections.goal && !scopeSelections.size && !scopeSelections.timeline) {
+      // If no selections, prompt the user to make at least one selection
+      alert("Please select at least one option to generate a project scope.");
+      return;
+    }
+    
+    // Generate scope text based on user selections
+    let scopeText = "I'm interested in discussing ";
+    
+    // Add project type if selected
+    if (formData.projectType) {
+      const projectTypeLabel = projectTypes.find(t => t.value === formData.projectType)?.label || formData.projectType;
+      scopeText += `a ${projectTypeLabel} project `;
+    } else {
+      scopeText += "a cybersecurity project ";
+    }
+    
+    // Add goal if selected
+    if (scopeSelections.goal) {
+      scopeText += `focused on ${scopeSelections.goal}. `;
+    } else {
+      scopeText += "with your team. ";
+    }
+    
+    // Add size and timeline details
+    if (scopeSelections.size) {
+      scopeText += `This is a ${scopeSelections.size.toLowerCase()} scale project `;
+    }
+    
+    if (scopeSelections.timeline) {
+      if (scopeSelections.timeline === "Urgent") {
+        scopeText += `that needs to be completed quickly. The timeline is ${scopeSelections.timeline.toLowerCase()}, so I'd appreciate your prompt attention. `;
+      } else if (scopeSelections.timeline === "Standard") {
+        scopeText += `with a ${scopeSelections.timeline.toLowerCase()} timeline of 4-6 weeks. `;
+      } else {
+        scopeText += `with a ${scopeSelections.timeline.toLowerCase()} timeline that can be adjusted to your availability. `;
+      }
+    }
+    
+    // Add a closing statement
+    scopeText += "I look forward to discussing the details further and receiving a proposal.";
+    
+    // Update the message in the form
+    setFormData(prev => ({ ...prev, message: scopeText }));
   };
   
   return (
@@ -168,12 +211,12 @@ export default function ContactSection({ onClose }: ContactSectionProps) {
         <div>
           <h3 className="font-orbitron text-lg mb-4 text-cyber-blue/90">Project Inquiry</h3>
           {formStatus === 'success' ? (
-            <div className="bg-gradient-to-r from-green-900/30 to-green-800/20 border border-green-500/30 rounded-lg p-6 text-center animate-fadeIn">
-              <svg className="w-16 h-16 mx-auto text-green-500/80 mb-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <div className="bg-gradient-to-r from-blue-900/40 to-cyber-blue/20 border border-cyber-blue/30 rounded-lg p-6 text-center animate-fadeIn backdrop-blur-sm">
+              <svg className="w-16 h-16 mx-auto text-cyber-blue/80 mb-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                 <polyline points="22 4 12 14.01 9 11.01"></polyline>
               </svg>
-              <h4 className="text-xl font-orbitron text-green-400 mb-2">Message Sent!</h4>
+              <h4 className="text-xl font-orbitron text-white mb-2">Message Sent!</h4>
               <p className="text-white/80 mb-4">Thank you for your inquiry. We'll get back to you shortly.</p>
               <button 
                 onClick={() => setFormStatus('idle')}
