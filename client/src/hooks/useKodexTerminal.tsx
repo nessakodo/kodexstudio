@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { TerminalHistory } from '@/types';
+import { downloadResume } from '@/lib/utils';
 
 export function useKodexTerminal() {
   const [input, setInput] = useState('');
@@ -100,14 +101,20 @@ export function useKodexTerminal() {
         setActiveSection('contact');
         cmdOutput = <div className="mb-4">Loading contact section...</div>;
       } else if (cmd === 'walkthrough') {
-        // Hide current section first
-        setActiveSection(null);
-        
-        // Simple walkthrough
+        // Simply show a message - walkthrough will be handled by the parent component
         cmdOutput = (
           <div className="mb-4">
             <p className="text-terminal-green">Starting guided tour. First, let's look at the about section...</p>
-            <p className="mt-2">Type <span className="text-cyber-blue">nessa-kodo</span> or click the walkthrough button.</p>
+            <p className="mt-2">The about section will be displayed automatically.</p>
+          </div>
+        );
+      } else if (cmd === 'resume') {
+        // Trigger resume download
+        downloadResume();
+        
+        cmdOutput = (
+          <div className="mb-4">
+            <p className="text-terminal-green">Downloading Nessa Kodo's resume...</p>
           </div>
         );
       } else {

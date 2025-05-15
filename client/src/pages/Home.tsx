@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import BootSequence from '@/components/BootSequence';
 import MatrixRain from '@/components/MatrixRain';
 import Terminal from '@/components/Terminal';
@@ -13,6 +13,39 @@ import { downloadResume } from '@/lib/utils';
 
 export default function Home() {
   const [bootComplete, setBootComplete] = useState(false);
+  const [walkthrough, setWalkthrough] = useState({ active: false, step: 0 });
+  
+  // Define walkthrough steps
+  const walkthroughSteps = [
+    {
+      message: "Welcome to the guided tour of KODEX.STUDIO. Let's start by exploring who Nessa Kodo is...",
+      command: "nessa-kodo"
+    },
+    {
+      message: "Next, let's look at some of the key projects in the portfolio...",
+      command: "projects"
+    },
+    {
+      message: "Now for the services offered to clients...",
+      command: "services"
+    },
+    {
+      message: "Finally, here's how to get in touch for project inquiries...",
+      command: "contact"
+    }
+  ];
+  
+  // Start the walkthrough
+  const startWalkthroughTour = () => {
+    // Set walkthrough as active and start at step 0
+    setWalkthrough({
+      active: true,
+      step: 0
+    });
+    
+    // Set the active section to about (first step)
+    setActiveSection("about");
+  };
   
   // Use the terminal hook
   const {
@@ -25,6 +58,47 @@ export default function Home() {
     focusInput,
     handleCommandSubmit
   } = useKodexTerminal();
+  
+  // Function to handle walkthrough progression
+  const handleWalkthroughClick = () => {
+    const nextStep = walkthrough.step + 1;
+    
+    if (nextStep < walkthroughSteps.length) {
+      // Process next step
+      const step = walkthroughSteps[nextStep];
+      
+      // Update step
+      setWalkthrough({
+        active: true,
+        step: nextStep
+      });
+      
+      // Set the active section based on the command
+      if (step.command === "nessa-kodo") setActiveSection("about");
+      else if (step.command === "projects") setActiveSection("projects");
+      else if (step.command === "services") setActiveSection("services");
+      else if (step.command === "writings") setActiveSection("writings");
+      else if (step.command === "clients") setActiveSection("clients");
+      else if (step.command === "contact") setActiveSection("contact");
+    } else {
+      // End of walkthrough
+      setWalkthrough({
+        active: false,
+        step: 0
+      });
+    }
+  };
+  
+  // Add a command handler for walkthrough - use a regular function to avoid dependency issues
+  function handleCommand(e: React.KeyboardEvent<HTMLInputElement>) {
+    // First, call the terminal's default command handler
+    handleCommandSubmit(e);
+    
+    // If the command was "walkthrough", start the tour
+    if (e.key === 'Enter' && input.trim().toLowerCase() === 'walkthrough') {
+      startWalkthroughTour();
+    }
+  }
   
   // When the boot is complete, focus the terminal
   useEffect(() => {
@@ -80,7 +154,7 @@ export default function Home() {
           input={input}
           onInputChange={setInput}
           history={history}
-          onCommandSubmit={handleCommandSubmit}
+          onCommandSubmit={handleCommand}
           inputRef={inputRef}
           className="mb-8"
         />
@@ -92,7 +166,7 @@ export default function Home() {
         {walkthrough.active && walkthrough.step < walkthroughSteps.length - 1 && (
           <div className="my-4 flex justify-center">
             <button
-              onClick={() => advanceWalkthrough(walkthroughSteps)}
+              onClick={handleWalkthroughClick}
               className="border border-cyber-blue px-4 py-1 rounded-md transition duration-300 hover:bg-cyber-blue/10"
             >
               Continue Tour
