@@ -11,7 +11,8 @@ export const clients: Client[] = [
       "96% reduction in security incidents",
       "PCI-DSS compliance achieved",
       "Zero downtime during implementation"
-    ]
+    ],
+    caseStudyUrl: "/assets/case-studies/kodex-portfolio.pdf"
   },
   {
     id: "meditech",
@@ -23,7 +24,8 @@ export const clients: Client[] = [
       "HIPAA & GDPR compliance certified",
       "400% faster data access with enhanced security",
       "Secure API integration with 12 partner systems"
-    ]
+    ],
+    caseStudyUrl: "/assets/case-studies/kodex-resume.pdf"
   }
 ];
 
