@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+<svg width="800px" height="800px" viewBox="0 0 800 800" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>Female Silhouette</title>
   <defs>
-    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#3694D7" stop-opacity="0.4"/>
-      <stop offset="100%" stop-color="#14ADFF" stop-opacity="0.2"/>
+    <linearGradient x1="0%" y1="0%" x2="100%" y2="100%" id="gradient">
+      <stop stop-color="#6ae4ff" stop-opacity="0.4" offset="0%"></stop>
+      <stop stop-color="#a68cff" stop-opacity="0.3" offset="100%"></stop>
     </linearGradient>
   </defs>
-  <circle cx="100" cy="100" r="100" fill="url(#gradient)"/>
-  <path d="M100,40 C115,40 130,55 130,75 C130,95 115,105 100,105 C85,105 70,95 70,75 C70,55 85,40 100,40 Z" fill="#0F76A8" opacity="0.7"/>
-  <path d="M140,180 C140,155 125,125 100,125 C75,125 60,155 60,180 Z" fill="#0F76A8" opacity="0.7"/>
+  <g stroke="none" fill="none">
+    <circle fill="url(#gradient)" cx="400" cy="400" r="400" opacity="0.3"></circle>
+    <path d="M400,160 C350,160 310,200 310,250 C310,300 340,340 400,340 C460,340 490,300 490,250 C490,200 450,160 400,160 Z" fill="#a68cff" opacity="0.7"></path>
+    <path d="M300,330 C280,360 250,380 250,430 C250,480 270,580 280,620 C290,660 320,700 400,700 C480,700 510,660 520,620 C530,580 550,480 550,430 C550,380 520,360 500,330 C500,330 470,380 400,380 C330,380 300,330 300,330 Z" fill="#a68cff" opacity="0.6"></path>
+  </g>
 </svg>

@@ -42,6 +42,6 @@ export const services: Service[] = [
       "Quarterly Security Audits",
       "Dedicated Support Team"
     ],
-    contactLink: "#contact"
+    contactLink: "https://calendly.com/nessakodo/custom-security-inquiry"
   }
 ];

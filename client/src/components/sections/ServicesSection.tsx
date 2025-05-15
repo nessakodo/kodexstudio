@@ -104,7 +104,20 @@ export default function ServicesSection({ onClose }: ServicesSectionProps) {
                 onClose();
                 setTimeout(() => {
                   const contactButton = document.querySelector('button[data-section="contact"]') as HTMLButtonElement;
-                  if (contactButton) contactButton.click();
+                  if (contactButton) {
+                    contactButton.click();
+                    
+                    // Wait for contact form to load and then prefill message
+                    setTimeout(() => {
+                      const messageField = document.querySelector('#message') as HTMLTextAreaElement;
+                      if (messageField) {
+                        messageField.value = "I'm interested in discussing a custom security solution for my organization.";
+                        // Trigger change event to update form state
+                        const event = new Event('input', { bubbles: true });
+                        messageField.dispatchEvent(event);
+                      }
+                    }, 300);
+                  }
                 }, 100);
               }
             }}
