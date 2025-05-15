@@ -42,7 +42,7 @@ export default function Terminal({
           <span className="bg-yellow-500 w-3 h-3 rounded-full"></span>
           <span className="bg-green-500 w-3 h-3 rounded-full"></span>
         </div>
-        <div className="text-sm font-plex text-cyber-blue/70">
+        <div className="text-sm font-plex text-cyber-accent/80 font-medium">
           kodex ~$
         </div>
         <div className="text-xs text-cyber-text/40">
@@ -76,7 +76,7 @@ export default function Terminal({
           <div key={index} className="mb-4">
             {entry.input && (
               <div className="mb-1 font-medium">
-                <span className="text-cyber-blue mr-2">kodex ~$</span>
+                <span className="text-cyber-accent mr-2">kodex ~$</span>
                 <span className="text-white">{entry.input}</span>
               </div>
             )}
@@ -88,18 +88,18 @@ export default function Terminal({
       </div>
       
       {/* Terminal input */}
-      <div className="flex items-center border border-cyber-blue/20 rounded-lg p-2 bg-cyber-blue/5">
-        <span className="text-cyber-blue mr-2 font-plex">kodex ~$</span>
+      <div className="flex items-center border border-cyber-blue/30 rounded-lg p-2.5 bg-gradient-to-r from-cyber-blue/10 to-cyber-blue/5 backdrop-blur-sm">
+        <span className="text-cyber-accent mr-2 font-plex font-medium">kodex ~$</span>
         <input
           ref={inputRef}
           type="text"
           value={input}
           onChange={(e) => onInputChange(e.target.value)}
           onKeyDown={onCommandSubmit}
-          className="bg-transparent flex-grow focus:outline-none text-cyber-text/90 font-plex"
+          className="bg-transparent flex-grow focus:outline-none text-cyber-text/90 font-plex caret-cyber-accent"
+          placeholder="Type a command..."
           aria-label="Command input"
           autoComplete="off"
-          placeholder="Type a command..."
         />
       </div>
     </div>

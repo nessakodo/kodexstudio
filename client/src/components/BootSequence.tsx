@@ -147,21 +147,21 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
           
           <div className="px-6 py-4 border-t border-cyber-blue/10 bg-cyber-blue/5">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-xs text-cyber-blue/60 font-plex">System Boot</span>
-              <span className="text-xs text-cyber-blue/80 font-plex">{Math.round(progress)}%</span>
+              <span className="text-xs text-cyber-accent/80 font-plex font-medium">System Boot</span>
+              <span className="text-xs text-cyber-highlight font-plex">{Math.round(progress)}%</span>
             </div>
             <div className="h-1.5 w-full bg-black/60 rounded-full overflow-hidden">
               <div 
-                className="h-full bg-gradient-to-r from-blue-500/90 to-cyber-blue/90 loading-bar rounded-full transition-all duration-500 ease-out"
+                className="h-full bg-gradient-to-r from-cyber-accent/80 to-cyber-blue/80 loading-bar rounded-full transition-all duration-500 ease-out"
                 style={{width: `${progress}%`}}
               ></div>
             </div>
             
             <div className="mt-4 grid grid-cols-4 gap-2">
-              <div className={`h-1 rounded-full ${bootPhase === 'pre' || bootPhase === 'loading' || bootPhase === 'security' || bootPhase === 'final' ? 'bg-cyber-blue/90' : 'bg-cyber-blue/20'}`}></div>
-              <div className={`h-1 rounded-full ${bootPhase === 'loading' || bootPhase === 'security' || bootPhase === 'final' ? 'bg-cyber-blue/90' : 'bg-cyber-blue/20'}`}></div>
-              <div className={`h-1 rounded-full ${bootPhase === 'security' || bootPhase === 'final' ? 'bg-cyber-blue/90' : 'bg-cyber-blue/20'}`}></div>
-              <div className={`h-1 rounded-full ${bootPhase === 'final' ? 'bg-cyber-blue/90' : 'bg-cyber-blue/20'}`}></div>
+              <div className={`h-1 rounded-full ${bootPhase === 'pre' || bootPhase === 'loading' || bootPhase === 'security' || bootPhase === 'final' ? 'bg-cyber-accent/90' : 'bg-cyber-blue/20'}`}></div>
+              <div className={`h-1 rounded-full ${bootPhase === 'loading' || bootPhase === 'security' || bootPhase === 'final' ? 'bg-cyber-accent/90' : 'bg-cyber-blue/20'}`}></div>
+              <div className={`h-1 rounded-full ${bootPhase === 'security' || bootPhase === 'final' ? 'bg-cyber-accent/90' : 'bg-cyber-blue/20'}`}></div>
+              <div className={`h-1 rounded-full ${bootPhase === 'final' ? 'bg-cyber-accent/90' : 'bg-cyber-blue/20'}`}></div>
             </div>
           </div>
         </div>
