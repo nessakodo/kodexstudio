@@ -9,25 +9,79 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
   const [text, setText] = useState<string[]>([]);
   const [progress, setProgress] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
+  const [bootPhase, setBootPhase] = useState<'pre' | 'loading' | 'security' | 'final'>('pre');
   
   const bootSystem = useCallback(async () => {
-    const bootSequence = [
-      "> Initializing kodex-studio.sh...",
-      "> Cultivating encrypted workspace...",
-      "> Preparing glass modules...",
-      "> Loading cyber-somatic terminal..."
+    // Initial delay
+    await new Promise<void>(resolve => setTimeout(resolve, 400));
+    
+    // Pre-boot phase
+    setBootPhase('pre');
+    const preBootSequence = [
+      "$ sudo ./initialize_kodex.sh",
+      "> System check: [OK]",
+      "> Establishing secure environment..."
     ];
     
-    // Type each line with a delay
+    for (let i = 0; i < preBootSequence.length; i++) {
+      await new Promise<void>((resolve) => {
+        setTimeout(() => {
+          setText(prev => [...prev, preBootSequence[i]]);
+          setProgress(5 + ((i + 1) / preBootSequence.length * 15));
+          resolve();
+        }, i === 0 ? 300 : 700);
+      });
+    }
+    
+    // Main loading phase
+    setBootPhase('loading');
+    setText(prev => [...prev, "", "> INITIALIZING KODEX OS v3.6.2"]);
+    await new Promise<void>(resolve => setTimeout(resolve, 800));
+    
+    const bootSequence = [
+      "> Constructing glassmorphic interface modules...",
+      "> Calibrating neural response patterns...",
+      "> Establishing secure connection tunnels...",
+      "> Compiling reactive UI components...",
+      "> Loading cyberspace visualization engine..."
+    ];
+    
     for (let i = 0; i < bootSequence.length; i++) {
       await new Promise<void>((resolve) => {
         setTimeout(() => {
           setText(prev => [...prev, bootSequence[i]]);
-          setProgress((i + 1) / bootSequence.length * 100);
+          setProgress(20 + ((i + 1) / bootSequence.length * 40));
           resolve();
-        }, i === 0 ? 300 : 800);
+        }, 600);
       });
     }
+    
+    // Security phase
+    setBootPhase('security');
+    setText(prev => [...prev, "", "> SECURITY PROTOCOL ENGAGED"]);
+    await new Promise<void>(resolve => setTimeout(resolve, 800));
+    
+    const securitySequence = [
+      "> Generating encryption keys...",
+      "> Validating digital signatures...",
+      "> Establishing zero-knowledge protocol...",
+      "> Secure handshake complete."
+    ];
+    
+    for (let i = 0; i < securitySequence.length; i++) {
+      await new Promise<void>((resolve) => {
+        setTimeout(() => {
+          setText(prev => [...prev, securitySequence[i]]);
+          setProgress(60 + ((i + 1) / securitySequence.length * 30));
+          resolve();
+        }, 600);
+      });
+    }
+    
+    // Final phase
+    setBootPhase('final');
+    setText(prev => [...prev, "", "> KODEX STUDIO READY"]);
+    setProgress(100);
     
     // Short delay before completing
     setTimeout(() => {
@@ -44,28 +98,85 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
     <div 
       className={`fixed inset-0 bg-cyber-black z-50 flex flex-col items-center justify-center transition-opacity duration-500 ${isComplete ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
     >
-      <h1 className="font-orbitron font-bold text-5xl md:text-6xl tracking-wider text-cyber-blue animate-pulse-glow mb-16">
-        KODEX.STUDIO_
-      </h1>
-      
-      <div className="w-full max-w-2xl border border-cyber-blue/20 rounded-xl overflow-hidden bg-cyber-black/80 backdrop-blur-md">
-        <div className="p-8 font-plex text-lg">
-          {text.map((line, index) => (
-            <div key={index} className="mb-3 text-cyber-blue whitespace-pre-line">{line}</div>
-          ))}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-full opacity-10">
+          <div className="absolute top-0 left-0 w-full h-full bg-cyber-black"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[200%] h-[200%] bg-[radial-gradient(circle,rgba(15,180,244,0.05)_0%,rgba(15,180,244,0)_60%)]"></div>
         </div>
+      </div>
+      
+      <div className="max-w-3xl w-full px-4 z-10">
+        <h1 className="font-orbitron font-bold text-4xl md:text-6xl tracking-wide text-cyber-blue mb-12 md:mb-16 text-center relative">
+          <span className="opacity-90">KODEX</span>
+          <span className="opacity-70">.</span>
+          <span className="opacity-80">STUDIO</span>
+          <span className="ml-1 animate-type-cursor">_</span>
+          
+          <div className="absolute -top-12 -left-12 w-32 h-32 border border-cyber-blue/30 rounded-full opacity-20 animate-pulse-glow" style={{ animationDelay: '0.5s' }}></div>
+          <div className="absolute -bottom-8 -right-8 w-24 h-24 border border-cyber-blue/20 rounded-full opacity-10 animate-pulse-glow" style={{ animationDelay: '1.2s' }}></div>
+        </h1>
         
-        <div className="px-8 pb-8">
-          <div className="h-1.5 w-full bg-cyber-black/60 rounded-full overflow-hidden">
-            <div 
-              className="h-full bg-cyber-blue loading-bar rounded-full"
-              style={{width: `${progress}%`}}
-            ></div>
+        <div className="w-full border border-cyber-blue/20 rounded-xl overflow-hidden bg-black/50 backdrop-blur-xl shadow-[0_0_25px_rgba(15,180,244,0.1)]">
+          <div className="border-b border-cyber-blue/20 bg-cyber-blue/5 px-4 py-2 flex justify-between items-center">
+            <div className="flex items-center">
+              <div className="w-3 h-3 rounded-full bg-red-500/80 mr-2"></div>
+              <div className="w-3 h-3 rounded-full bg-yellow-500/80 mr-2"></div>
+              <div className="w-3 h-3 rounded-full bg-green-500/80"></div>
+            </div>
+            <div className="font-plex text-xs text-cyber-blue/70">
+              {bootPhase === 'pre' && 'System Initialization'}
+              {bootPhase === 'loading' && 'Loading Kodex Core'}
+              {bootPhase === 'security' && 'Security Protocol'}
+              {bootPhase === 'final' && 'Boot Complete'}
+            </div>
+            <div className="font-plex text-xs text-cyber-blue/40">
+              {new Date().toLocaleTimeString()}
+            </div>
+          </div>
+          
+          <div className="p-6 font-plex text-sm md:text-base max-h-[50vh] overflow-y-auto">
+            {text.map((line, index) => (
+              <div key={index} className={`mb-2 ${
+                line.startsWith('$') ? 'text-white/90' : 
+                line.startsWith('>') ? (
+                  line.includes('ERROR') || line.includes('FAILED') ? 'text-red-400' :
+                  line.includes('SECURITY') ? 'text-yellow-400' :
+                  line.includes('READY') || line.includes('COMPLETE') ? 'text-cyber-blue' :
+                  line.includes('INITIALIZING') ? 'text-cyber-blue' :
+                  'text-cyber-blue/80'
+                ) : 'text-white/60'
+              }`}>
+                {line}
+              </div>
+            ))}
+            {bootPhase === 'final' && (
+              <div className="text-green-400 mt-2 animate-pulse">$ _</div>
+            )}
+          </div>
+          
+          <div className="px-6 py-4 border-t border-cyber-blue/10 bg-cyber-blue/5">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-xs text-cyber-blue/60 font-plex">System Boot</span>
+              <span className="text-xs text-cyber-blue/80 font-plex">{Math.round(progress)}%</span>
+            </div>
+            <div className="h-1.5 w-full bg-black/60 rounded-full overflow-hidden">
+              <div 
+                className="h-full bg-gradient-to-r from-blue-500/90 to-cyber-blue/90 loading-bar rounded-full transition-all duration-500 ease-out"
+                style={{width: `${progress}%`}}
+              ></div>
+            </div>
+            
+            <div className="mt-4 grid grid-cols-4 gap-2">
+              <div className={`h-1 rounded-full ${bootPhase === 'pre' || bootPhase === 'loading' || bootPhase === 'security' || bootPhase === 'final' ? 'bg-cyber-blue/90' : 'bg-cyber-blue/20'}`}></div>
+              <div className={`h-1 rounded-full ${bootPhase === 'loading' || bootPhase === 'security' || bootPhase === 'final' ? 'bg-cyber-blue/90' : 'bg-cyber-blue/20'}`}></div>
+              <div className={`h-1 rounded-full ${bootPhase === 'security' || bootPhase === 'final' ? 'bg-cyber-blue/90' : 'bg-cyber-blue/20'}`}></div>
+              <div className={`h-1 rounded-full ${bootPhase === 'final' ? 'bg-cyber-blue/90' : 'bg-cyber-blue/20'}`}></div>
+            </div>
           </div>
         </div>
       </div>
       
-      <p className="text-gray-500 mt-16 text-center text-sm max-w-lg px-4">
+      <p className="text-white/40 mt-12 text-center text-xs md:text-sm max-w-md px-4 font-plex relative z-10">
         "Technology cultivated with intention — respecting your autonomy, enhancing your capability."
       </p>
     </div>
