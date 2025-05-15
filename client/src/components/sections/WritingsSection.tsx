@@ -194,9 +194,9 @@ export default function WritingsSection({ onClose }: WritingsSectionProps) {
     <section className="glass-panel border border-cyber-blue/20 backdrop-blur-xl p-6 my-8 animate-fadeIn">
       <div className="flex justify-between items-center mb-4 pb-2 border-b border-cyber-blue/10">
         <div className="flex items-center">
-          <span className="text-xs text-cyber-blue/60 font-plex mr-2">~/</span>
-          <span className="text-xs text-cyber-blue/60 font-plex mr-2">writings —</span>
-          <h2 className="text-cyber-blue font-orbitron text-xl">
+          <span className="text-xs text-cyber-accent/80 font-plex mr-1">~/</span>
+          <span className="text-xs text-cyber-accent/80 font-plex mr-2">writings —</span>
+          <h2 className="text-cyber-highlight font-orbitron text-xl tracking-wide">
             Writings & Blog
           </h2>
         </div>
@@ -204,7 +204,7 @@ export default function WritingsSection({ onClose }: WritingsSectionProps) {
         {onClose && (
           <button 
             onClick={onClose}
-            className="text-cyber-text/40 hover:text-cyber-blue transition-colors"
+            className="bg-cyber-blue/10 hover:bg-cyber-blue/20 text-cyber-blue p-1 rounded-md transition-colors"
             aria-label="Close"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -269,7 +269,7 @@ export default function WritingsSection({ onClose }: WritingsSectionProps) {
               )}
               
               <div className="p-5">
-                <h3 className="font-orbitron text-lg text-cyber-blue mb-2">{article.title}</h3>
+                <h3 className="font-orbitron text-lg text-cyber-highlight mb-2 tracking-wide leading-tight">{article.title}</h3>
                 <p className="text-sm text-cyber-text/80 mb-4 line-clamp-2">{article.description}</p>
                 
                 <div className="flex justify-between items-center text-xs text-cyber-text/60 mb-4">
