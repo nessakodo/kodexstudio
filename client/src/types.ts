@@ -25,6 +25,11 @@ export interface Article {
   date: string;
   readTime: string;
   category: string;
+  source?: 'notion' | 'medium' | 'hashnode' | 'devto' | 'substack';
+  sourceUrl?: string;
+  tags?: string[];
+  content?: string;
+  imageUrl?: string;
 }
 
 export interface Client {

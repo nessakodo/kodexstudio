@@ -2,6 +2,20 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { TerminalHistory } from '@/types';
 import { downloadResume } from '@/lib/utils';
 
+// The available commands for tab completion
+const AVAILABLE_COMMANDS = [
+  'help',
+  'walkthrough',
+  'whois',
+  'projects',
+  'services',
+  'writings',
+  'clients',
+  'contact',
+  'resume',
+  'clear'
+];
+
 export function useKodexTerminal() {
   const [input, setInput] = useState('');
   const [history, setHistory] = useState<TerminalHistory[]>([]);
@@ -14,13 +28,28 @@ export function useKodexTerminal() {
       {
         output: (
           <div className="mb-4">
-            <p className="text-terminal-green">Welcome to KODEX.STUDIO Terminal</p>
+            <p className="text-terminal-green">Welcome to KODEX STUDIO Terminal</p>
             <p className="text-sm mt-2">Type <span className="text-cyber-blue">help</span> to see available commands or <span className="text-cyber-blue">walkthrough</span> for a guided tour.</p>
           </div>
         )
       }
     ]);
   }, []);
+
+  // Setup event listeners for esc key to close sections
+  useEffect(() => {
+    const handleEscapeKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && activeSection) {
+        setActiveSection(null);
+        focusInput();
+      }
+    };
+
+    window.addEventListener('keydown', handleEscapeKey);
+    return () => {
+      window.removeEventListener('keydown', handleEscapeKey);
+    };
+  }, [activeSection]);
   
   // Focus the input when requested
   const focusInput = useCallback(() => {
@@ -28,9 +57,54 @@ export function useKodexTerminal() {
       inputRef.current.focus();
     }
   }, []);
+
+  // Handle tab completion
+  const handleTabComplete = useCallback(() => {
+    const partialCommand = input.trim().toLowerCase();
+    if (partialCommand) {
+      const matches = AVAILABLE_COMMANDS.filter(cmd => 
+        cmd.startsWith(partialCommand)
+      );
+      
+      if (matches.length === 1) {
+        setInput(matches[0]);
+      } else if (matches.length > 1) {
+        // If multiple matches, show them as options
+        const cmdOutput = (
+          <div className="mb-4">
+            <p className="text-cyber-blue mb-2 font-medium">Tab completions:</p>
+            <div className="flex flex-wrap gap-2">
+              {matches.map((match, idx) => (
+                <span 
+                  key={idx} 
+                  className="text-cyber-blue bg-cyber-blue/10 px-2 py-0.5 rounded font-mono text-sm cursor-pointer hover:bg-cyber-blue/20"
+                  onClick={() => setInput(match)}
+                >
+                  {match}
+                </span>
+              ))}
+            </div>
+          </div>
+        );
+        
+        setHistory(prev => [
+          ...prev,
+          {
+            output: cmdOutput
+          }
+        ]);
+      }
+    }
+  }, [input]);
   
   // Handle command submissions
   const handleCommandSubmit = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      handleTabComplete();
+      return;
+    }
+    
     if (e.key === 'Enter') {
       const cmd = input.trim().toLowerCase();
       
@@ -179,7 +253,7 @@ export function useKodexTerminal() {
       // Clear input
       setInput('');
     }
-  }, [input]);
+  }, [input, handleTabComplete]);
   
   return {
     input,
