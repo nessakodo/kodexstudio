@@ -37,6 +37,20 @@ export function useKodexTerminal() {
   }, []);
 
   // Setup event listeners for esc key to close sections
+  // Auto-scroll to section when activated
+  useEffect(() => {
+    if (activeSection) {
+      // Short delay to allow component to render
+      setTimeout(() => {
+        const sectionElement = document.querySelector('section');
+        if (sectionElement) {
+          // Scroll to the top of the section with smooth animation
+          sectionElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+    }
+  }, [activeSection]);
+
   useEffect(() => {
     const handleEscapeKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && activeSection) {
