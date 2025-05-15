@@ -52,19 +52,49 @@ export function useKodexTerminal() {
       if (cmd === 'help') {
         cmdOutput = (
           <div className="mb-4">
-            <p className="text-terminal-green mb-2">Available commands:</p>
-            <ul className="space-y-1">
-              <li><span className="text-cyber-blue">help</span> <span className="ml-4 text-cyber-text/70">Show list of available commands</span></li>
-              <li><span className="text-cyber-blue">walkthrough</span> <span className="ml-4 text-cyber-text/70">Step-by-step guided tour</span></li>
-              <li><span className="text-cyber-blue">nessa-kodo</span> <span className="ml-4 text-cyber-text/70">About section + downloadable resume</span></li>
-              <li><span className="text-cyber-blue">projects</span> <span className="ml-4 text-cyber-text/70">Interactive portfolio</span></li>
-              <li><span className="text-cyber-blue">services</span> <span className="ml-4 text-cyber-text/70">Freelance offerings with tiers</span></li>
-              <li><span className="text-cyber-blue">writings</span> <span className="ml-4 text-cyber-text/70">Auto-pulled blog content</span></li>
-              <li><span className="text-cyber-blue">clients</span> <span className="ml-4 text-cyber-text/70">Case studies & testimonials</span></li>
-              <li><span className="text-cyber-blue">contact</span> <span className="ml-4 text-cyber-text/70">Project form + scope generator</span></li>
-              <li><span className="text-cyber-blue">resume</span> <span className="ml-4 text-cyber-text/70">Trigger resume download</span></li>
-              <li><span className="text-cyber-blue">clear</span> <span className="ml-4 text-cyber-text/70">Clear terminal output</span></li>
-            </ul>
+            <p className="text-cyber-blue mb-2 font-medium">Available commands:</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2">
+              <div className="flex items-center">
+                <span className="text-cyber-blue bg-cyber-blue/10 px-1.5 py-0.5 rounded font-mono text-sm">help</span> 
+                <span className="ml-3 text-cyber-text/70">Display available commands</span>
+              </div>
+              <div className="flex items-center">
+                <span className="text-cyber-blue bg-cyber-blue/10 px-1.5 py-0.5 rounded font-mono text-sm">walkthrough</span> 
+                <span className="ml-3 text-cyber-text/70">Step-by-step guided tour</span>
+              </div>
+              <div className="flex items-center">
+                <span className="text-cyber-blue bg-cyber-blue/10 px-1.5 py-0.5 rounded font-mono text-sm">whois</span> 
+                <span className="ml-3 text-cyber-text/70">About section + resume</span>
+              </div>
+              <div className="flex items-center">
+                <span className="text-cyber-blue bg-cyber-blue/10 px-1.5 py-0.5 rounded font-mono text-sm">projects</span> 
+                <span className="ml-3 text-cyber-text/70">Technical portfolio</span>
+              </div>
+              <div className="flex items-center">
+                <span className="text-cyber-blue bg-cyber-blue/10 px-1.5 py-0.5 rounded font-mono text-sm">services</span> 
+                <span className="ml-3 text-cyber-text/70">Freelance offerings</span>
+              </div>
+              <div className="flex items-center">
+                <span className="text-cyber-blue bg-cyber-blue/10 px-1.5 py-0.5 rounded font-mono text-sm">writings</span> 
+                <span className="ml-3 text-cyber-text/70">Blog content & thoughts</span>
+              </div>
+              <div className="flex items-center">
+                <span className="text-cyber-blue bg-cyber-blue/10 px-1.5 py-0.5 rounded font-mono text-sm">clients</span> 
+                <span className="ml-3 text-cyber-text/70">Case studies & testimonials</span>
+              </div>
+              <div className="flex items-center">
+                <span className="text-cyber-blue bg-cyber-blue/10 px-1.5 py-0.5 rounded font-mono text-sm">contact</span> 
+                <span className="ml-3 text-cyber-text/70">Project form & scheduling</span>
+              </div>
+              <div className="flex items-center">
+                <span className="text-cyber-blue bg-cyber-blue/10 px-1.5 py-0.5 rounded font-mono text-sm">resume</span> 
+                <span className="ml-3 text-cyber-text/70">Download PDF resume</span>
+              </div>
+              <div className="flex items-center">
+                <span className="text-cyber-blue bg-cyber-blue/10 px-1.5 py-0.5 rounded font-mono text-sm">clear</span> 
+                <span className="ml-3 text-cyber-text/70">Clear terminal output</span>
+              </div>
+            </div>
           </div>
         );
       } else if (cmd === 'clear') {
@@ -82,9 +112,16 @@ export function useKodexTerminal() {
         // Reset input and return early - we've already updated history
         setInput('');
         return;
-      } else if (cmd === 'nessa-kodo') {
+      } else if (cmd === 'whois') {
         setActiveSection('about');
-        cmdOutput = <div className="mb-4">Loading about section...</div>;
+        cmdOutput = <div className="mb-4">
+          <p className="text-cyber-blue">Fetching identity data...</p>
+          <div className="flex items-center mt-2 gap-x-1">
+            <span className="w-2 h-2 bg-cyber-blue rounded-full animate-pulse"></span>
+            <span className="w-2 h-2 bg-cyber-blue/60 rounded-full animate-pulse" style={{ animationDelay: '300ms' }}></span>
+            <span className="w-2 h-2 bg-cyber-blue/30 rounded-full animate-pulse" style={{ animationDelay: '600ms' }}></span>
+          </div>
+        </div>;
       } else if (cmd === 'projects') {
         setActiveSection('projects');
         cmdOutput = <div className="mb-4">Loading projects section...</div>;

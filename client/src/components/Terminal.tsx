@@ -32,39 +32,74 @@ export default function Terminal({
   
   return (
     <div 
-      className={cn("glass-panel p-4 sm:p-6 overflow-hidden flex flex-col", className)}
+      className={cn("glass-panel border border-cyber-blue/20 bg-cyber-black/80 backdrop-blur-xl rounded-xl p-4 sm:p-6 overflow-hidden flex flex-col animate-fadeInUp delay-500", className)}
       onClick={() => inputRef.current?.focus()}
     >
+      {/* Terminal header */}
+      <div className="flex justify-between items-center mb-4 pb-3 border-b border-cyber-blue/10">
+        <div className="flex items-center space-x-2">
+          <span className="bg-red-500 w-3 h-3 rounded-full"></span>
+          <span className="bg-yellow-500 w-3 h-3 rounded-full"></span>
+          <span className="bg-green-500 w-3 h-3 rounded-full"></span>
+        </div>
+        <div className="text-sm font-plex text-cyber-blue/70">
+          kodex ~$
+        </div>
+        <div className="text-xs text-cyber-text/40">
+          v1.0.2
+        </div>
+      </div>
+      
+      {/* Command guide */}
+      <div className="bg-cyber-blue/5 border border-cyber-blue/10 rounded-lg p-3 mb-4 font-plex text-sm">
+        <h3 className="text-cyber-blue mb-2">⟠ Command Guide:</h3>
+        <p className="text-xs text-cyber-text/70 flex items-center gap-x-2">
+          <span className="font-mono bg-cyber-blue/10 text-cyber-blue px-1.5 py-0.5 rounded">help</span> 
+          <span>for all options</span>
+        </p>
+        <p className="text-xs text-cyber-text/70 flex items-center gap-x-2 mt-1">
+          <span className="font-mono bg-cyber-blue/10 text-cyber-blue px-1.5 py-0.5 rounded">Tab</span> 
+          <span>for auto-completion</span>
+        </p>
+        <p className="text-xs text-cyber-text/70 flex items-center gap-x-2 mt-1">
+          <span className="font-mono bg-cyber-blue/10 text-cyber-blue px-1.5 py-0.5 rounded">Esc</span> 
+          <span>to close sections</span>
+        </p>
+      </div>
+      
       {/* Terminal output */}
       <div 
         ref={outputRef}
-        className="flex-grow overflow-y-auto mb-4 min-h-[300px] md:min-h-[400px] max-h-[60vh]"
+        className="flex-grow overflow-y-auto mb-4 min-h-[200px] md:min-h-[300px] max-h-[50vh] font-plex"
       >
         {history.map((entry, index) => (
-          <div key={index} className="mb-2">
+          <div key={index} className="mb-4">
             {entry.input && (
-              <div className="mb-1">
-                <span className="text-terminal-green mr-2">{'>'}</span>
-                <span>{entry.input}</span>
+              <div className="mb-1 font-medium">
+                <span className="text-cyber-blue mr-2">kodex ~$</span>
+                <span className="text-white">{entry.input}</span>
               </div>
             )}
-            {entry.output}
+            <div className="pl-0 text-cyber-text/90">
+              {entry.output}
+            </div>
           </div>
         ))}
       </div>
       
       {/* Terminal input */}
-      <div className="flex items-center border-t border-cyber-text/10 pt-4">
-        <span className="text-terminal-green mr-2">{'>'}</span>
+      <div className="flex items-center border border-cyber-blue/20 rounded-lg p-2 bg-cyber-blue/5">
+        <span className="text-cyber-blue mr-2 font-plex">kodex ~$</span>
         <input
           ref={inputRef}
           type="text"
           value={input}
           onChange={(e) => onInputChange(e.target.value)}
           onKeyDown={onCommandSubmit}
-          className="bg-transparent flex-grow focus:outline-none text-cyber-text"
+          className="bg-transparent flex-grow focus:outline-none text-cyber-text/90 font-plex"
           aria-label="Command input"
           autoComplete="off"
+          placeholder="Type a command..."
         />
       </div>
     </div>
