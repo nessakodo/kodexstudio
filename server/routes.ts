@@ -10,13 +10,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
   
   // Resume download endpoint
   app.get('/api/resume', async (req, res) => {
-    // In a real implementation, this would retrieve the actual resume file
-    // For now, we'll create a simple placeholder response
-    res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', 'attachment; filename="nessa-kodo-resume.pdf"');
-    
-    // Simulate a file response
-    res.send('This would be the resume PDF content');
+    try {
+      const resumePath = path.join(process.cwd(), 'public', 'data', 'Nessa_Kodo_Resume.pdf');
+      
+      // Check if file exists
+      await fs.access(resumePath);
+      
+      // Set headers for PDF file
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', 'attachment; filename="nessa-kodo-resume.pdf"');
+      
+      // Stream the file to the response
+      const fileStream = fs.readFile(resumePath);
+      res.send(await fileStream);
+    } catch (error) {
+      console.error('Error serving resume file:', error);
+      res.status(404).send('Resume file not found');
+    }
   });
   
   // Fetch projects

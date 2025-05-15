@@ -12,7 +12,7 @@ export const services: Service[] = [
       "Security Recommendations",
       "Documentation & Reporting"
     ],
-    contactLink: "https://calendly.com/nessakodo/security-audit-inquiry"
+    contactLink: "#contact"
   },
   {
     id: "secure-development",
@@ -26,7 +26,7 @@ export const services: Service[] = [
       "CI/CD Security Integration",
       "Maintenance & Support"
     ],
-    contactLink: "https://calendly.com/nessakodo/secure-development-inquiry",
+    contactLink: "#contact",
     highlighted: true
   },
   {
@@ -42,6 +42,6 @@ export const services: Service[] = [
       "Quarterly Security Audits",
       "Dedicated Support Team"
     ],
-    contactLink: "https://calendly.com/nessakodo/enterprise-security-inquiry"
+    contactLink: "#contact"
   }
 ];
