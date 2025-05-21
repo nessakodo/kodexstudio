@@ -1,5 +1,5 @@
 import { downloadResume } from '@/lib/utils';
-
+import NK_LOGO from '../assets/profile-image.jpg'
 interface AboutSectionProps {
   onClose?: () => void;
 }
@@ -155,7 +155,7 @@ export default function AboutSection({ onClose }: AboutSectionProps) {
               <div className="w-32 h-32 rounded-full border-2 border-cyber-blue/30 p-1 flex items-center justify-center">
                 <div className="bg-cyber-blue/10 w-full h-full rounded-full overflow-hidden">
                   <img 
-                    src="https://github.com/nessakodo/NessKodo/raw/main/public/NK-logo-circle.png" 
+                    src={NK_LOGO}
                     alt="Nessa Kodo" 
                     className="w-full h-full object-cover optimize-img"
                   />
