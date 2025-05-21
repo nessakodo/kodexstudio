@@ -89,7 +89,7 @@ export default function Terminal({
       {/* Terminal output - adaptive height with scroll */}
       <div 
         ref={outputRef}
-        className="h-[250px] md:h-[300px] overflow-y-auto mb-4 font-plex"
+        className="h-[300px] md:h-[350px] overflow-y-auto mb-4 font-plex"
       >
         {history.map((entry, index) => (
           <div key={index} className="mb-4">
