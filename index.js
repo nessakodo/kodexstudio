@@ -353,9 +353,27 @@ function serveStatic(app2) {
 }
 
 // server/index.ts
+import helmet from "helmet";
+import rateLimit from "express-rate-limit";
+import cors from "cors";
+import dotenv from "dotenv";
+dotenv.config();
 var app = express2();
-app.use(express2.json());
-app.use(express2.urlencoded({ extended: false }));
+app.use(helmet());
+app.use(cors({
+  origin: process.env.CORS_ORIGIN || "*",
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
+var limiter = rateLimit({
+  windowMs: 15 * 60 * 1e3,
+  // 15 minutes
+  max: 100
+  // limit each IP to 100 requests per windowMs
+});
+app.use("/api/", limiter);
+app.use(express2.json({ limit: "10kb" }));
+app.use(express2.urlencoded({ extended: false, limit: "10kb" }));
 app.use((req, res, next) => {
   const start = Date.now();
   const path4 = req.path;
@@ -384,9 +402,9 @@ app.use((req, res, next) => {
   const server = await registerRoutes(app);
   app.use((err, _req, res, _next) => {
     const status = err.status || err.statusCode || 500;
-    const message = err.message || "Internal Server Error";
+    const message = process.env.NODE_ENV === "production" ? "Internal Server Error" : err.message || "Internal Server Error";
     console.error(`Server Error: ${status} - ${message}`);
-    if (err.stack) {
+    if (err.stack && process.env.NODE_ENV !== "production") {
       console.error(err.stack);
     }
     res.status(status).json({ message });
@@ -396,12 +414,12 @@ app.use((req, res, next) => {
   } else {
     serveStatic(app);
   }
-  const port = 5001;
+  const port = process.env.PORT || 5001;
   server.listen({
     port,
     host: "0.0.0.0",
     reusePort: true
   }, () => {
-    log(`serving on port ${port}`);
+    log(`Server running in ${process.env.NODE_ENV || "development"} mode on port ${port}`);
   });
 })();
