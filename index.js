@@ -262,6 +262,8 @@ import react from "@vitejs/plugin-react";
 import path2 from "path";
 import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
 var vite_config_default = defineConfig({
+  // 👇 Add this line for GitHub Pages subfolder deploy!
+  base: "/kodexstudio/",
   plugins: [
     react(),
     runtimeErrorOverlay(),
