@@ -267,21 +267,19 @@ export default function Home() {
             <span className="bg-gradient-to-r from-white/90 via-cyber-blue to-blue-400 bg-clip-text text-transparent drop-shadow-sm">KODEX STUDIO</span>
           </h1>
           <p className="font-space text-lg md:text-xl mb-4 text-white/80 animate-fadeInUp delay-100">
-            Cybersecurity & Creative Systems Design
+            Security-Focused Software Engineering & DevSecOps
           </p>
           <p className="text-cyber-blue text-sm md:text-base mb-10 font-plex animate-fadeInUp delay-200">
-            &gt; Mindful | Tactical | Technical
+            &gt; Secure | Resilient | Ethical
           </p>
           
-          {/* Removed security, ethical design, and digital sovereignty buttons as requested */}
-          
-          {/* Subtitle without border as a cohesive subtitle, removing the glass panel */}
+          {/* Subtitle without border as a cohesive subtitle */}
           <div className="max-w-2xl mx-auto text-center animate-fadeInUp delay-400">
             <p className="text-white/80 text-sm mb-1">
-              Secure systems for the post-noise internet. Cybersecurity, development, and mindful tech consulting.
+              Building secure, resilient systems with zero-trust architecture and privacy-first development. Specializing in DevSecOps, cloud security, and adversarial resilience.
             </p>
             <p className="text-cyber-accent font-plex text-xs italic">
-              "Technology that respects your autonomy and enhances your capability."
+              "Engineering systems that protect your digital sovereignty while enhancing your capabilities."
             </p>
           </div>
           

@@ -3,4 +3,5 @@ import App from "./App";
 import "./index.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
-createRoot(document.getElementById("root")!).render(<App />);
+const root = createRoot(document.getElementById("root")!);
+root.render(<App />);

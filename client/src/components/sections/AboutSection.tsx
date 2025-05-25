@@ -39,31 +39,21 @@ export default function AboutSection({ onClose }: AboutSectionProps) {
         <div className="md:col-span-2">
           <div className="prose prose-invert mb-6">
             <p className="text-white/90 mb-4">
-              I'm a cybersecurity-focused creative technologist with a
-              mission to build secure, ethical systems that respect digital
-              sovereignty.
+              I'm a security-focused software engineer specializing in DevSecOps, secure cloud architecture, and adversarial resilience. My mission is to build systems that prioritize security, privacy, and digital sovereignty.
             </p>
             
             <p className="text-white/80 mb-4">
-              With a background spanning both secure systems architecture and
-              design, I specialize in blending technical precision with intuitive
-              interfaces. My work encompasses application security, vulnerability
-              analysis, full-stack development, and mindful tech education.
+              With expertise in secure coding practices, vulnerability management, and zero-trust architecture, I help organizations implement robust security measures while maintaining system performance and usability. My work spans application security, cloud infrastructure, and secure development lifecycle implementation.
             </p>
             
             <p className="text-white/80 mb-4">
-              As the founder of <span className="text-cyber-blue">KODEX.STUDIO</span>, I help clients and communities build
-              safe, elegant, and scalable digital tools that enhance human
-              capability while respecting autonomy.
+              As the founder of <span className="text-cyber-blue">KODEX.STUDIO</span>, I provide security-focused consulting and development services, helping clients build resilient systems that withstand modern threats while maintaining compliance with industry standards.
             </p>
             
             <div className="bg-cyber-blue/5 border border-cyber-blue/20 rounded-lg p-4 my-6">
               <h3 className="text-cyber-blue font-plex m-0 mb-3 text-base font-medium">MISSION</h3>
               <p className="text-white/90 m-0 text-sm pl-4 border-l-2 border-cyber-blue/30">
-                To create digital systems that prioritize human dignity,
-                security, and sovereignty. I believe technology should serve
-                as an extension of human capability rather than a
-                replacement for human judgment.
+                To engineer secure, resilient systems that protect digital assets while enabling innovation. I believe in building security into every layer of the technology stack, from infrastructure to application code.
               </p>
             </div>
           </div>
@@ -81,7 +71,7 @@ export default function AboutSection({ onClose }: AboutSectionProps) {
                   <div>
                     <h4 className="text-sm font-medium text-white/90 m-0">Security Architecture</h4>
                     <p className="text-xs text-white/60 mt-1">
-                      Secure-by-design systems & protocols
+                      Zero-trust architecture & secure protocols
                     </p>
                   </div>
                 </div>
@@ -93,9 +83,9 @@ export default function AboutSection({ onClose }: AboutSectionProps) {
                     </svg>
                   </div>
                   <div>
-                    <h4 className="text-sm font-medium text-white/90 m-0">Full-Stack Development</h4>
+                    <h4 className="text-sm font-medium text-white/90 m-0">DevSecOps</h4>
                     <p className="text-xs text-white/60 mt-1">
-                      React, Node.js, TypeScript, Python
+                      Secure CI/CD & cloud infrastructure
                     </p>
                   </div>
                 </div>
@@ -107,9 +97,9 @@ export default function AboutSection({ onClose }: AboutSectionProps) {
                     </svg>
                   </div>
                   <div>
-                    <h4 className="text-sm font-medium text-white/90 m-0">Digital Systems Design</h4>
+                    <h4 className="text-sm font-medium text-white/90 m-0">Secure Development</h4>
                     <p className="text-xs text-white/60 mt-1">
-                      Workflow optimization & knowledge systems
+                      OWASP practices & vulnerability management
                     </p>
                   </div>
                 </div>
@@ -171,14 +161,14 @@ export default function AboutSection({ onClose }: AboutSectionProps) {
             <div className="text-left mb-6">
               <h3 className="text-cyber-blue mb-3 font-plex text-sm font-medium text-center">CURRENT ROLES</h3>
               <div className="space-y-2 text-sm">
-                <p className="text-white/90 font-medium m-0">Founder & Principal Consultant</p>
-                <p className="text-white/60 text-xs m-0">KODEX.STUDIO — Cybersecurity Consulting</p>
+                <p className="text-white/90 font-medium m-0">Security Operations Specialist</p>
+                <p className="text-white/60 text-xs m-0">UCD Anschutz Medical Campus — HIPAA Compliance</p>
                 
-                <p className="text-white/90 font-medium m-0 mt-4">Business Development Manager</p>
-                <p className="text-white/60 text-xs m-0">PDS Research — Security & Drone Technologies</p>
+                <p className="text-white/90 font-medium m-0 mt-4">Founder & Lead Developer</p>
+                <p className="text-white/60 text-xs m-0">KODEX.STUDIO — Security-Focused Development</p>
                 
-                <p className="text-white/90 font-medium m-0 mt-4">Outreach Officer</p>
-                <p className="text-white/60 text-xs m-0">AI Student Association — Educational Initiatives</p>
+                <p className="text-white/90 font-medium m-0 mt-4">Officer, AI Student Association</p>
+                <p className="text-white/60 text-xs m-0">UC Denver — Ethical AI & Security</p>
               </div>
             </div>
             

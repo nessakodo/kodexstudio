@@ -117,9 +117,9 @@ export default function ServicesSection({ onClose }: ServicesSectionProps) {
       </div>
       
       <div className="mt-10 p-5 border border-cyber-blue/20 rounded-lg bg-cyber-blue/5">
-        <h3 className="text-lg font-orbitron text-cyber-blue mb-3">Custom Solutions</h3>
+        <h3 className="text-lg font-orbitron text-cyber-blue mb-3">Custom Security Solutions</h3>
         <p className="text-white/80 mb-4">
-          Need a tailored security solution? I work closely with clients to develop custom cybersecurity strategies that address your specific challenges and requirements.
+          Need a tailored security solution? I specialize in developing custom DevSecOps pipelines, implementing zero-trust architecture, and building secure cloud infrastructure that meets your specific security requirements and compliance needs.
         </p>
         <div className="text-right">
           <a 
@@ -131,7 +131,7 @@ export default function ServicesSection({ onClose }: ServicesSectionProps) {
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
             </svg>
-            Discuss Your Project
+            Schedule Security Consultation
           </a>
         </div>
       </div>
