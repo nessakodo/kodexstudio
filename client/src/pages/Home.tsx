@@ -11,8 +11,12 @@ import ContactSection from '@/components/sections/ContactSection';
 import { useKodexTerminal } from '@/hooks/useKodexTerminal';
 import { downloadResume } from '@/lib/utils';
 import { Article } from '@/types';
-import { hasNotionCredentials } from '@/services/notionService';
 
+/**
+ * The main entry point of the application, rendering the terminal interface, header/hero, and footer.
+ * Handles the walkthrough feature, which guides the user through the available commands and sections.
+ * @returns {JSX.Element}
+ */
 export default function Home() {
   const [bootComplete, setBootComplete] = useState(false);
   const [walkthrough, setWalkthrough] = useState({ active: false, step: 0 });
@@ -32,6 +36,10 @@ export default function Home() {
     {
       message: "Now for the services offered to clients...",
       command: "services"
+    },
+    {
+      message: "Let's check out some of the published articles and blog posts...",
+      command: "writings"
     },
     {
       message: "Finally, here's how to get in touch for project inquiries...",
@@ -94,6 +102,43 @@ export default function Home() {
     setActiveSection(null);
   };
   
+  // Function to handle walkthrough completion
+  const handleWalkthroughComplete = () => {
+    addToHistory({
+      output: (
+        <div className="mb-4">
+          <p className="text-cyan-400 mb-2">Walkthrough complete! Would you like to return to the homepage?</p>
+          <p className="text-cyan-300/80 text-sm mb-2">
+            {window.innerWidth > 768 ? (
+              <>Press <span className="bg-cyber-blue/20 px-2 py-0.5 rounded">Y</span> for yes or <span className="bg-cyber-blue/20 px-2 py-0.5 rounded">N</span> for no</>
+            ) : (
+              <>Tap the buttons below to choose</>
+            )}
+          </p>
+          <div className="flex gap-4 mt-3">
+            <button 
+              onClick={() => {
+                setActiveSection(null);
+                focusInput();
+              }}
+              className="glass-button px-4 py-1.5 text-sm rounded text-center items-center justify-center"
+            >
+              Yes (Y)
+            </button>
+            <button 
+              onClick={() => {
+                focusInput();
+              }}
+              className="glass-button px-4 py-1.5 text-sm rounded text-center items-center justify-center"
+            >
+              No (N)
+            </button>
+          </div>
+        </div>
+      )
+    });
+  };
+  
   // Function to handle walkthrough progression
   const handleWalkthroughClick = useCallback(() => {
     const nextStep = walkthrough.step + 1;
@@ -154,13 +199,8 @@ export default function Home() {
         step: 0
       });
       
-      // Add final message to history
-      addToHistory({
-        output: <div className="text-cyan-400 mb-2">Walkthrough complete! You can now explore on your own.</div>
-      });
-      
-      // Focus input
-      focusInput();
+      // Show completion message
+      handleWalkthroughComplete();
     }
   }, [walkthrough.step, walkthroughSteps, setActiveSection, setInput, addToHistory, focusInput]);
   
@@ -189,6 +229,14 @@ export default function Home() {
         });
         
         // Focus input
+        focusInput();
+      }
+
+      // Handle Y/N response after walkthrough completion
+      if (!walkthrough.active && (e.key.toLowerCase() === 'y' || e.key.toLowerCase() === 'n')) {
+        if (e.key.toLowerCase() === 'y') {
+          setActiveSection(null);
+        }
         focusInput();
       }
     };

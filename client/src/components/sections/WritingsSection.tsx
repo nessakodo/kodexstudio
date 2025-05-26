@@ -320,8 +320,8 @@ export default function WritingsSection({ onClose }: WritingsSectionProps) {
 
       {/* Article Modal */}
       <Dialog open={!!selectedArticle} onOpenChange={() => setSelectedArticle(null)}>
-        <DialogContent className="max-w-screen-xl w-[95vw] sm:w-[90vw] md:w-[85vw] lg:w-[80vw] bg-cyber-dark/95 border border-cyber-blue/20 backdrop-blur-xl p-4 sm:p-6 md:px-10 lg:px-16 rounded-lg fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-h-[90vh] flex flex-col">
-          <DialogHeader className="space-y-4 mb-6 flex-shrink-0">
+        <DialogContent className="max-w-screen-xl w-[95vw] sm:w-[90vw] md:w-[85vw] lg:w-[80vw] bg-cyber-dark/95 border border-cyber-blue/20 backdrop-blur-xl p-4 sm:p-6 md:px-10 lg:px-16 rounded-lg fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-h-[85vh] flex flex-col">
+          <DialogHeader className="space-y-4 mb-4 flex-shrink-0">
             <DialogTitle className="font-orbitron text-xl sm:text-2xl text-cyber-highlight tracking-wider">
               {selectedArticle?.title}
             </DialogTitle>
@@ -355,7 +355,7 @@ export default function WritingsSection({ onClose }: WritingsSectionProps) {
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row justify-between gap-4 mt-6 pt-6 border-t border-cyber-blue/20 flex-shrink-0">
+          <div className="flex flex-col sm:flex-row justify-between gap-4 mt-4 pt-4 border-t border-cyber-blue/20 flex-shrink-0">
             <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
               {selectedArticle?.sourceUrl && (
                 <Button

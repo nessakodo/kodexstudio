@@ -167,7 +167,7 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
       </p>
       
       {/* Continue button for mobile devices */}
-      {showContinueButton && (
+      {/* {showContinueButton && (
         <button 
           onClick={() => {
             setIsComplete(true);
@@ -179,7 +179,7 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
         >
           Continue to Kodex Studio →
         </button>
-      )}
+      )} */}
     </div>
   );
 }

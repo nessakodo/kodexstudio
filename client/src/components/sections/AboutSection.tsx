@@ -155,7 +155,7 @@ export default function AboutSection({ onClose }: AboutSectionProps) {
             
             <h3 className="text-2xl text-cyber-blue font-medium font-orbitron mb-1">Nessa Kodo</h3>
             <p className="text-white/60 text-xs font-plex uppercase tracking-wide mb-6">
-              CYBERSECURITY SPECIALIST
+              DevSecOps Engineer
             </p>
             
             <div className="text-left mb-6">
@@ -168,7 +168,7 @@ export default function AboutSection({ onClose }: AboutSectionProps) {
                 <p className="text-white/60 text-xs m-0">KODEX.STUDIO — Security-Focused Development</p>
                 
                 <p className="text-white/90 font-medium m-0 mt-4">Officer, AI Student Association</p>
-                <p className="text-white/60 text-xs m-0">UC Denver — Ethical AI & Security</p>
+                <p className="text-white/60 text-xs m-0">UC Denver — Technical Leadership</p>
               </div>
             </div>
             

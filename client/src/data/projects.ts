@@ -45,7 +45,7 @@ export const projects: Project[] = [
       ],
       impact: "PhishKiller has been used to enhance security awareness training programs and improve email security posture across multiple organizations. The tool has helped identify and mitigate potential phishing threats before they reach end users."
     },
-    imageUrl: "/assets/projects/phishkiller.png"
+    imageUrl: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=800&q=80"
   },
   {
     id: "cryptiq",
@@ -74,7 +74,7 @@ export const projects: Project[] = [
       ],
       impact: "Cryptiq demonstrates the practical implementation of post-quantum cryptography in real-world applications. It serves as a reference implementation for secure messaging systems that need to be resistant to quantum computing threats."
     },
-    imageUrl: "/assets/projects/cryptiq.png"
+    imageUrl: "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=800&q=80"
   },
   {
     id: "caresense",
@@ -103,6 +103,7 @@ export const projects: Project[] = [
       ],
       impact: "CareSense has been recognized for its innovative approach to mental health triage while maintaining strict privacy standards. It has helped healthcare providers streamline their intake process while ensuring patient confidentiality."
     },
-    imageUrl: "/assets/projects/caresense.png"
+    // imageUrl: "/assets/projects/caresense.png"
+    imageUrl: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80"
   }
 ];

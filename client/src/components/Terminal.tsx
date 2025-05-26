@@ -66,11 +66,11 @@ export default function Terminal({
         {/* Desktop-only commands */}
         {window.innerWidth > 768 && (
           <>
-            <p className="text-xs text-cyber-text/80 flex items-center gap-x-2 mt-1">
+            <p className="text-xs text-cyber-text/80 flex items-center gap-x-2 mt-2">
               <span className="font-mono bg-cyber-blue/15 text-cyber-blue px-1.5 py-0.5 rounded-md border border-cyber-blue/20">Tab</span> 
               <span>for auto-completion</span>
             </p>
-            <p className="text-xs text-cyber-text/80 flex items-center gap-x-2 mt-1">
+            <p className="text-xs text-cyber-text/80 flex items-center gap-x-2 mt-2">
               <span className="font-mono bg-cyber-blue/15 text-cyber-blue px-1.5 py-0.5 rounded-md border border-cyber-blue/20">Esc</span> 
               <span>to close sections</span>
             </p>
@@ -79,7 +79,7 @@ export default function Terminal({
         
         {/* Mobile-only tip */}
         {window.innerWidth <= 768 && (
-          <p className="text-xs text-cyber-text/80 flex items-center gap-x-2 mt-1">
+          <p className="text-xs text-cyber-text/80 flex items-center gap-x-2 mt-2">
             <span className="font-mono bg-cyber-blue/15 text-cyber-blue px-1.5 py-0.5 rounded-md border border-cyber-blue/20">walkthrough</span> 
             <span>for guided tour</span>
           </p>
