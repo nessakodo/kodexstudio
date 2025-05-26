@@ -157,11 +157,11 @@ export default function WritingsSection({ onClose }: WritingsSectionProps) {
 
   return (
     <section className="glass-panel border border-cyber-blue/20 backdrop-blur-xl p-4 sm:p-6 my-4 sm:my-8 animate-fadeIn overflow-y-auto">
-      <div className="flex justify-between items-center mb-4 pb-2 border-b border-cyber-blue/10 sticky top-0 bg-cyber-dark/95 backdrop-blur-sm z-10">
-        <div className="flex items-center w-full md:w-auto">
-          <span className="text-xs text-cyber-blue/70 font-plex mr-1">~/</span>
-          <span className="text-xs text-cyber-blue/70 font-plex mr-2">writings —</span>
-          <h2 className="text-white font-orbitron text-lg sm:text-xl tracking-wider">
+      <div className="flex justify-between items-center mb-4 pb-2 border-b border-cyber-blue/10 sticky top-0 ">
+        <div className="flex items-center w-full md:w-auto pointer-events-none">
+          <span className="text-[10px] sm:text-xs text-cyber-blue/70 font-plex mr-1">~/</span>
+          <span className="text-[10px] sm:text-xs text-cyber-blue/70 font-plex mr-2">writings —</span>
+          <h2 className="text-white font-orbitron text-base sm:text-lg tracking-wider">
             Articles & Blog Posts
           </h2>
         </div>
@@ -177,7 +177,7 @@ export default function WritingsSection({ onClose }: WritingsSectionProps) {
       </div>
 
       {/* Search and Filters */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 mb-6 sticky top-[60px] bg-cyber-dark/95 backdrop-blur-sm z-10 py-2">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 mb-6 sticky top-[60px]  py-2">
         <div className="relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-cyber-blue/50 w-4 h-4" />
           <Input
@@ -185,12 +185,12 @@ export default function WritingsSection({ onClose }: WritingsSectionProps) {
             placeholder="Search articles by title or content..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10 bg-cyber-blue/10 border-cyber-blue/20 text-cyber-text text-sm sm:text-base"
+            className="pl-10 bg-cyber-blue/10 border-cyber-blue/20 text-cyber-text text-sm sm:text-base focus:ring-0 focus:border-cyber-blue/40"
             aria-label="Search articles"
           />
         </div>
         <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-          <SelectTrigger className="bg-cyber-blue/10 border-cyber-blue/20 text-cyber-text hover:bg-cyber-blue/20 text-sm sm:text-base">
+          <SelectTrigger className="bg-cyber-blue/10 border-cyber-blue/20 text-cyber-text hover:bg-cyber-blue/20 text-sm sm:text-base focus:ring-0 focus:border-cyber-blue/40">
             <SelectValue placeholder="Filter by category" />
           </SelectTrigger>
           <SelectContent className="bg-cyber-blue/10 border-cyber-blue/20">
@@ -214,7 +214,7 @@ export default function WritingsSection({ onClose }: WritingsSectionProps) {
           paginatedArticles.map(article => (
             <Card 
               key={article.id}
-              className="group flex flex-col h-full glass-panel border border-cyber-blue/20 hover:border-cyber-blue/40 transition-all duration-300 hover:shadow-[0_0_15px_rgba(0,149,255,0.3)]"
+              className="group flex flex-col h-full glass-panel border border-cyber-blue/20 hover:border-cyber-blue/40 transition-all duration-300"
             >
               {article.imageUrl && (
                 <div className="relative aspect-[16/9] overflow-hidden">
@@ -279,10 +279,10 @@ export default function WritingsSection({ onClose }: WritingsSectionProps) {
 
       {/* Pagination Controls */}
       {totalPages > 1 && (
-        <div className="flex justify-center items-center gap-3 sm:gap-4 mt-6 sm:mt-8 pb-4 sticky bottom-0 bg-cyber-dark/95 backdrop-blur-sm z-10">
+        <div className="flex justify-center items-center gap-3 sm:gap-4 mt-6 sm:mt-8 pb-4 sticky bottom-0 ">
           <Button
             variant="outline"
-            className="bg-cyber-blue/10 hover:bg-cyber-blue/20 text-cyber-blue border-cyber-blue/20 text-sm"
+            className="bg-cyber-blue/10 hover:bg-cyber-blue/20 text-cyber-blue border-cyber-blue/20 text-sm focus:ring-0 focus:border-cyber-blue/40"
             onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
             disabled={currentPage === 1}
             aria-label="Previous page"
@@ -298,7 +298,7 @@ export default function WritingsSection({ onClose }: WritingsSectionProps) {
                   currentPage === page 
                     ? 'bg-cyber-blue text-white' 
                     : 'bg-cyber-blue/10 text-cyber-blue border-cyber-blue/20'
-                } hover:bg-cyber-blue/20 text-sm`}
+                } hover:bg-cyber-blue/20 text-sm focus:ring-0 focus:border-cyber-blue/40`}
                 onClick={() => setCurrentPage(page)}
                 aria-label={`Go to page ${page}`}
               >
@@ -308,7 +308,7 @@ export default function WritingsSection({ onClose }: WritingsSectionProps) {
           </div>
           <Button
             variant="outline"
-            className="bg-cyber-blue/10 hover:bg-cyber-blue/20 text-cyber-blue border-cyber-blue/20 text-sm"
+            className="bg-cyber-blue/10 hover:bg-cyber-blue/20 text-cyber-blue border-cyber-blue/20 text-sm focus:ring-0 focus:border-cyber-blue/40"
             onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
             disabled={currentPage === totalPages}
             aria-label="Next page"

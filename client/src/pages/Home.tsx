@@ -276,10 +276,16 @@ export default function Home() {
           {/* Subtitle without border as a cohesive subtitle */}
           <div className="max-w-2xl mx-auto text-center animate-fadeInUp delay-400">
             <p className="text-white/80 text-sm mb-1">
-              Building secure, resilient systems with zero-trust architecture and privacy-first development. Specializing in DevSecOps, cloud security, and adversarial resilience.
+            Protecting your edge. Powering your future.
+            
+            {/* Building zero-trust systems where privacy is default and resilience is relentless. DevSecOps. Cloud security. Adversarial defense. */}
+
+              {/* Building secure, resilient systems with zero-trust architecture and privacy-first development. Specializing in DevSecOps, cloud security, and adversarial resilience. */}
             </p>
+            {/* <br></br> */}
             <p className="text-cyber-accent font-plex text-xs italic">
-              "Engineering systems that protect your digital sovereignty while enhancing your capabilities."
+              
+              {/* "Engineering systems that protect your digital sovereignty while enhancing your capabilities." */}
             </p>
           </div>
           

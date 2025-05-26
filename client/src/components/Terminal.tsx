@@ -92,7 +92,7 @@ export default function Terminal({
         className="h-[300px] md:h-[350px] overflow-y-auto mb-4 font-plex"
       >
         {history.map((entry, index) => (
-          <div key={index} className="mb-4">
+          <div key={index} className="mb-4 animate-fadeInUp text-xs sm:text-sm">
             {entry.input && (
               <div className="mb-1 font-medium">
                 <span className="text-cyber-accent mr-2">kodex ~$</span>

@@ -17,9 +17,9 @@ export default function AboutSection({ onClose }: AboutSectionProps) {
         </div>
         
         <div className="flex items-center">
-          <div className="text-xs text-cyber-text/60 font-plex mr-4">
+          {/* <div className="text-xs text-cyber-text/60 font-plex mr-4">
             CYBERSECURITY SPECIALIST
-          </div>
+          </div> */}
           {onClose && (
             <button 
               onClick={onClose}
