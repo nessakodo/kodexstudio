@@ -1,6 +1,7 @@
 import { services } from '@/data/services';
 import { cn } from '@/lib/utils';
 import { useKodexTerminal } from '@/hooks/useKodexTerminal';
+import { Service } from '@/types';
 
 interface ServicesSectionProps {
   onClose?: () => void;
@@ -46,8 +47,8 @@ export default function ServicesSection({ onClose }: ServicesSectionProps) {
         <div className="flex items-center">
           <span className="text-xs text-cyber-blue/70 font-plex mr-1">~/</span>
           <span className="text-xs text-cyber-blue/70 font-plex mr-2">services —</span>
-          <h2 className="text-white font-orbitron text-xl tracking-wide">
-            Service Offerings
+          <h2 className="text-lg md:text-xl lg:text-2xl text-white font-orbitron tracking-wide">
+            Services & Expertise
           </h2>
         </div>
         
@@ -65,8 +66,8 @@ export default function ServicesSection({ onClose }: ServicesSectionProps) {
         )}
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {services.map(service => (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {services.map((service: Service) => (
           <div 
             key={service.id}
             className={cn(
@@ -84,15 +85,15 @@ export default function ServicesSection({ onClose }: ServicesSectionProps) {
             >
               {service.tier}
             </span>
-            <h3 className="font-orbitron text-lg mb-4 mt-4 text-cyber-blue">{service.title}</h3>
-            <p className="mb-4 text-sm text-white/80 flex-grow">{service.description}</p>
-            <ul className="mb-6 text-sm space-y-2.5">
-              {service.features.map((feature, index) => (
-                <li key={index} className="flex items-start">
-                  <svg className="w-4 h-4 text-cyber-blue mt-0.5 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <h3 className="font-orbitron text-base md:text-lg text-cyber-highlight tracking-wide mb-2">{service.title}</h3>
+            <p className="text-sm md:text-base text-white/80 flex-grow mb-4">{service.description}</p>
+            <ul className="text-sm space-y-1">
+              {service.areas.map((area: string, index: number) => (
+                <li key={index} className="flex items-start text-white/80">
+                  <svg className="w-4 h-4 text-cyber-blue/90 mt-0.5 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                   </svg>
-                  <span className="text-white/70">{feature}</span>
+                  <span>{area}</span>
                 </li>
               ))}
             </ul>

@@ -169,13 +169,13 @@ export default function WritingsSection({ onClose }: WritingsSectionProps) {
   }
 
   return (
-    <section ref={sectionRef} className="glass-panel border border-cyber-blue/20 backdrop-blur-xl p-4 sm:p-6 my-4 sm:my-8 animate-fadeIn overflow-y-auto">
-      <div className="flex justify-between items-center mb-4 pb-2 border-b border-cyber-blue/10 sticky top-0 ">
-        <div className="flex items-center w-full md:w-auto pointer-events-none">
-          <span className="text-[10px] sm:text-xs text-cyber-blue/70 font-plex mr-1">~/</span>
-          <span className="text-[10px] sm:text-xs text-cyber-blue/70 font-plex mr-2">writings —</span>
-          <h2 className="text-white font-orbitron text-base sm:text-lg tracking-wider">
-            Articles & Blog Posts
+    <section ref={sectionRef} className="glass-panel border border-cyber-blue/20 backdrop-blur-xl p-6 my-8 animate-fadeIn overflow-y-auto max-h-[85vh]">
+      <div className="flex justify-between items-center mb-4 pb-2 border-b border-cyber-blue/10">
+        <div className="flex items-center">
+          <span className="text-xs text-cyber-blue/70 font-plex mr-1">~/</span>
+          <span className="text-xs text-cyber-blue/70 font-plex mr-2">writings —</span>
+          <h2 className="text-lg md:text-xl lg:text-2xl text-white font-orbitron tracking-wide">
+            Writings & Insights
           </h2>
         </div>
         {onClose && (
@@ -190,35 +190,28 @@ export default function WritingsSection({ onClose }: WritingsSectionProps) {
       </div>
 
       {/* Search and Filters */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 mb-6 sticky top-[60px]  py-2">
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-cyber-blue/50 w-4 h-4" />
-          <Input
-            type="text"
-            placeholder="Search articles by title or content..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10 bg-cyber-blue/10 border-cyber-blue/20 text-cyber-text text-sm sm:text-base focus:ring-0 focus:border-cyber-blue/40"
-            aria-label="Search articles"
-          />
-        </div>
-        <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-          <SelectTrigger className="bg-cyber-blue/10 border-cyber-blue/20 text-cyber-text hover:bg-cyber-blue/20 text-sm sm:text-base focus:ring-0 focus:border-cyber-blue/40">
-            <SelectValue placeholder="Filter by category" />
-          </SelectTrigger>
-          <SelectContent className="bg-cyber-blue/10 border-cyber-blue/20">
-            <SelectItem value="all" className="text-sm sm:text-base">All Categories</SelectItem>
-            {categories.filter(category => category !== 'all').map(category => (
-              <SelectItem key={category} value={category} className="text-sm sm:text-base">
-                {category.charAt(0).toUpperCase() + category.slice(1)}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+      <div className="flex flex-col sm:flex-row items-center gap-4 mb-6">
+        <input
+          type="text"
+          placeholder="Search articles..."
+          className="flex-grow glass-input bg-cyber-blue/10 border border-cyber-blue/20 rounded-md px-4 py-2 text-sm text-white/80 placeholder-white/40 focus:outline-none focus:border-cyber-blue/40 transition-colors"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+        <select
+          className="glass-input bg-cyber-blue/10 border border-cyber-blue/20 rounded-md px-4 py-2 text-sm text-white/80 focus:outline-none focus:border-cyber-blue/40 transition-colors"
+          value={selectedCategory}
+          onChange={(e) => setSelectedCategory(e.target.value)}
+        >
+          <option value="">All Categories</option>
+          {categories.map(category => (
+            <option key={category} value={category}>{category}</option>
+          ))}
+        </select>
       </div>
 
       {/* Articles Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 pb-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {paginatedArticles.length === 0 ? (
           <div className="col-span-full text-center py-8 sm:py-12">
             <p className="text-cyber-text/60 text-sm sm:text-base">No articles found matching your search criteria.</p>
@@ -333,9 +326,9 @@ export default function WritingsSection({ onClose }: WritingsSectionProps) {
 
       {/* Article Modal */}
       <Dialog open={!!selectedArticle} onOpenChange={() => setSelectedArticle(null)}>
-        <DialogContent className="max-w-screen-xl w-[95vw] sm:w-[90vw] md:w-[85vw] lg:w-[80vw] bg-cyber-dark/95 border border-cyber-blue/20 backdrop-blur-xl p-4 sm:p-6 md:px-10 lg:px-16 rounded-lg fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-h-[85vh] flex flex-col">
+        <DialogContent className="glass-panel border border-cyber-blue/20 backdrop-blur-xl p-6 md:p-8 rounded-lg max-w-2xl w-full max-h-[85vh] overflow-y-auto animate-fadeInUp">
           <DialogHeader className="space-y-4 mb-4 flex-shrink-0">
-            <DialogTitle className="font-orbitron text-xl sm:text-2xl text-cyber-highlight tracking-wider">
+            <DialogTitle className="font-orbitron text-lg md:text-xl text-cyber-highlight tracking-wide">
               {selectedArticle?.title}
             </DialogTitle>
             <div className="flex flex-wrap items-center gap-4">
@@ -358,14 +351,15 @@ export default function WritingsSection({ onClose }: WritingsSectionProps) {
             </div>
           </DialogHeader>
 
-          <div className="flex-1 overflow-y-auto pr-2 min-h-0">
-            <div className="prose prose-invert prose-headings:text-cyber-highlight prose-a:text-cyber-blue prose-strong:text-cyber-accent prose-p:text-cyber-text/80 prose-li:text-cyber-text/80 w-full">
-              {selectedArticle?.content ? (
-                <ReactMarkdown>{selectedArticle.content}</ReactMarkdown>
-              ) : (
-                <p className="text-cyber-text/60 text-sm sm:text-base">No content available for this article.</p>
-              )}
-            </div>
+          <div className="text-sm md:text-base text-white/80 space-y-4 leading-relaxed">
+            {selectedArticle?.content && (
+              <div dangerouslySetInnerHTML={{ __html: selectedArticle.content }} className="prose prose-invert max-w-none" />
+            )}
+            {selectedArticle?.sourceUrl && (
+              <p>
+                <strong className="text-cyber-blue/90">Source:</strong> <a href={selectedArticle.sourceUrl} target="_blank" rel="noopener noreferrer" className="text-cyber-blue hover:underline">{selectedArticle.sourceUrl}</a>
+              </p>
+            )}
           </div>
 
           <div className="flex flex-col sm:flex-row justify-between gap-4 mt-4 pt-4 border-t border-cyber-blue/20 flex-shrink-0">

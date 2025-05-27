@@ -6,7 +6,7 @@ export const services: Service[] = [
     title: "Security Audit",
     description: "Comprehensive analysis of your digital infrastructure with actionable recommendations.",
     tier: "Starter",
-    features: [
+    areas: [
       "Vulnerability Assessment",
       "Basic Penetration Testing",
       "Security Recommendations",
@@ -19,7 +19,7 @@ export const services: Service[] = [
     title: "Secure Development",
     description: "End-to-end secure application development with continuous testing and monitoring.",
     tier: "Pro",
-    features: [
+    areas: [
       "Custom Security Architecture",
       "Advanced Penetration Testing",
       "Secure UI/UX Implementation",
@@ -34,7 +34,7 @@ export const services: Service[] = [
     title: "Enterprise Security",
     description: "Complete cybersecurity strategy and implementation for organizations with complex requirements.",
     tier: "Premium",
-    features: [
+    areas: [
       "All Pro Features",
       "Red Team Exercises",
       "Security Training & Workshops",

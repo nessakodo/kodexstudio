@@ -13,7 +13,7 @@ export interface Service {
   title: string;
   description: string;
   tier: 'Starter' | 'Pro' | 'Premium';
-  features: string[];
+  areas: string[];
   contactLink: string;
   highlighted?: boolean;
 }

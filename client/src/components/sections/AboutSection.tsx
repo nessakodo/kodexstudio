@@ -11,7 +11,7 @@ export default function AboutSection({ onClose }: AboutSectionProps) {
         <div className="flex items-center">
           <span className="text-xs text-cyber-blue/70 font-plex mr-1">~/</span>
           <span className="text-xs text-cyber-blue/70 font-plex mr-2">whois —</span>
-          <h2 className="text-white font-orbitron text-xl tracking-wide">
+          <h2 className="text-lg md:text-xl lg:text-2xl text-white font-orbitron tracking-wide">
             Nessa Kodo
           </h2>
         </div>
@@ -33,6 +33,20 @@ export default function AboutSection({ onClose }: AboutSectionProps) {
             </button>
           )}
         </div>
+      </div>
+      
+      <div className="text-sm md:text-base text-white/80 space-y-4 leading-relaxed">
+        <p>
+          Hey there! I'm Nessa Kodo, a <strong className="text-cyber-highlight">DevSecOps Engineer</strong> and <strong className="text-cyber-highlight">Security Strategist</strong> currently based in the vibrant tech scene of Vancouver, BC. My journey into the world of code and cybersecurity started with a fascination for how things work, both in building them robustly and understanding their potential vulnerabilities.
+        </p>
+
+        <p>
+          I specialize in architecting and securing cloud-native applications, implementing continuous security practices in CI/CD pipelines, and helping teams build resilience against modern threats. My approach blends technical expertise with a strategic mindset, focusing on creating systems that are not just functional, but inherently secure and scalable. I believe in ethical hacking and proactive defense as fundamental pillars of the digital landscape. You can check out my <a href="/Users/nessakodo/kodexstudio/client/src/components/assets/nessa-kodo-resume.pdf" target="_blank" rel="noopener noreferrer" className="text-cyber-blue hover:underline inline-flex items-center">resume here <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-1"><path d="M13 17l5-5-5-5M6 17l5-5-5-5"></path></svg></a>.
+        </p>
+
+        <p>
+          Beyond the keyboard, I'm passionate about contributing to the cybersecurity community through speaking engagements and sharing insights. I thrive on tackling complex problems and turning them into elegant, secure solutions. Let's connect and build something resilient together!
+        </p>
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

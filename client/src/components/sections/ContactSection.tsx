@@ -188,8 +188,8 @@ export default function ContactSection({ onClose }: ContactSectionProps) {
         <div className="flex items-center">
           <span className="text-xs text-cyber-blue/70 font-plex mr-1">~/</span>
           <span className="text-xs text-cyber-blue/70 font-plex mr-2">contact —</span>
-          <h2 className="text-white font-orbitron text-lg tracking-wide">
-            Contact
+          <h2 className="text-lg md:text-xl lg:text-2xl text-white font-orbitron tracking-wide">
+            Get in Touch
           </h2>
         </div>
         

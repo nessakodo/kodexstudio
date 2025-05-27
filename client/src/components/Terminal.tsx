@@ -109,7 +109,7 @@ export default function Terminal({
                 <span className="text-white">{entry.input}</span>
               </div>
             )}
-            <div className="pl-0 text-cyber-text/90">
+            <div className="pl-1 text-cyber-text/90">
               {entry.output}
             </div>
           </div>

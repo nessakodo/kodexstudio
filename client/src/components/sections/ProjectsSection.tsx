@@ -38,13 +38,13 @@ export default function ProjectsSection({ onClose }: ProjectsSectionProps) {
   const paginatedProjects = filteredProjects.slice(startIndex, startIndex + ITEMS_PER_PAGE);
 
   return (
-    <section className="glass-panel border border-cyber-blue/20 backdrop-blur-xl p-4 sm:p-6 my-4 sm:my-8 animate-fadeIn overflow-y-auto" aria-label="Projects">
-      <div className="flex justify-between items-center mb-4 pb-2 border-b border-cyber-blue/10 sticky top-0 ">
-        <div className="flex items-center w-full md:w-auto pointer-events-none">
-          <span className="text-[10px] sm:text-xs text-cyber-blue/70 font-plex mr-1">~/</span>
-          <span className="text-[10px] sm:text-xs text-cyber-blue/70 font-plex mr-2">projects —</span>
-          <h2 className="text-white font-orbitron text-base sm:text-lg tracking-wider">
-            Featured Projects
+    <section className="glass-panel border border-cyber-blue/20 backdrop-blur-xl p-6 my-8 animate-fadeIn">
+      <div className="flex justify-between items-center mb-4 pb-2 border-b border-cyber-blue/10">
+        <div className="flex items-center">
+          <span className="text-xs text-cyber-blue/70 font-plex mr-1">~/</span>
+          <span className="text-xs text-cyber-blue/70 font-plex mr-2">projects —</span>
+          <h2 className="text-lg md:text-xl lg:text-2xl text-white font-orbitron tracking-wide">
+            Projects
           </h2>
         </div>
         {onClose && (
