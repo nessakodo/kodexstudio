@@ -9,6 +9,7 @@ import WritingsSection from '@/components/sections/WritingsSection';
 import ClientsSection from '@/components/sections/ClientsSection';
 import ContactSection from '@/components/sections/ContactSection';
 import { useKodexTerminal } from '@/hooks/useKodexTerminal';
+import { useIsDesktop } from '@/hooks/useIsDesktop';
 import { downloadResume } from '@/lib/utils';
 import { Article } from '@/types';
 
@@ -20,6 +21,7 @@ import { Article } from '@/types';
 export default function Home() {
   const [bootComplete, setBootComplete] = useState(false);
   const [walkthrough, setWalkthrough] = useState({ active: false, step: 0 });
+  const isDesktop = useIsDesktop();
   
 
   
@@ -61,7 +63,7 @@ export default function Home() {
         <div className="mb-3">
           <p className="text-cyan-400 mb-1">Starting guided tour of KODEX.STUDIO</p>
           <p className="text-cyan-300/80 text-sm mb-1">
-            {window.innerWidth > 768 ? (
+            {isDesktop ? (
               <>Press <span className="bg-cyber-blue/20 px-2 py-0.5 rounded">SPACE</span> to continue to each step</>
             ) : (
               <>Tap anywhere on screen to continue</>
@@ -104,12 +106,13 @@ export default function Home() {
   
   // Function to handle walkthrough completion
   const handleWalkthroughComplete = () => {
+    // Clear the terminal history
     addToHistory({
       output: (
         <div className="mb-4">
           <p className="text-cyan-400 mb-2">Walkthrough complete! Would you like to return to the homepage?</p>
           <p className="text-cyan-300/80 text-sm mb-2">
-            {window.innerWidth > 768 ? (
+            {isDesktop ? (
               <>Press <span className="bg-cyber-blue/20 px-2 py-0.5 rounded">Y</span> for yes or <span className="bg-cyber-blue/20 px-2 py-0.5 rounded">N</span> for no</>
             ) : (
               <>Tap the buttons below to choose</>
@@ -118,18 +121,39 @@ export default function Home() {
           <div className="flex gap-4 mt-3">
             <button 
               onClick={() => {
+                // Clear terminal history
+                addToHistory({
+                  output: <div className="text-cyber-text/60 text-xs">Terminal cleared.</div>
+                });
+                // Reset walkthrough state
+                setWalkthrough({
+                  active: false,
+                  step: 0
+                });
+                // Close any open section
                 setActiveSection(null);
+                // Focus input
                 focusInput();
               }}
-              className="glass-button px-4 py-1.5 text-sm rounded text-center items-center justify-center"
+              className="glass-button px-4 py-1.5 text-xs rounded text-center items-center justify-center"
             >
               Yes (Y)
             </button>
             <button 
               onClick={() => {
+                // Clear terminal history
+                addToHistory({
+                  output: <div className="text-cyber-text/60 text-xs">Terminal cleared.</div>
+                });
+                // Reset walkthrough state
+                setWalkthrough({
+                  active: false,
+                  step: 0
+                });
+                // Focus input
                 focusInput();
               }}
-              className="glass-button px-4 py-1.5 text-sm rounded text-center items-center justify-center"
+              className="glass-button px-4 py-1.5 text-xs rounded text-center items-center justify-center"
             >
               No (N)
             </button>
@@ -299,6 +323,39 @@ export default function Home() {
     }
   };
   
+  // Get the last command to determine status message
+  const getStatusMessage = () => {
+    if (!history.length) return "System ready for commands";
+    
+    const lastEntry = history[history.length - 1];
+    if (!lastEntry.input) return "System ready for commands";
+    
+    const command = lastEntry.input.toLowerCase();
+    switch (command) {
+      case 'help':
+        return "Help menu displayed";
+      case 'walkthrough':
+        return "Guided tour started";
+      case 'whois':
+      case 'about':
+        return "About section opened";
+      case 'projects':
+        return "Projects section opened";
+      case 'services':
+        return "Services section opened";
+      case 'writings':
+        return "Writings section opened";
+      case 'clients':
+        return "Clients section opened";
+      case 'contact':
+        return "Contact section opened";
+      case 'clear':
+        return "Terminal cleared";
+      default:
+        return "Command executed";
+    }
+  };
+  
   return (
     <div className="bg-cyber-black text-cyber-text overflow-x-hidden min-h-screen">
       {/* Matrix Rain Background */}
@@ -311,33 +368,25 @@ export default function Home() {
       <div className={`container mx-auto px-4 py-6 max-w-6xl min-h-screen flex flex-col transition-opacity duration-500 ${bootComplete ? 'opacity-100' : 'opacity-0'}`}>
         {/* Header / Hero */}
         <header className="pt-6 md:pt-10 text-center mb-8">
-          <h1 className="font-orbitron font-bold text-4xl sm:text-5xl md:text-6xl tracking-wider mb-4 animate-fadeInUp">
+          <h1 className="font-orbitron font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-wider mb-4 animate-fadeInUp">
             <span className="bg-gradient-to-r from-white/90 via-cyber-blue to-blue-400 bg-clip-text text-transparent drop-shadow-sm">KODEX STUDIO</span>
           </h1>
-          <p className="font-space text-lg md:text-xl mb-4 text-white/80 animate-fadeInUp delay-100">
+          <p className="font-space text-base sm:text-lg md:text-xl mb-4 text-white/80 animate-fadeInUp delay-100">
             Security-Focused Software Engineering & DevSecOps
           </p>
-          <p className="text-cyber-blue text-sm md:text-base mb-10 font-plex animate-fadeInUp delay-200">
+          <p className="text-cyber-blue text-xs sm:text-sm md:text-base mb-10 font-plex animate-fadeInUp delay-200">
             &gt; Secure | Resilient | Ethical
           </p>
           
           {/* Subtitle without border as a cohesive subtitle */}
           <div className="max-w-2xl mx-auto text-center animate-fadeInUp delay-400">
-            <p className="text-white/80 text-sm mb-1">
-            Protecting your edge. Powering your future.
-            
-            {/* Building zero-trust systems where privacy is default and resilience is relentless. DevSecOps. Cloud security. Adversarial defense. */}
-
-              {/* Building secure, resilient systems with zero-trust architecture and privacy-first development. Specializing in DevSecOps, cloud security, and adversarial resilience. */}
+            <p className="text-white/80 text-xs sm:text-sm mb-1">
+              Protecting your edge. Powering your future.
             </p>
-            {/* <br></br> */}
-            <p className="text-cyber-accent font-plex text-xs italic">
-              
-              {/* "Engineering systems that protect your digital sovereignty while enhancing your capabilities." */}
+            <p className="text-cyber-accent font-plex text-[10px] sm:text-xs italic">
+              Engineering systems that protect your digital sovereignty while enhancing your capabilities.
             </p>
           </div>
-          
-          {/* Removed "Type help to explore" as the command guide is self-explanatory */}
         </header>
         
         {/* Terminal Interface */}
@@ -353,31 +402,31 @@ export default function Home() {
         {/* Active Content Section */}
         {renderActiveSection()}
         
-        {/* Walkthrough Continue Button - removed harsh border */}
+        {/* Walkthrough Continue Button */}
         {walkthrough.active && walkthrough.step < walkthroughSteps.length - 1 && (
           <div className="my-4 flex justify-center">
             <button
               onClick={handleWalkthroughClick}
-              className="bg-cyber-accent/10 text-cyber-accent px-5 py-1.5 rounded-md transition-all duration-300 hover:bg-cyber-accent/20"
+              className="bg-cyber-accent/10 text-cyber-accent px-4 sm:px-5 py-1.5 text-xs sm:text-sm rounded-md transition-all duration-300 hover:bg-cyber-accent/20"
             >
-              Continue Tour (press space)
+              {isDesktop ? "Continue Tour (press space)" : "Continue Tour"}
             </button>
           </div>
         )}
         
-        {/* Footer - improved spacing and removed period */}
+        {/* Footer */}
         <footer className="mt-4 pt-4 pb-3 border-t border-cyber-blue/10">
           <div className="flex flex-col md:flex-row items-center justify-between">
             <div className="flex items-center mb-4 md:mb-0">
-              <div className="flex items-center text-xs font-plex">
+              <div className="flex items-center text-[10px] sm:text-xs font-plex">
                 <span className="text-cyber-blue/80 mr-2">kodex ~$</span>
-                <span className="text-cyber-blue-softer/70">System ready for commands</span>
+                <span className="text-cyber-blue-softer/70">{getStatusMessage()}</span>
               </div>
             </div>
             
             <div className="flex items-center">
-              <span className="text-white/40 text-xs mr-4 font-orbitron">&copy; {new Date().getFullYear()} KODEX STUDIO</span>
-              <div className="flex space-x-5">
+              <span className="text-white/40 text-[10px] sm:text-xs mr-4 font-orbitron">&copy; {new Date().getFullYear()} KODEX STUDIO</span>
+              <div className="flex space-x-4 sm:space-x-5">
                 <a href="https://github.com/nessakodo" target="_blank" rel="noopener noreferrer" 
                    className="text-cyber-text/70 hover:text-cyber-blue transition-colors">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="fill-current">

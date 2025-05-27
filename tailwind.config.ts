@@ -6,8 +6,8 @@ export default {
   theme: {
     fontFamily: {
       orbitron: ['Orbitron', 'sans-serif'],
-      plex: ['IBM Plex Mono', 'monospace'],
-      space: ['Space Grotesk', 'sans-serif'],
+      sora: ['Sora', 'sans-serif'],
+      
     },
     extend: {
       borderRadius: {

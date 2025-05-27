@@ -1,5 +1,6 @@
 import { useRef, useEffect } from 'react';
 import { cn } from '@/lib/utils';
+import { useIsDesktop } from '@/hooks/useIsDesktop';
 
 interface TerminalProps {
   input: string;
@@ -22,16 +23,12 @@ export default function Terminal({
   className
 }: TerminalProps) {
   const outputRef = useRef<HTMLDivElement>(null);
+  const isDesktop = useIsDesktop();
   
   // Always scroll to bottom when history changes or input changes
   useEffect(() => {
     if (outputRef.current) {
-      // Use a small timeout to ensure content is rendered before scrolling
-      setTimeout(() => {
-        if (outputRef.current) {
-          outputRef.current.scrollTop = outputRef.current.scrollHeight;
-        }
-      }, 50);
+      outputRef.current.scrollTop = outputRef.current.scrollHeight;
     }
   }, [history, input]);
   
@@ -47,30 +44,30 @@ export default function Terminal({
           <span className="bg-yellow-500 w-3 h-3 rounded-full"></span>
           <span className="bg-green-500 w-3 h-3 rounded-full"></span>
         </div>
-        <div className="text-sm font-plex text-cyber-accent/80 font-medium">
+        <div className="text-sm font-plex text-cyber-accent/80 ">
           kodex ~$
         </div>
-        <div className="text-xs text-cyber-text/40">
+        <div className="text-sm text-cyber-text/40">
           v1.0.2
         </div>
       </div>
       
       {/* Command guide */}
-      <div className="bg-gradient-to-r from-cyber-blue/10 to-cyber-blue/5 border border-cyber-blue/20 rounded-lg p-3 mb-4 font-plex text-sm backdrop-blur-sm">
+      <div className="bg-gradient-to-r from-cyber-blue/10 to-cyber-blue/5 border border-cyber-blue/20 rounded-lg p-3 mb-4 font-plex text-xs sm:text-sm backdrop-blur-sm">
         <h3 className="text-cyber-highlight font-medium tracking-wide mb-2">⟠ Command Guide:</h3>
-        <p className="text-xs text-cyber-text/80 flex items-center gap-x-2">
+        <p className="text-xs sm:text-sm text-cyber-text/80 flex items-center gap-x-2">
           <span className="font-mono bg-cyber-blue/15 text-cyber-blue px-1.5 py-0.5 rounded-md border border-cyber-blue/20">help</span> 
           <span>for all options</span>
         </p>
         
         {/* Desktop-only commands */}
-        {window.innerWidth > 768 && (
+        {isDesktop && (
           <>
-            <p className="text-xs text-cyber-text/80 flex items-center gap-x-2 mt-2">
+            <p className="text-xs sm:text-sm text-cyber-text/80 flex items-center gap-x-2 mt-2">
               <span className="font-mono bg-cyber-blue/15 text-cyber-blue px-1.5 py-0.5 rounded-md border border-cyber-blue/20">Tab</span> 
               <span>for auto-completion</span>
             </p>
-            <p className="text-xs text-cyber-text/80 flex items-center gap-x-2 mt-2">
+            <p className="text-xs sm:text-sm text-cyber-text/80 flex items-center gap-x-2 mt-2">
               <span className="font-mono bg-cyber-blue/15 text-cyber-blue px-1.5 py-0.5 rounded-md border border-cyber-blue/20">Esc</span> 
               <span>to close sections</span>
             </p>
@@ -78,7 +75,7 @@ export default function Terminal({
         )}
         
         {/* Mobile-only tip */}
-        {window.innerWidth <= 768 && (
+        {!isDesktop && (
           <p className="text-xs text-cyber-text/80 flex items-center gap-x-2 mt-2">
             <span className="font-mono bg-cyber-blue/15 text-cyber-blue px-1.5 py-0.5 rounded-md border border-cyber-blue/20">walkthrough</span> 
             <span>for guided tour</span>
@@ -86,28 +83,39 @@ export default function Terminal({
         )}
       </div>
       
-      {/* Terminal output - adaptive height with scroll */}
-      <div 
-        ref={outputRef}
-        className="h-[300px] md:h-[350px] overflow-y-auto mb-4 font-plex"
-      >
-        {history.map((entry, index) => (
-          <div key={index} className="mb-4 animate-fadeInUp text-xs sm:text-sm">
-            {entry.input && (
-              <div className="mb-1 font-medium">
-                <span className="text-cyber-accent mr-2">kodex ~$</span>
-                <span className="text-white">{entry.input}</span>
+      {/* Terminal output - adaptive height with scroll and fade effects */}
+      <div className="relative flex-1 min-h-[200px] max-h-[300px] sm:max-h-[400px] overflow-hidden mb-4">
+        <div 
+          ref={outputRef}
+          className="h-full overflow-y-auto font-plex pr-2 pt-4"
+        >
+          {history.map((entry, index) => (
+            <div key={index} className="mb-4 animate-fadeInUp text-xs sm:text-sm">
+              {entry.input && (
+                <div className="mb-1 font-medium">
+                  <span className="text-cyber-accent mr-2">kodex ~$</span>
+                  <span className="text-white">{entry.input}</span>
+                </div>
+              )}
+              <div className="pl-0 text-cyber-text/90 text-xs sm:text-sm">
+                {entry.output}
               </div>
-            )}
-            <div className="pl-0 text-cyber-text/90">
-              {entry.output}
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
+        
+        {/* Top fade overlay - only show when content is scrolled */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute top-0 left-0 w-full h-8 bg-gradient-to-b from-cyber-black/90 to-transparent z-10 opacity-0 transition-opacity duration-200"
+          style={{
+            opacity: outputRef.current?.scrollTop ? 1 : 0
+          }}
+        ></div>
       </div>
       
       {/* Mobile command shortcuts */}
-      {window.innerWidth <= 768 && (
+      {!isDesktop && (
         <div className="mb-3 flex flex-wrap gap-2">
           <button 
             onClick={() => {
@@ -150,14 +158,14 @@ export default function Terminal({
       
       {/* Terminal input */}
       <div className="flex items-center border border-cyber-blue/30 rounded-lg p-2.5 bg-gradient-to-r from-cyber-blue/10 to-cyber-blue/5 backdrop-blur-sm">
-        <span className="text-cyber-accent mr-2 font-plex font-medium">kodex ~$</span>
+        <span className="text-cyber-accent mr-2 font-plex text-xs sm:text-sm">kodex ~$</span>
         <input
           ref={inputRef}
           type="text"
           value={input}
           onChange={(e) => onInputChange(e.target.value)}
           onKeyDown={onCommandSubmit}
-          className="bg-transparent flex-grow focus:outline-none text-cyber-text/90 font-plex caret-cyber-accent"
+          className="bg-transparent flex-grow focus:outline-none text-cyber-text/90 font-plex caret-cyber-accent text-xs sm:text-sm"
           placeholder="Type a command..."
           aria-label="Command input"
           autoComplete="off"

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Article } from '@/types';
 import { ContentService } from '@/services/contentService';
 import { Card } from '@/components/ui/card';
@@ -25,6 +25,7 @@ export default function WritingsSection({ onClose }: WritingsSectionProps) {
   const [selectedSource, setSelectedSource] = useState<string>('all');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchArticles = async () => {
@@ -58,6 +59,13 @@ export default function WritingsSection({ onClose }: WritingsSectionProps) {
     };
 
     fetchArticles();
+  }, []);
+
+  // Add autoscroll effect
+  useEffect(() => {
+    if (sectionRef.current) {
+      sectionRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
   }, []);
 
   // Filter articles based on search query and selected filters
@@ -156,7 +164,7 @@ export default function WritingsSection({ onClose }: WritingsSectionProps) {
   }
 
   return (
-    <section className="glass-panel border border-cyber-blue/20 backdrop-blur-xl p-4 sm:p-6 my-4 sm:my-8 animate-fadeIn overflow-y-auto">
+    <section ref={sectionRef} className="glass-panel border border-cyber-blue/20 backdrop-blur-xl p-4 sm:p-6 my-4 sm:my-8 animate-fadeIn overflow-y-auto">
       <div className="flex justify-between items-center mb-4 pb-2 border-b border-cyber-blue/10 sticky top-0 ">
         <div className="flex items-center w-full md:w-auto pointer-events-none">
           <span className="text-[10px] sm:text-xs text-cyber-blue/70 font-plex mr-1">~/</span>
