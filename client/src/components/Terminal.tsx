@@ -12,6 +12,7 @@ interface TerminalProps {
   onCommandSubmit: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   inputRef: React.RefObject<HTMLInputElement>;
   className?: string;
+  onCommandClick: (command: string) => void;
 }
 
 export default function Terminal({
@@ -20,7 +21,8 @@ export default function Terminal({
   history,
   onCommandSubmit,
   inputRef,
-  className
+  className,
+  onCommandClick
 }: TerminalProps) {
   const outputRef = useRef<HTMLDivElement>(null);
   const isDesktop = useIsDesktop();
@@ -61,7 +63,10 @@ export default function Terminal({
       <div className="bg-gradient-to-r from-cyber-blue/10 to-cyber-blue/5 border border-cyber-blue/20 rounded-lg p-2 sm:p-3 mb-3 sm:mb-4 font-plex text-xs sm:text-sm backdrop-blur-sm">
         <h3 className="text-cyber-highlight font-medium tracking-wide mb-1.5 sm:mb-2">⟠ Command Guide:</h3>
         <p className="text-[10px] sm:text-xs text-cyber-text/80 flex items-center gap-x-2">
-          <span className="font-mono bg-cyber-blue/15 text-cyber-blue px-1.5 py-0.5 rounded-md border border-cyber-blue/20">help</span> 
+          <button
+            onClick={() => onCommandClick('help')}
+            className="font-mono bg-cyber-blue/15 text-cyber-blue px-1.5 py-0.5 rounded-md border border-cyber-blue/20 cursor-pointer hover:bg-cyber-blue/20"
+          >help</button> 
           <span>for all options</span>
         </p>
         
@@ -79,10 +84,13 @@ export default function Terminal({
           </>
         )}
         
-        {/* Mobile-only tip */}
+        {/* Mobile-only tip / Make walkthrough clickable */}
         {!isDesktop && (
           <p className="text-[10px] sm:text-xs text-cyber-text/80 flex items-center gap-x-2 mt-1.5 sm:mt-2">
-            <span className="font-mono bg-cyber-blue/15 text-cyber-blue px-1.5 py-0.5 rounded-md border border-cyber-blue/20">walkthrough</span> 
+            <button
+              onClick={() => onCommandClick('walkthrough')}
+              className="font-mono bg-cyber-blue/15 text-cyber-blue px-1.5 py-0.5 rounded-md border border-cyber-blue/20 cursor-pointer hover:bg-cyber-blue/20"
+            >walkthrough</button> 
             <span>for guided tour</span>
           </p>
         )}
@@ -107,48 +115,6 @@ export default function Terminal({
           </div>
         ))}
       </div>
-      
-      {/* Mobile command shortcuts */}
-      {!isDesktop && (
-        <div className="mb-2 sm:mb-3 flex flex-wrap gap-1.5 sm:gap-2">
-          <button 
-            onClick={() => {
-              onInputChange("help");
-              onCommandSubmit({ key: 'Enter', preventDefault: () => {} } as React.KeyboardEvent<HTMLInputElement>);
-            }}
-            className="glass-button py-0.5 sm:py-1 px-1.5 sm:px-2 text-[10px] sm:text-xs rounded"
-          >
-            help
-          </button>
-          <button 
-            onClick={() => {
-              onInputChange("walkthrough");
-              onCommandSubmit({ key: 'Enter', preventDefault: () => {} } as React.KeyboardEvent<HTMLInputElement>);
-            }}
-            className="glass-button py-0.5 sm:py-1 px-1.5 sm:px-2 text-[10px] sm:text-xs rounded"
-          >
-            walkthrough
-          </button>
-          <button 
-            onClick={() => {
-              onInputChange("whois");
-              onCommandSubmit({ key: 'Enter', preventDefault: () => {} } as React.KeyboardEvent<HTMLInputElement>);
-            }}
-            className="glass-button py-0.5 sm:py-1 px-1.5 sm:px-2 text-[10px] sm:text-xs rounded"
-          >
-            about
-          </button>
-          <button 
-            onClick={() => {
-              onInputChange("contact");
-              onCommandSubmit({ key: 'Enter', preventDefault: () => {} } as React.KeyboardEvent<HTMLInputElement>);
-            }}
-            className="glass-button py-0.5 sm:py-1 px-1.5 sm:px-2 text-[10px] sm:text-xs rounded"
-          >
-            contact
-          </button>
-        </div>
-      )}
       
       {/* Terminal input */}
       <div className="flex items-center border border-cyber-blue/30 rounded-lg p-2 sm:p-2.5 bg-gradient-to-r from-cyber-blue/10 to-cyber-blue/5 backdrop-blur-sm">

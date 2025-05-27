@@ -40,7 +40,7 @@ export function useKodexTerminal() {
     setTimeout(() => {
       setActiveSection('contact');
     }, 100);
-  }, []);
+  }, [setActiveSection]);
   
   // Show welcome message when terminal mounts
   useEffect(() => {
@@ -103,6 +103,12 @@ export function useKodexTerminal() {
       inputRef.current.focus();
     }
   }, []);
+
+  // Helper function to handle setting input and focusing (defined after focusInput)
+  const setInputAndFocus = useCallback((cmd: string) => {
+    setInput(cmd);
+    focusInput();
+  }, [setInput, focusInput]);
 
   // Handle tab completion
   const handleTabComplete = useCallback(() => {
@@ -175,44 +181,74 @@ export function useKodexTerminal() {
             <p className={`${TERMINAL_STYLES.blue} mb-2 font-medium`}>Available commands:</p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2">
               <div className="flex items-center">
-                <span className={`${TERMINAL_STYLES.blue} bg-cyber-blue/10 px-1.5 py-0.5 rounded font-mono ${TERMINAL_STYLES.text}`}>help</span> 
+                <button 
+                  onClick={() => setInputAndFocus('help')}
+                  className={`${TERMINAL_STYLES.blue} bg-cyber-blue/10 px-1.5 py-0.5 rounded font-mono ${TERMINAL_STYLES.text} cursor-pointer hover:bg-cyber-blue/20`}
+                >help</button> 
                 <span className={`ml-3 ${TERMINAL_STYLES.text} text-cyber-text/70`}>Display available commands</span>
               </div>
               <div className="flex items-center">
-                <span className={`${TERMINAL_STYLES.blue} bg-cyber-blue/10 px-1.5 py-0.5 rounded font-mono ${TERMINAL_STYLES.text}`}>walkthrough</span> 
+                <button
+                  onClick={() => setInputAndFocus('walkthrough')}
+                  className={`${TERMINAL_STYLES.blue} bg-cyber-blue/10 px-1.5 py-0.5 rounded font-mono ${TERMINAL_STYLES.text} cursor-pointer hover:bg-cyber-blue/20`}
+                >walkthrough</button> 
                 <span className={`ml-3 ${TERMINAL_STYLES.text} text-cyber-text/70`}>Step-by-step guided tour</span>
               </div>
               <div className="flex items-center">
-                <span className={`${TERMINAL_STYLES.blue} bg-cyber-blue/10 px-1.5 py-0.5 rounded font-mono ${TERMINAL_STYLES.text}`}>whois</span> 
+                <button
+                  onClick={() => setInputAndFocus('whois')}
+                  className={`${TERMINAL_STYLES.blue} bg-cyber-blue/10 px-1.5 py-0.5 rounded font-mono ${TERMINAL_STYLES.text} cursor-pointer hover:bg-cyber-blue/20`}
+                >whois</button> 
                 <span className={`ml-3 ${TERMINAL_STYLES.text} text-cyber-text/70`}>About section + resume</span>
               </div>
               <div className="flex items-center">
-                <span className={`${TERMINAL_STYLES.blue} bg-cyber-blue/10 px-1.5 py-0.5 rounded font-mono ${TERMINAL_STYLES.text}`}>projects</span> 
+                <button
+                  onClick={() => setInputAndFocus('projects')}
+                  className={`${TERMINAL_STYLES.blue} bg-cyber-blue/10 px-1.5 py-0.5 rounded font-mono ${TERMINAL_STYLES.text} cursor-pointer hover:bg-cyber-blue/20`}
+                >projects</button> 
                 <span className={`ml-3 ${TERMINAL_STYLES.text} text-cyber-text/70`}>Technical portfolio</span>
               </div>
               <div className="flex items-center">
-                <span className={`${TERMINAL_STYLES.blue} bg-cyber-blue/10 px-1.5 py-0.5 rounded font-mono ${TERMINAL_STYLES.text}`}>services</span> 
+                <button
+                  onClick={() => setInputAndFocus('services')}
+                  className={`${TERMINAL_STYLES.blue} bg-cyber-blue/10 px-1.5 py-0.5 rounded font-mono ${TERMINAL_STYLES.text} cursor-pointer hover:bg-cyber-blue/20`}
+                >services</button> 
                 <span className={`ml-3 ${TERMINAL_STYLES.text} text-cyber-text/70`}>Freelance offerings</span>
               </div>
               <div className="flex items-center">
-                <span className={`${TERMINAL_STYLES.blue} bg-cyber-blue/10 px-1.5 py-0.5 rounded font-mono ${TERMINAL_STYLES.text}`}>writings</span> 
+                <button
+                  onClick={() => setInputAndFocus('writings')}
+                  className={`${TERMINAL_STYLES.blue} bg-cyber-blue/10 px-1.5 py-0.5 rounded font-mono ${TERMINAL_STYLES.text} cursor-pointer hover:bg-cyber-blue/20`}
+                >writings</button> 
                 <span className={`ml-3 ${TERMINAL_STYLES.text} text-cyber-text/70`}>Blog content & thoughts</span>
               </div>
               <div className="flex items-center">
-                <span className="text-cyber-blue bg-cyber-blue/10 px-1.5 py-0.5 rounded font-mono text-sm">clients</span> 
-                <span className="ml-3 text-cyber-text/70">Case studies & testimonials</span>
+                <button
+                  onClick={() => setInputAndFocus('clients')}
+                  className={`${TERMINAL_STYLES.blue} bg-cyber-blue/10 px-1.5 py-0.5 rounded font-mono ${TERMINAL_STYLES.text} cursor-pointer hover:bg-cyber-blue/20`}
+                >clients</button> 
+                <span className={`ml-3 ${TERMINAL_STYLES.text} text-cyber-text/70`}>Case studies & testimonials</span>
               </div>
               <div className="flex items-center">
-                <span className="text-cyber-blue bg-cyber-blue/10 px-1.5 py-0.5 rounded font-mono text-sm">contact</span> 
-                <span className="ml-3 text-cyber-text/70">Project form & scheduling</span>
+                <button
+                  onClick={() => setInputAndFocus('contact')}
+                  className={`${TERMINAL_STYLES.blue} bg-cyber-blue/10 px-1.5 py-0.5 rounded font-mono ${TERMINAL_STYLES.text} cursor-pointer hover:bg-cyber-blue/20`}
+                >contact</button> 
+                <span className={`ml-3 ${TERMINAL_STYLES.text} text-cyber-text/70`}>Project form & scheduling</span>
               </div>
               <div className="flex items-center">
-                <span className="text-cyber-blue bg-cyber-blue/10 px-1.5 py-0.5 rounded font-mono text-sm">resume</span> 
-                <span className="ml-3 text-cyber-text/70">Download PDF resume</span>
+                <button
+                  onClick={() => setInputAndFocus('resume')}
+                  className={`${TERMINAL_STYLES.blue} bg-cyber-blue/10 px-1.5 py-0.5 rounded font-mono ${TERMINAL_STYLES.text} cursor-pointer hover:bg-cyber-blue/20`}
+                >resume</button> 
+                <span className={`ml-3 ${TERMINAL_STYLES.text} text-cyber-text/70`}>Download PDF resume</span>
               </div>
               <div className="flex items-center">
-                <span className="text-cyber-blue bg-cyber-blue/10 px-1.5 py-0.5 rounded font-mono text-sm">clear</span> 
-                <span className="ml-3 text-cyber-text/70">Clear terminal output</span>
+                <button
+                  onClick={() => setInputAndFocus('clear')}
+                  className={`${TERMINAL_STYLES.blue} bg-cyber-blue/10 px-1.5 py-0.5 rounded font-mono ${TERMINAL_STYLES.text} cursor-pointer hover:bg-cyber-blue/20`}
+                >clear</button> 
+                <span className={`ml-3 ${TERMINAL_STYLES.text} text-cyber-text/70`}>Clear terminal output</span>
               </div>
             </div>
           </div>
@@ -228,7 +264,6 @@ export function useKodexTerminal() {
             output: cmdOutput
           }
         ]);
-        setInput('');
         return;
       } else if (cmd === 'whois') {
         setActiveSection('about');
@@ -274,15 +309,15 @@ export function useKodexTerminal() {
         );
       } else if (cmd === 'walkthrough') {
         cmdOutput = (
-          <div className={TERMINAL_STYLES.green}>
-            <p>Starting guided tour. First, let's look at the about section...</p>
+          <div className={'text-yellow-400'}>
+            <p>Walkthrough sequence initiated...</p>
             {/* <p className={`${TERMINAL_STYLES.text}`}>The about section will be displayed automatically.</p> */}
           </div>
         );
       } else if (cmd === 'resume') {
         downloadResume();
         cmdOutput = (
-          <div className={TERMINAL_STYLES.green}>
+          <div className={'text-yellow-400'}>
             <p>Downloading Nessa Kodo's resume...</p>
           </div>
         );
@@ -305,12 +340,12 @@ export function useKodexTerminal() {
       // Clear input
       setInput('');
     }
-  }, [input, handleTabComplete]);
+  }, [input, handleTabComplete, setInputAndFocus, navigateToContact, downloadResume, setActiveSection, setHistory]);
   
   // Helper function to add entries to terminal history
   const addToHistory = useCallback((entry: TerminalHistory) => {
     setHistory(prev => [...prev, entry]);
-  }, []);
+  }, [setHistory]);
   
   return {
     input,
@@ -323,6 +358,7 @@ export function useKodexTerminal() {
     focusInput,
     handleCommandSubmit,
     addToHistory,
-    navigateToContact
+    navigateToContact,
+    setInputAndFocus
   };
 }

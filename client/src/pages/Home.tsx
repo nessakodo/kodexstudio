@@ -35,11 +35,13 @@ export default function Home() {
     focusInput,
     handleCommandSubmit,
     addToHistory,
-    setHistory
+    setHistory,
+    setInputAndFocus
   } = useKodexTerminal();
   
-  // Ref to store the initial timeout ID
+  // Ref to store the initial timeout ID and auto-continue timeout ID
   const initialWalkthroughTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const autoContinueTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null); // Ref for auto-continue timeout
 
   // Refs for mutually dependent functions
   const triggerFirstWalkthroughStepRef = useRef<(() => void) | null>(null);
@@ -47,10 +49,6 @@ export default function Home() {
 
   // Define walkthrough steps
   const walkthroughSteps = [
-    {
-      message: "Welcome to KODEX.STUDIO—the portfolio of Nessa Kodo, where DevSecOps, security, and creative technology intersect.",
-      command: "nessa-kodo"
-    },
     {
       message: "Start with the vision. Meet Nessa Kodo—DevSecOps engineer, security strategist, and creative technologist.",
       command: "whois"
@@ -77,27 +75,36 @@ export default function Home() {
 
   // Function to handle walkthrough completion
   const handleWalkthroughComplete = useCallback(() => {
+    console.log('handleWalkthroughComplete called'); // Log start of completion
+    // Clear any existing auto-continue timeout
+    if (autoContinueTimeoutRef.current) {
+      clearTimeout(autoContinueTimeoutRef.current);
+      autoContinueTimeoutRef.current = null;
+      console.log('Cleared autoContinueTimeout in handleWalkthroughComplete');
+    }
+
     // Clear input and set to 'help'
     setInput('help'); // Set input to help
+    console.log('Input set to help');
     
     // Add completion message to history
     addToHistory({
       output: (
-        <div className={'text-terminal-green'}>
-          <p>Walkthrough complete!</p>
+        <div className={'mt-2'}>
+          <p className={'text-yellow-400'}>Walkthrough complete!</p>
           <p className={'mt-2'}>Type <span className={'text-cyber-blue'}>help</span> to see available commands.</p>
         </div>
       )
     });
+    console.log('Completion message added to history');
     
     // Deactivate walkthrough state
-    setWalkthrough({
-      active: false,
-      step: 0
-    });
+    setWalkthrough({ active: false, step: 0 });
+    console.log('Walkthrough state deactivated');
     
     // Focus the input field
     focusInput();
+    console.log('Input focused after completion');
     
   }, [setInput, addToHistory, setWalkthrough, focusInput]);
   
@@ -106,115 +113,126 @@ export default function Home() {
     setActiveSection(null);
   }, [setActiveSection]);
 
-  // Function to trigger the first step of the walkthrough (called by timeout or interaction)
-  const triggerFirstWalkthroughStep = useCallback(() => {
-    // Clear the initial timeout if it exists (safety)
+  // Function to handle walkthrough progression (called by continue button or space)
+  const handleWalkthroughClick = useCallback(() => {
+    console.log(`handleWalkthroughClick called. Current step: ${walkthrough.step}, Active: ${walkthrough.active}`);
+    // Clear the initial timeout if it exists
     if (initialWalkthroughTimeoutRef.current) {
       clearTimeout(initialWalkthroughTimeoutRef.current);
       initialWalkthroughTimeoutRef.current = null;
     }
 
-    setWalkthrough({ active: true, step: 0 });
-    const firstStep = walkthroughSteps[0];
-    
-    // Set the active section for the first step
-    setActiveSection(firstStep.command === "nessa-kodo" || firstStep.command === "whois" ? "about" : null); // Assuming first step is about/whois
-    setInput(firstStep.command);
-    
-    // Add the output for the first step to history
-     addToHistory({
-      input: firstStep.command,
-      output: (
-        <div className="mb-2">
-          <div className="text-sm text-cyber-blue/80 mb-2">{firstStep.message}</div>
-          {/* Continue button visible especially for mobile */}
-              <div className="mt-2">
-                <button 
-                  onClick={() => handleWalkthroughClickRef.current?.()}
-                  className="glass-button px-4 py-1.5 text-xs rounded text-center items-center justify-center"
-                >
-                  Continue Tour →
-                </button>
-              </div>
-        </div>
-      )
-    });
-    focusInput();
-  }, [walkthroughSteps, setActiveSection, setInput, addToHistory, focusInput]);
-  
-  // Function to handle walkthrough progression (called by continue button or space)
-  const handleWalkthroughClick = useCallback(() => {
-    // Clear the initial timeout if it exists (in case button is clicked before timeout)
-    if (initialWalkthroughTimeoutRef.current) {
-      clearTimeout(initialWalkthroughTimeoutRef.current);
-      initialWalkthroughTimeoutRef.current = null;
+    // Clear any existing auto-continue timeout before proceeding
+    if (autoContinueTimeoutRef.current) {
+      clearTimeout(autoContinueTimeoutRef.current);
+      autoContinueTimeoutRef.current = null;
+      console.log('Cleared previous autoContinueTimeout in handleWalkthroughClick');
     }
     
-    // If walkthrough is not active, trigger the first step
-    if (!walkthrough.active) {
-      triggerFirstWalkthroughStepRef.current?.();
-      return; // Stop here, the first step is triggered
+    const currentStepIndex = walkthrough.active ? walkthrough.step : -1; // -1 if not active yet
+    const nextStepIndex = currentStepIndex + 1;
+
+    console.log(`Next step index calculation: ${nextStepIndex}`);
+
+    // Check if this click completes the walkthrough
+    if (nextStepIndex === walkthroughSteps.length) {
+        console.log('Manual trigger on last step. Initiating completion.');
+        handleWalkthroughComplete();
+        return; // Stop further processing
     }
-    
-    const nextStep = walkthrough.step + 1;
-    
-    if (nextStep < walkthroughSteps.length) {
-      // Process next step
-      const step = walkthroughSteps[nextStep];
+
+    if (nextStepIndex < walkthroughSteps.length) {
+      const step = walkthroughSteps[nextStepIndex];
+      console.log(`Processing step: ${nextStepIndex}, Command: ${step.command}`);
+
+      // Update step state
+      setWalkthrough({ active: true, step: nextStepIndex });
+      console.log(`Walkthrough state updated: active=true, step=${nextStepIndex}`);
       
-      // Update step
-      setWalkthrough({
-        active: true,
-        step: nextStep
-      });
-      
-      // Close current section first
+      // Close current section first (if any) before opening the next one
       setActiveSection(null);
       
-      // Short delay to ensure the section closes before opening the next one
+      // Short delay to ensure the section closes before opening the next one and adding history
       setTimeout(() => {
-        // Set the active section based on the command
-        if (step.command === "nessa-kodo" || step.command === "whois") setActiveSection("about");
+        console.log(`Inside timeout after closing section. Setting active section: ${step.command}`);
+        // Set the active section
+        if (step.command === "whois") setActiveSection("about");
         else if (step.command === "projects") setActiveSection("projects");
         else if (step.command === "services") setActiveSection("services");
         else if (step.command === "writings") setActiveSection("writings");
         else if (step.command === "clients") setActiveSection("clients");
         else if (step.command === "contact") setActiveSection("contact");
         
-        // Set the input value to match the command
         setInput(step.command);
+        console.log(`Input set to: ${step.command}`);
         
-        // Add to history with the appropriate command and continue button for mobile
-        addToHistory({ 
-          input: step.command,
-          output: (
-            <div className="mb-2">
-              <div className="text-sm text-cyber-blue/80 mb-2">{step.message}</div>
-              
-              {/* Continue button visible especially for mobile */}
-              <div className="mt-2">
-                <button 
-                  onClick={() => handleWalkthroughClickRef.current?.()}
-                  className="glass-button px-4 py-1.5 text-xs rounded text-center items-center justify-center"
-                >
-                  Continue Tour →
-                </button>
+        // Add to history with the appropriate command and message/button after setting section and input
+        setTimeout(() => {
+          console.log('Inside timeout after setting input. Adding history entry.');
+          addToHistory({ 
+            input: step.command,
+            output: (
+              <div className="mb-2">
+                <div className="text-sm text-cyber-blue/80 mb-2">{step.message}</div>
+                
+                {/* Continue button visible for manual progression */}
+                <div className="mt-2">
+                  <button 
+                    onClick={() => handleWalkthroughClickRef.current?.()}
+                    className="glass-button px-4 py-1.5 text-xs rounded text-center items-center justify-center"
+                  >
+                    Continue Tour →
+                  </button>
+                </div>
               </div>
-            </div>
-          )
-        });
-        
-        // Focus the input for the next command
-        setTimeout(focusInput, 300);
-      }, 300);
+            )
+          });
+          console.log('History entry added.');
+          
+          // Focus the input for the next command
+          setTimeout(focusInput, 300);
+
+           // Automatically proceed to the next step after a delay (except when manually triggered on the last step)
+          if (nextStepIndex < walkthroughSteps.length -1) { // Only set auto-continue for non-last steps
+            console.log(`Setting auto-continue timeout for next step (${nextStepIndex + 1})...`);
+            autoContinueTimeoutRef.current = setTimeout(() => {
+              handleWalkthroughClickRef.current?.();
+            }, 5000); // Auto-continue after 5 seconds
+          } else {
+             // This is the last step. Set the auto-completion timeout.
+             console.log('This is the last step. Setting timeout for completion...');
+             autoContinueTimeoutRef.current = setTimeout(() => {
+                handleWalkthroughComplete();
+             }, 5000); // Auto-complete after 5 seconds on the last step
+          }
+
+        }, 100); // Small delay to ensure section and input are set before adding history
+
+      }, 300); // Delay for closing previous section
     } else {
-      // Walkthrough is complete, show completion message and set input to help
-      handleWalkthroughComplete();
+      // Walkthrough is complete (should be handled by the timeout on the last step or manual trigger)
+      // This case might be hit if handleWalkthroughClick is called manually after completion
+      console.log("Walkthrough already complete. handleWalkthroughClick called unnecessarily."); // Add logging for debugging
     }
-  }, [walkthrough.active, walkthrough.step, walkthroughSteps, setActiveSection, setInput, addToHistory, focusInput, handleWalkthroughComplete]);
+  }, [walkthrough.active, walkthrough.step, walkthroughSteps.length, setActiveSection, setInput, addToHistory, focusInput, handleWalkthroughComplete]);
   
+  // Function to trigger the first step of the walkthrough (called by timeout or interaction)
+  const triggerFirstWalkthroughStep = useCallback(() => {
+     handleWalkthroughClickRef.current?.(); // Simply trigger the click handler, it will handle the first step
+  }, []); // No dependencies needed as it calls via ref
+
   // Start the walkthrough (called by 'walkthrough' command)
   const startWalkthroughTour = useCallback(() => {
+    // Clear any existing timeout if a new walkthrough is started
+     if (initialWalkthroughTimeoutRef.current) {
+      clearTimeout(initialWalkthroughTimeoutRef.current);
+      initialWalkthroughTimeoutRef.current = null;
+    }
+     if (autoContinueTimeoutRef.current) {
+      clearTimeout(autoContinueTimeoutRef.current);
+      autoContinueTimeoutRef.current = null;
+    }
+
     // Add initial welcome message with instructions
     addToHistory({
       output: (
@@ -245,7 +263,7 @@ export default function Home() {
       triggerFirstWalkthroughStepRef.current?.();
     }, 5000);
     
-  }, [addToHistory]); // Removed triggerFirstWalkthroughStep and handleWalkthroughClick from dependencies
+  }, [addToHistory]); // No dependencies needed as it calls via ref
 
   // Update refs whenever the functions change
   useEffect(() => {
@@ -274,29 +292,19 @@ export default function Home() {
       // If space is pressed and walkthrough is active or starting
       if (e.code === 'Space' && (walkthrough.active || initialWalkthroughTimeoutRef.current)) {
         e.preventDefault(); // Prevent page scrolling
-        
-        // Clear the initial timeout if it exists
-        if (initialWalkthroughTimeoutRef.current) {
-          clearTimeout(initialWalkthroughTimeoutRef.current);
-          initialWalkthroughTimeoutRef.current = null;
-        }
-        
-        // If walkthrough is not active, trigger the first step
-        if (!walkthrough.active) {
-          triggerFirstWalkthroughStepRef.current?.();
-        } else if (walkthrough.step < walkthroughSteps.length - 1) { // If walkthrough is active and not at the last step
-           handleWalkthroughClickRef.current?.();
-        } else if (walkthrough.step === walkthroughSteps.length - 1) { // If at the last step, trigger completion
-           handleWalkthroughComplete();
-        }
+        handleWalkthroughClickRef.current?.(); // Trigger the click handler
       }
       
       // If escape is pressed during walkthrough, exit walkthrough
       if (e.key === 'Escape' && walkthrough.active) {
-        // Clear the initial timeout if it exists
+        // Clear any existing timeouts
         if (initialWalkthroughTimeoutRef.current) {
           clearTimeout(initialWalkthroughTimeoutRef.current);
           initialWalkthroughTimeoutRef.current = null;
+        }
+        if (autoContinueTimeoutRef.current) {
+          clearTimeout(autoContinueTimeoutRef.current);
+          autoContinueTimeoutRef.current = null;
         }
         
         setWalkthrough({
@@ -323,13 +331,52 @@ export default function Home() {
     // Cleanup
     return () => {
       window.removeEventListener('keydown', handleKeyPress);
-      // Clear the initial timeout on cleanup
+      // Clear all timeouts on cleanup
       if (initialWalkthroughTimeoutRef.current) {
         clearTimeout(initialWalkthroughTimeoutRef.current);
       }
+      if (autoContinueTimeoutRef.current) {
+        clearTimeout(autoContinueTimeoutRef.current);
+      }
     };
-  }, [walkthrough.active, walkthrough.step, walkthroughSteps.length, setActiveSection, addToHistory, focusInput, handleWalkthroughComplete, triggerFirstWalkthroughStepRef, handleWalkthroughClickRef]); // Updated dependencies
+  }, [walkthrough.active, walkthrough.step, walkthroughSteps.length, setActiveSection, addToHistory, focusInput, handleWalkthroughComplete, handleWalkthroughClickRef]);
   
+  // Effect to scroll to active section when it changes
+  useEffect(() => {
+    if (activeSection) {
+      // Short delay to allow component to render fully
+      setTimeout(() => {
+        const sectionElement = document.querySelector('section');
+        if (sectionElement) {
+          // Calculate offset to ensure we see the section title at the top, considering a potential fixed header/nav (adjust offset as needed)
+          // The terminal and its header might act as a 'fixed' top bar on mobile, so adjust scroll based on screen size
+          const isMobile = window.innerWidth < 768; // Assuming 768px is your mobile breakpoint
+          const headerHeight = isMobile ? 0 : 0; // Adjust based on actual fixed header height on desktop vs mobile
+          
+          // Attempt to find the section header for a more precise scroll target
+          const sectionHeader = sectionElement.querySelector('div[class*="border-b"]') as HTMLElement | null;
+          
+          // Scroll target is the top of the section element, adjusted by header height and a small padding
+          let scrollTarget = sectionElement.offsetTop;
+          
+          // If a section header is found, use its position relative to the section, plus the section's offsetTop
+          if (sectionHeader) {
+               scrollTarget = sectionElement.offsetTop + sectionHeader.offsetTop;
+          }
+
+          // Apply header height offset, but ensure we don't scroll above the top of the page (0)
+          const offset = headerHeight + (isMobile ? 10 : 20); // Add more padding on mobile
+          const finalScrollPosition = Math.max(0, scrollTarget - offset);
+          
+          window.scrollTo({
+            top: finalScrollPosition,
+            behavior: 'smooth'
+          });
+        }
+      }, 150); // Delay to allow section to render
+    }
+  }, [activeSection]); // Depend on activeSection
+
   // Add a command handler for walkthrough - use a regular function to avoid dependency issues
   function handleCommand(e: React.KeyboardEvent<HTMLInputElement>) {
     // First, call the terminal's default command handler
@@ -360,6 +407,10 @@ export default function Home() {
        if (initialWalkthroughTimeoutRef.current) {
           clearTimeout(initialWalkthroughTimeoutRef.current);
           initialWalkthroughTimeoutRef.current = null;
+        }
+       if (autoContinueTimeoutRef.current) {
+          clearTimeout(autoContinueTimeoutRef.current);
+          autoContinueTimeoutRef.current = null;
         }
     };
   }, []);
@@ -424,13 +475,14 @@ export default function Home() {
           onCommandSubmit={handleCommand}
           inputRef={inputRef}
           className="mb-6"
+          onCommandClick={setInputAndFocus}
         />
         
         {/* Active Content Section */}
         {renderActiveSection()}
         
         {/* Walkthrough Continue Button */}
-        {walkthrough.active && walkthrough.step < walkthroughSteps.length - 1 && (
+        {walkthrough.active && walkthrough.step < walkthroughSteps.length && ( // Keep button visible on the last step
           <div className="my-4 flex justify-center">
             <button
               onClick={() => handleWalkthroughClickRef.current?.()}

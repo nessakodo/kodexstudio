@@ -32,9 +32,9 @@ export default function ClientsSection({ onClose }: ClientsSectionProps) {
       
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
         {clients.map(client => (
-          <div key={client.id} className="glass-panel border border-cyber-blue/20 p-6 rounded-lg h-[350px] flex flex-col justify-between">
+          <div key={client.id} className="glass-panel border border-cyber-blue/20 p-6 rounded-lg flex flex-col">
             <div className="flex items-center mb-4">
-              <div className="w-16 h-16 rounded-full bg-cyber-blue/5 border border-cyber-blue/20 flex items-center justify-center mr-4">
+              <div className="w-16 h-16 rounded-full bg-cyber-blue/5 border border-cyber-blue/20 flex items-center justify-center mr-4 flex-shrink-0">
                 <i className={`fas fa-${client.icon} text-cyber-blue/90 text-2xl`}></i>
               </div>
               <div>
@@ -43,7 +43,7 @@ export default function ClientsSection({ onClose }: ClientsSectionProps) {
               </div>
             </div>
             
-            <p className="mb-4 text-sm text-white/80">{client.description}</p>
+            <p className="mb-4 text-sm text-white/80 flex-grow">{client.description}</p>
             
             <div className="mb-4">
               <h4 className="text-cyber-accent/90 text-sm mb-2 font-medium">Key Results:</h4>
@@ -59,7 +59,7 @@ export default function ClientsSection({ onClose }: ClientsSectionProps) {
               </ul>
             </div>
             
-            <div className="text-right">
+            <div className="text-center md:text-right mt-auto">
               <a 
                 href={client.caseStudyUrl}
                 target="_blank"

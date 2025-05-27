@@ -27,6 +27,18 @@ export default function WritingsSection({ onClose }: WritingsSectionProps) {
   const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
 
+  // Add effect to scroll to the bottom of the section when articles load or filter/pagination changes
+  useEffect(() => {
+    if (sectionRef.current && !loading) {
+      // Use a small timeout to allow content to render before scrolling
+      setTimeout(() => {
+        if (sectionRef.current) {
+          sectionRef.current.scrollTop = sectionRef.current.scrollHeight;
+        }
+      }, 100);
+    }
+  }, [articles, loading, currentPage, searchQuery, selectedSource, selectedCategory]); // Depend on data, loading state, and filters
+
   useEffect(() => {
     const fetchArticles = async () => {
       try {
@@ -59,14 +71,7 @@ export default function WritingsSection({ onClose }: WritingsSectionProps) {
     };
 
     fetchArticles();
-  }, []);
-
-  // Add autoscroll effect
-  useEffect(() => {
-    if (sectionRef.current) {
-      sectionRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, []);
+  }, []); // Empty dependency array to run only on mount
 
   // Filter articles based on search query and selected filters
   const filteredArticles = articles.filter(article => {
