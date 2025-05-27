@@ -42,6 +42,16 @@ export interface Client {
   caseStudyUrl?: string;
 }
 
+export interface Showcase {
+  id: string;
+  name: string;
+  industry: string;
+  icon: string;
+  description: string;
+  results: string[];
+  caseStudyUrl: string;
+}
+
 export interface Testimonial {
   id: string;
   quote: string;

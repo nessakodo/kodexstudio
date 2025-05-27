@@ -10,7 +10,7 @@ const AVAILABLE_COMMANDS = [
   'projects',
   'services',
   'writings',
-  'clients',
+  'showcase',
   'contact',
   'resume',
   'clear'
@@ -224,10 +224,10 @@ export function useKodexTerminal() {
               </div>
               <div className="flex items-center">
                 <button
-                  onClick={() => setInputAndFocus('clients')}
+                  onClick={() => setInputAndFocus('showcase')}
                   className={`${TERMINAL_STYLES.blue} bg-cyber-blue/10 px-1.5 py-0.5 rounded font-mono ${TERMINAL_STYLES.text} cursor-pointer hover:bg-cyber-blue/20`}
-                >clients</button> 
-                <span className={`ml-3 ${TERMINAL_STYLES.text} text-cyber-text/70`}>Case studies & testimonials</span>
+                >showcase</button> 
+                <span className={`ml-3 ${TERMINAL_STYLES.text} text-cyber-text/70`}>Community initiatives & real-world impact</span>
               </div>
               <div className="flex items-center">
                 <button
@@ -293,11 +293,11 @@ export function useKodexTerminal() {
             <p className={TERMINAL_STYLES.blue}>Loading published articles...</p>
           </div>
         );
-      } else if (cmd === 'clients') {
-        setActiveSection('clients');
+      } else if (cmd === 'showcase') {
+        setActiveSection('showcase');
         cmdOutput = (
           <div className={TERMINAL_STYLES.green}>
-            <p className={TERMINAL_STYLES.blue}>Gathering client testimonials...</p>
+            <p className={TERMINAL_STYLES.blue}>Loading community initiatives...</p>
           </div>
         );
       } else if (cmd === 'contact') {

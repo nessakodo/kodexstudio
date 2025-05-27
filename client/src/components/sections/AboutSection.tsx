@@ -11,7 +11,7 @@ export default function AboutSection({ onClose }: AboutSectionProps) {
         <div className="flex items-center">
           <span className="text-xs text-cyber-blue/70 font-plex mr-1">~/</span>
           <span className="text-xs text-cyber-blue/70 font-plex mr-2">whois —</span>
-          <h2 className="text-lg md:text-xl lg:text-2xl text-white font-orbitron tracking-wide">
+          <h2 className="text-white font-orbitron text-xl tracking-wide">
             Nessa Kodo
           </h2>
         </div>
@@ -35,41 +35,27 @@ export default function AboutSection({ onClose }: AboutSectionProps) {
         </div>
       </div>
       
-      <div className="text-sm md:text-base text-white/80 space-y-4 leading-relaxed">
-        <p>
-          Hey there! I'm Nessa Kodo, a <strong className="text-cyber-highlight">DevSecOps Engineer</strong> and <strong className="text-cyber-highlight">Security Strategist</strong> currently based in the vibrant tech scene of Vancouver, BC. My journey into the world of code and cybersecurity started with a fascination for how things work, both in building them robustly and understanding their potential vulnerabilities.
-        </p>
-
-        <p>
-          I specialize in architecting and securing cloud-native applications, implementing continuous security practices in CI/CD pipelines, and helping teams build resilience against modern threats. My approach blends technical expertise with a strategic mindset, focusing on creating systems that are not just functional, but inherently secure and scalable. I believe in ethical hacking and proactive defense as fundamental pillars of the digital landscape. You can check out my <a href="/Users/nessakodo/kodexstudio/client/src/components/assets/nessa-kodo-resume.pdf" target="_blank" rel="noopener noreferrer" className="text-cyber-blue hover:underline inline-flex items-center">resume here <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-1"><path d="M13 17l5-5-5-5M6 17l5-5-5-5"></path></svg></a>.
-        </p>
-
-        <p>
-          Beyond the keyboard, I'm passionate about contributing to the cybersecurity community through speaking engagements and sharing insights. I thrive on tackling complex problems and turning them into elegant, secure solutions. Let's connect and build something resilient together!
-        </p>
-      </div>
-      
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div className="md:col-span-2">
           <div className="prose prose-invert mb-6">
             <p className="text-white/90 mb-4">
-              I'm a security-focused software engineer specializing in DevSecOps, secure cloud architecture, and adversarial resilience. My mission is to build systems that prioritize security, privacy, and digital sovereignty.
+              I'm Nessa Kodo—a DevSecOps Engineer and Security Strategist specializing in resilient cloud systems and next-gen AI security. I architect security at every layer, blending automation, vulnerability management, and creative problem-solving to help organizations embed defense and digital well-being into their workflows.
             </p>
             
             <p className="text-white/80 mb-4">
-              With expertise in secure coding practices, vulnerability management, and zero-trust architecture, I help organizations implement robust security measures while maintaining system performance and usability. My work spans application security, cloud infrastructure, and secure development lifecycle implementation.
-            </p>
-            
-            <p className="text-white/80 mb-4">
-              As the founder of <span className="text-cyber-blue">KODEX.STUDIO</span>, I provide security-focused consulting and development services, helping clients build resilient systems that withstand modern threats while maintaining compliance with industry standards.
+              Currently deepening my expertise in adversarial ML and AI defense, I also consult and teach through <span className="text-cyber-blue">KODEX.STUDIO</span>, empowering others to build and protect with intention.
             </p>
             
             <div className="bg-cyber-blue/5 border border-cyber-blue/20 rounded-lg p-4 my-6">
               <h3 className="text-cyber-blue font-plex m-0 mb-3 text-base font-medium">MISSION</h3>
               <p className="text-white/90 m-0 text-sm pl-4 border-l-2 border-cyber-blue/30">
-                To engineer secure, resilient systems that protect digital assets while enabling innovation. I believe in building security into every layer of the technology stack, from infrastructure to application code.
+                To engineer secure, innovative systems that safeguard digital assets and drive digital sovereignty in an evolving threat landscape.
               </p>
             </div>
+
+            <p className="text-white/80 mb-4">
+              Let's connect if you're ready to future-proof your tech.
+            </p>
           </div>
           
           <div className="grid grid-cols-2 gap-6 mb-6">
@@ -134,8 +120,8 @@ export default function AboutSection({ onClose }: AboutSectionProps) {
                 <div className="flex items-start">
                   <div className="mr-3 text-cyber-blue pt-1">•</div>
                   <div>
-                    <h4 className="text-sm font-medium text-white/90 m-0">Cybersecurity</h4>
-                    <p className="text-xs text-white/60 mt-1">UC Davis (in progress)</p>
+                    <h4 className="text-sm font-medium text-white/90 m-0">AWS Certified Cloud Practitioner</h4>
+                    <p className="text-xs text-white/60 mt-1">(in progress)</p>
                   </div>
                 </div>
                 
@@ -174,15 +160,24 @@ export default function AboutSection({ onClose }: AboutSectionProps) {
             
             <div className="text-left mb-6">
               <h3 className="text-cyber-blue mb-3 font-plex text-sm font-medium text-center">CURRENT ROLES</h3>
-              <div className="space-y-2 text-sm">
-                <p className="text-white/90 font-medium m-0">Security Operations Specialist</p>
-                <p className="text-white/60 text-xs m-0">UCD Anschutz Medical Campus — HIPAA Compliance</p>
+              <div className="space-y-4 text-sm">
+                <div className="mb-6">
+                  <p className="text-white/90 font-medium m-0">Security Operations Specialist</p>
+                  <p className="text-white/60 text-xs m-0"><span className="text-white/80 font-medium">UCD Anschutz Medical Campus</span></p>
+                  <p className="text-white/60 text-xs m-0 pl-3 relative before:content-['•'] before:absolute before:left-0 before:text-cyber-blue">Ensuring HIPAA compliance and enhancing cloud security.</p>
+                </div>
                 
-                <p className="text-white/90 font-medium m-0 mt-4">Founder & Lead Developer</p>
-                <p className="text-white/60 text-xs m-0">KODEX.STUDIO — Security-Focused Development</p>
+                <div className="mb-6">
+                  <p className="text-white/90 font-medium m-0">Founder & Lead Developer</p>
+                  <p className="text-white/60 text-xs m-0"><span className="text-white/80 font-medium">KODEX STUDIO</span></p>
+                  <p className="text-white/60 text-xs m-0 pl-3 relative before:content-['•'] before:absolute before:left-0 before:text-cyber-blue">Leading security-first development and expert consulting.</p>
+                </div>
                 
-                <p className="text-white/90 font-medium m-0 mt-4">Officer, AI Student Association</p>
-                <p className="text-white/60 text-xs m-0">UC Denver — Technical Leadership</p>
+                <div>
+                  <p className="text-white/90 font-medium m-0">Technical Lead & Officer</p>
+                  <p className="text-white/60 text-xs m-0"><span className="text-white/80 font-medium">UCD Auraria Campus</span></p>
+                   <p className="text-white/60 text-xs m-0 pl-3 relative before:content-['•'] before:absolute before:left-0 before:text-cyber-blue">Providing technical leadership in AI security research & collaboration.</p>
+                </div>
               </div>
             </div>
             

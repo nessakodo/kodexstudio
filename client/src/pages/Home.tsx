@@ -6,7 +6,7 @@ import AboutSection from '@/components/sections/AboutSection';
 import ProjectsSection from '@/components/sections/ProjectsSection';
 import ServicesSection from '@/components/sections/ServicesSection';
 import WritingsSection from '@/components/sections/WritingsSection';
-import ClientsSection from '@/components/sections/ClientsSection';
+import ShowcaseSection from '@/components/sections/ShowcaseSection';
 import ContactSection from '@/components/sections/ContactSection';
 import { useKodexTerminal } from '@/hooks/useKodexTerminal';
 import { useIsDesktop } from '@/hooks/useIsDesktop';
@@ -60,6 +60,10 @@ export default function Home() {
     {
       message: "See flagship projects showcasing robust DevSecOps, adversarial resilience, and innovation.",
       command: "projects"
+    },
+    {
+      message: "Explore standout projects and initiatives advancing secure development, creative technology, and real-world impact.",
+      command: "showcase"
     },
     {
       message: "Review services: DevSecOps implementation, cloud security, security audits, and technical consulting.",
@@ -160,7 +164,7 @@ export default function Home() {
         else if (step.command === "projects") setActiveSection("projects");
         else if (step.command === "services") setActiveSection("services");
         else if (step.command === "writings") setActiveSection("writings");
-        else if (step.command === "clients") setActiveSection("clients");
+        else if (step.command === "showcase") setActiveSection("showcase");
         else if (step.command === "contact") setActiveSection("contact");
         
         setInput(step.command);
@@ -425,8 +429,8 @@ export default function Home() {
         return <ServicesSection onClose={handleCloseSection} />;
       case 'writings':
         return <WritingsSection onClose={handleCloseSection} />;
-      case 'clients':
-        return <ClientsSection onClose={handleCloseSection} />;
+      case 'showcase':
+        return <ShowcaseSection onClose={() => setActiveSection(null)} />;
       case 'contact':
         return <ContactSection onClose={handleCloseSection} />;
       default:
