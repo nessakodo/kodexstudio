@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import BootSequence from '@/components/BootSequence';
 import MatrixRain from '@/components/MatrixRain';
 import Terminal from '@/components/Terminal';
@@ -19,74 +19,12 @@ import { Article } from '@/types';
  * @returns {JSX.Element}
  */
 export default function Home() {
+  // Define state
   const [bootComplete, setBootComplete] = useState(false);
   const [walkthrough, setWalkthrough] = useState({ active: false, step: 0 });
+  
+  // Use hooks
   const isDesktop = useIsDesktop();
-  
-
-  
-  // Define walkthrough steps
-  const walkthroughSteps = [
-    {
-      message: "Welcome to the guided tour of KODEX.STUDIO. Let's start by exploring who Nessa Kodo is...",
-      command: "nessa-kodo"
-    },
-    {
-      message: "Next, let's look at some of the key projects in the portfolio...",
-      command: "projects"
-    },
-    {
-      message: "Now for the services offered to clients...",
-      command: "services"
-    },
-    {
-      message: "Let's check out some of the published articles and blog posts...",
-      command: "writings"
-    },
-    {
-      message: "Finally, here's how to get in touch for project inquiries...",
-      command: "contact"
-    }
-  ];
-  
-  // Start the walkthrough
-  const startWalkthroughTour = () => {
-    // Set walkthrough as active and start at step 0
-    setWalkthrough({
-      active: true,
-      step: 0
-    });
-    
-    // Add initial welcome message with instructions
-    addToHistory({
-      output: (
-        <div className="mb-3">
-          <p className="text-cyan-400 mb-1">Starting guided tour of KODEX.STUDIO</p>
-          <p className="text-cyan-300/80 text-sm mb-1">
-            {isDesktop ? (
-              <>Press <span className="bg-cyber-blue/20 px-2 py-0.5 rounded">SPACE</span> to continue to each step</>
-            ) : (
-              <>Tap anywhere on screen to continue</>
-            )}
-          </p>
-          <p className="text-white/60 text-sm">Tour will auto-continue in 8 seconds</p>
-          <div className="mt-3">
-            <button 
-              onClick={handleWalkthroughClick}
-              className="glass-button px-4 py-1.5 text-sm rounded text-center items-center justify-center"
-            >
-              Continue Tour →
-            </button>
-          </div>
-        </div>
-      )
-    });
-    
-    // Set the active section to about (first step)
-    setActiveSection("about");
-  };
-  
-  // Use the terminal hook
   const {
     input,
     setInput,
@@ -96,75 +34,128 @@ export default function Home() {
     inputRef,
     focusInput,
     handleCommandSubmit,
-    addToHistory
+    addToHistory,
+    setHistory
   } = useKodexTerminal();
   
-  // Function to close active section and return to terminal
-  const handleCloseSection = () => {
-    setActiveSection(null);
-  };
+  // Ref to store the initial timeout ID
+  const initialWalkthroughTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Refs for mutually dependent functions
+  const triggerFirstWalkthroughStepRef = useRef<(() => void) | null>(null);
+  const handleWalkthroughClickRef = useRef<(() => void) | null>(null);
+
+  // Define walkthrough steps
+  const walkthroughSteps = [
+    {
+      message: "Welcome to KODEX.STUDIO—the portfolio of Nessa Kodo, where DevSecOps, security, and creative technology intersect.",
+      command: "nessa-kodo"
+    },
+    {
+      message: "Start with the vision. Meet Nessa Kodo—DevSecOps engineer, security strategist, and creative technologist.",
+      command: "whois"
+    },
+    {
+      message: "Explore published insights on secure development, cloud, and digital resilience.",
+      command: "writings"
+    },
+    {
+      message: "See flagship projects showcasing robust DevSecOps, adversarial resilience, and innovation.",
+      command: "projects"
+    },
+    {
+      message: "Review services: DevSecOps implementation, cloud security, security audits, and technical consulting.",
+      command: "services"
+    },
+    {
+      message: "Ready to collaborate? Reach out for strategic partnerships or project inquiries.",
+      command: "contact"
+    }
+  ];
   
+  // Define helper functions and handlers (using useCallback where appropriate)
+
   // Function to handle walkthrough completion
-  const handleWalkthroughComplete = () => {
-    // Clear the terminal history
+  const handleWalkthroughComplete = useCallback(() => {
+    // Clear input and set to 'help'
+    setInput('help'); // Set input to help
+    
+    // Add completion message to history
     addToHistory({
       output: (
-        <div className="mb-4">
-          <p className="text-cyan-400 mb-2">Walkthrough complete! Would you like to return to the homepage?</p>
-          <p className="text-cyan-300/80 text-sm mb-2">
-            {isDesktop ? (
-              <>Press <span className="bg-cyber-blue/20 px-2 py-0.5 rounded">Y</span> for yes or <span className="bg-cyber-blue/20 px-2 py-0.5 rounded">N</span> for no</>
-            ) : (
-              <>Tap the buttons below to choose</>
-            )}
-          </p>
-          <div className="flex gap-4 mt-3">
-            <button 
-              onClick={() => {
-                // Clear terminal history
-                addToHistory({
-                  output: <div className="text-cyber-text/60 text-xs">Terminal cleared.</div>
-                });
-                // Reset walkthrough state
-                setWalkthrough({
-                  active: false,
-                  step: 0
-                });
-                // Close any open section
-                setActiveSection(null);
-                // Focus input
-                focusInput();
-              }}
-              className="glass-button px-4 py-1.5 text-xs rounded text-center items-center justify-center"
-            >
-              Yes (Y)
-            </button>
-            <button 
-              onClick={() => {
-                // Clear terminal history
-                addToHistory({
-                  output: <div className="text-cyber-text/60 text-xs">Terminal cleared.</div>
-                });
-                // Reset walkthrough state
-                setWalkthrough({
-                  active: false,
-                  step: 0
-                });
-                // Focus input
-                focusInput();
-              }}
-              className="glass-button px-4 py-1.5 text-xs rounded text-center items-center justify-center"
-            >
-              No (N)
-            </button>
-          </div>
+        <div className={'text-terminal-green'}>
+          <p>Walkthrough complete!</p>
+          <p className={'mt-2'}>Type <span className={'text-cyber-blue'}>help</span> to see available commands.</p>
         </div>
       )
     });
-  };
+    
+    // Deactivate walkthrough state
+    setWalkthrough({
+      active: false,
+      step: 0
+    });
+    
+    // Focus the input field
+    focusInput();
+    
+  }, [setInput, addToHistory, setWalkthrough, focusInput]);
   
-  // Function to handle walkthrough progression
+  // Function to close active section and return to terminal
+  const handleCloseSection = useCallback(() => {
+    setActiveSection(null);
+  }, [setActiveSection]);
+
+  // Function to trigger the first step of the walkthrough (called by timeout or interaction)
+  const triggerFirstWalkthroughStep = useCallback(() => {
+    // Clear the initial timeout if it exists (safety)
+    if (initialWalkthroughTimeoutRef.current) {
+      clearTimeout(initialWalkthroughTimeoutRef.current);
+      initialWalkthroughTimeoutRef.current = null;
+    }
+
+    setWalkthrough({ active: true, step: 0 });
+    const firstStep = walkthroughSteps[0];
+    
+    // Set the active section for the first step
+    setActiveSection(firstStep.command === "nessa-kodo" || firstStep.command === "whois" ? "about" : null); // Assuming first step is about/whois
+    setInput(firstStep.command);
+    
+    // Add the output for the first step to history
+     addToHistory({
+      input: firstStep.command,
+      output: (
+        <div className="mb-2">
+          <div className="text-sm text-cyber-blue/80 mb-2">{firstStep.message}</div>
+          {/* Continue button visible especially for mobile */}
+              <div className="mt-2">
+                <button 
+                  onClick={() => handleWalkthroughClickRef.current?.()}
+                  className="glass-button px-4 py-1.5 text-xs rounded text-center items-center justify-center"
+                >
+                  Continue Tour →
+                </button>
+              </div>
+        </div>
+      )
+    });
+    focusInput();
+  }, [walkthroughSteps, setActiveSection, setInput, addToHistory, focusInput]);
+  
+  // Function to handle walkthrough progression (called by continue button or space)
   const handleWalkthroughClick = useCallback(() => {
+    // Clear the initial timeout if it exists (in case button is clicked before timeout)
+    if (initialWalkthroughTimeoutRef.current) {
+      clearTimeout(initialWalkthroughTimeoutRef.current);
+      initialWalkthroughTimeoutRef.current = null;
+    }
+    
+    // If walkthrough is not active, trigger the first step
+    if (!walkthrough.active) {
+      triggerFirstWalkthroughStepRef.current?.();
+      return; // Stop here, the first step is triggered
+    }
+    
     const nextStep = walkthrough.step + 1;
     
     if (nextStep < walkthroughSteps.length) {
@@ -183,7 +174,7 @@ export default function Home() {
       // Short delay to ensure the section closes before opening the next one
       setTimeout(() => {
         // Set the active section based on the command
-        if (step.command === "nessa-kodo") setActiveSection("about");
+        if (step.command === "nessa-kodo" || step.command === "whois") setActiveSection("about");
         else if (step.command === "projects") setActiveSection("projects");
         else if (step.command === "services") setActiveSection("services");
         else if (step.command === "writings") setActiveSection("writings");
@@ -203,7 +194,7 @@ export default function Home() {
               {/* Continue button visible especially for mobile */}
               <div className="mt-2">
                 <button 
-                  onClick={handleWalkthroughClick}
+                  onClick={() => handleWalkthroughClickRef.current?.()}
                   className="glass-button px-4 py-1.5 text-xs rounded text-center items-center justify-center"
                 >
                   Continue Tour →
@@ -217,28 +208,97 @@ export default function Home() {
         setTimeout(focusInput, 300);
       }, 300);
     } else {
-      // End of walkthrough
-      setWalkthrough({
-        active: false,
-        step: 0
-      });
-      
-      // Show completion message
+      // Walkthrough is complete, show completion message and set input to help
       handleWalkthroughComplete();
     }
-  }, [walkthrough.step, walkthroughSteps, setActiveSection, setInput, addToHistory, focusInput]);
+  }, [walkthrough.active, walkthrough.step, walkthroughSteps, setActiveSection, setInput, addToHistory, focusInput, handleWalkthroughComplete]);
+  
+  // Start the walkthrough (called by 'walkthrough' command)
+  const startWalkthroughTour = useCallback(() => {
+    // Add initial welcome message with instructions
+    addToHistory({
+      output: (
+        <div className="mb-3">
+          <p className="text-cyan-400 mb-1">Starting guided tour of KODEX.STUDIO</p>
+          {/* <p className="text-cyan-300/80 text-sm mb-1">
+            {isDesktop ? (
+              <>Press <span className="bg-cyber-blue/20 px-2 py-0.5 rounded">SPACE</span> to continue to each step</>
+            ) : (
+              <>Tap anywhere on screen to continue</>
+            )}
+          </p> */}
+          <p className="text-white/60 text-sm">Tour will start in 5 seconds or press Space/click Continue Tour</p>
+          <div className="mt-3">
+            <button 
+              onClick={() => handleWalkthroughClickRef.current?.()}
+              className="glass-button px-4 py-1.5 text-xs rounded text-center items-center justify-center"
+            >
+              Continue Tour →
+            </button>
+          </div>
+        </div>
+      )
+    });
+    
+    // Set a timeout to trigger the first step after 5 seconds
+    initialWalkthroughTimeoutRef.current = setTimeout(() => {
+      triggerFirstWalkthroughStepRef.current?.();
+    }, 5000);
+    
+  }, [addToHistory]); // Removed triggerFirstWalkthroughStep and handleWalkthroughClick from dependencies
+
+  // Update refs whenever the functions change
+  useEffect(() => {
+    triggerFirstWalkthroughStepRef.current = triggerFirstWalkthroughStep;
+    handleWalkthroughClickRef.current = handleWalkthroughClick;
+  }, [triggerFirstWalkthroughStep, handleWalkthroughClick]);
+
+  // Effect to handle escape key to close sections
+  useEffect(() => {
+    const handleEscapeKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && activeSection) {
+        handleCloseSection();
+        focusInput();
+      }
+    };
+
+    window.addEventListener('keydown', handleEscapeKey);
+    return () => {
+      window.removeEventListener('keydown', handleEscapeKey);
+    };
+  }, [activeSection, handleCloseSection, focusInput]);
   
   // Effect to handle space key presses for walkthrough progression
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
-      // If space is pressed and walkthrough is active, continue to next step
-      if (e.code === 'Space' && walkthrough.active) {
+      // If space is pressed and walkthrough is active or starting
+      if (e.code === 'Space' && (walkthrough.active || initialWalkthroughTimeoutRef.current)) {
         e.preventDefault(); // Prevent page scrolling
-        handleWalkthroughClick();
+        
+        // Clear the initial timeout if it exists
+        if (initialWalkthroughTimeoutRef.current) {
+          clearTimeout(initialWalkthroughTimeoutRef.current);
+          initialWalkthroughTimeoutRef.current = null;
+        }
+        
+        // If walkthrough is not active, trigger the first step
+        if (!walkthrough.active) {
+          triggerFirstWalkthroughStepRef.current?.();
+        } else if (walkthrough.step < walkthroughSteps.length - 1) { // If walkthrough is active and not at the last step
+           handleWalkthroughClickRef.current?.();
+        } else if (walkthrough.step === walkthroughSteps.length - 1) { // If at the last step, trigger completion
+           handleWalkthroughComplete();
+        }
       }
       
       // If escape is pressed during walkthrough, exit walkthrough
       if (e.key === 'Escape' && walkthrough.active) {
+        // Clear the initial timeout if it exists
+        if (initialWalkthroughTimeoutRef.current) {
+          clearTimeout(initialWalkthroughTimeoutRef.current);
+          initialWalkthroughTimeoutRef.current = null;
+        }
+        
         setWalkthrough({
           active: false,
           step: 0
@@ -255,25 +315,7 @@ export default function Home() {
         // Focus input
         focusInput();
       }
-
-      // Handle Y/N response after walkthrough completion
-      if (!walkthrough.active && (e.key.toLowerCase() === 'y' || e.key.toLowerCase() === 'n')) {
-        if (e.key.toLowerCase() === 'y') {
-          setActiveSection(null);
-        }
-        focusInput();
-      }
     };
-    
-    // Auto-continue timer for walkthrough
-    let autoContinueTimer: ReturnType<typeof setTimeout> | null = null;
-    
-    if (walkthrough.active) {
-      // Set a timer to auto-continue after 8 seconds if no key is pressed
-      autoContinueTimer = setTimeout(() => {
-        handleWalkthroughClick();
-      }, 8000);
-    }
     
     // Add event listener
     window.addEventListener('keydown', handleKeyPress);
@@ -281,11 +323,12 @@ export default function Home() {
     // Cleanup
     return () => {
       window.removeEventListener('keydown', handleKeyPress);
-      if (autoContinueTimer) {
-        clearTimeout(autoContinueTimer);
+      // Clear the initial timeout on cleanup
+      if (initialWalkthroughTimeoutRef.current) {
+        clearTimeout(initialWalkthroughTimeoutRef.current);
       }
     };
-  }, [walkthrough.active, walkthrough.step, handleWalkthroughClick, setActiveSection, addToHistory, focusInput]);
+  }, [walkthrough.active, walkthrough.step, walkthroughSteps.length, setActiveSection, addToHistory, focusInput, handleWalkthroughComplete, triggerFirstWalkthroughStepRef, handleWalkthroughClickRef]); // Updated dependencies
   
   // Add a command handler for walkthrough - use a regular function to avoid dependency issues
   function handleCommand(e: React.KeyboardEvent<HTMLInputElement>) {
@@ -297,13 +340,30 @@ export default function Home() {
       startWalkthroughTour();
     }
   }
-  
+
   // When the boot is complete, focus the terminal
   useEffect(() => {
     if (bootComplete) {
       focusInput();
+    } else {
+      // Clear initial walkthrough timeout if boot is not complete yet and user hasn't interacted
+       if (initialWalkthroughTimeoutRef.current) {
+          clearTimeout(initialWalkthroughTimeoutRef.current);
+          initialWalkthroughTimeoutRef.current = null;
+        }
     }
   }, [bootComplete, focusInput]);
+  
+  // Effect to clear timeout if component unmounts
+  useEffect(() => {
+    return () => {
+       if (initialWalkthroughTimeoutRef.current) {
+          clearTimeout(initialWalkthroughTimeoutRef.current);
+          initialWalkthroughTimeoutRef.current = null;
+        }
+    };
+  }, []);
+
   const renderActiveSection = () => {
     switch (activeSection) {
       case 'about':
@@ -320,39 +380,6 @@ export default function Home() {
         return <ContactSection onClose={handleCloseSection} />;
       default:
         return null;
-    }
-  };
-  
-  // Get the last command to determine status message
-  const getStatusMessage = () => {
-    if (!history.length) return "System ready for commands";
-    
-    const lastEntry = history[history.length - 1];
-    if (!lastEntry.input) return "System ready for commands";
-    
-    const command = lastEntry.input.toLowerCase();
-    switch (command) {
-      case 'help':
-        return "Help menu displayed";
-      case 'walkthrough':
-        return "Guided tour started";
-      case 'whois':
-      case 'about':
-        return "About section opened";
-      case 'projects':
-        return "Projects section opened";
-      case 'services':
-        return "Services section opened";
-      case 'writings':
-        return "Writings section opened";
-      case 'clients':
-        return "Clients section opened";
-      case 'contact':
-        return "Contact section opened";
-      case 'clear':
-        return "Terminal cleared";
-      default:
-        return "Command executed";
     }
   };
   
@@ -374,7 +401,7 @@ export default function Home() {
           <p className="font-space text-base sm:text-lg md:text-xl mb-4 text-white/80 animate-fadeInUp delay-100">
             Security-Focused Software Engineering & DevSecOps
           </p>
-          <p className="text-cyber-blue text-xs sm:text-sm md:text-base mb-10 font-plex animate-fadeInUp delay-200">
+          <p className="text-cyber-blue text-xs sm:text-sm md:text-base mb-5 font-plex animate-fadeInUp delay-200">
             &gt; Secure | Resilient | Ethical
           </p>
           
@@ -383,9 +410,9 @@ export default function Home() {
             <p className="text-white/80 text-xs sm:text-sm mb-1">
               Protecting your edge. Powering your future.
             </p>
-            <p className="text-cyber-accent font-plex text-[10px] sm:text-xs italic">
+            {/* <p className="text-cyber-accent font-plex text-[10px] sm:text-xs italic">
               Engineering systems that protect your digital sovereignty while enhancing your capabilities.
-            </p>
+            </p> */}
           </div>
         </header>
         
@@ -406,7 +433,7 @@ export default function Home() {
         {walkthrough.active && walkthrough.step < walkthroughSteps.length - 1 && (
           <div className="my-4 flex justify-center">
             <button
-              onClick={handleWalkthroughClick}
+              onClick={() => handleWalkthroughClickRef.current?.()}
               className="bg-cyber-accent/10 text-cyber-accent px-4 sm:px-5 py-1.5 text-xs sm:text-sm rounded-md transition-all duration-300 hover:bg-cyber-accent/20"
             >
               {isDesktop ? "Continue Tour (press space)" : "Continue Tour"}
@@ -420,7 +447,7 @@ export default function Home() {
             <div className="flex items-center mb-4 md:mb-0">
               <div className="flex items-center text-[10px] sm:text-xs font-plex">
                 <span className="text-cyber-blue/80 mr-2">kodex ~$</span>
-                <span className="text-cyber-blue-softer/70">{getStatusMessage()}</span>
+                <span className="text-cyber-blue-softer/70">System ready for commands</span>
               </div>
             </div>
             

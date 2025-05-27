@@ -6,7 +6,13 @@ export default {
   ],
   theme: {
     extend: {
-      // ... existing theme extensions
+      colors: {
+        // ... existing colors ...
+      },
+      textColor: {
+        'terminal-green': 'rgb(74 222 128)', // green-400
+      },
+      // ... rest of existing theme config ...
     },
   },
   plugins: [

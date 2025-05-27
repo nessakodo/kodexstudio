@@ -16,6 +16,16 @@ const AVAILABLE_COMMANDS = [
   'clear'
 ];
 
+// Define terminal text colors and styles
+const TERMINAL_STYLES = {
+  green: 'text-terminal-green',
+  blue: 'text-cyber-blue',
+  error: 'text-error-red',
+  text: 'text-[10px] sm:text-xs md:text-sm',
+  accent: 'text-cyber-accent',
+  highlight: 'text-cyber-highlight'
+};
+
 export function useKodexTerminal() {
   const [input, setInput] = useState('');
   const [history, setHistory] = useState<TerminalHistory[]>([]);
@@ -37,9 +47,11 @@ export function useKodexTerminal() {
     setHistory([
       {
         output: (
-          <div className="mb-4">
-            <p className="text-terminal-green">Welcome to KODEX STUDIO Terminal</p>
-            <p className="text-sm mt-2">Type <span className="text-cyber-blue">help</span> to see available commands or <span className="text-cyber-blue">walkthrough</span> for a guided tour.</p>
+          <div className={TERMINAL_STYLES.green}>
+            <p>Welcome to KODEX STUDIO Terminal</p>
+            <p className={`${TERMINAL_STYLES.text} mt-2`}>
+              Type <span className={TERMINAL_STYLES.blue}>help</span> to see available commands or <span className={TERMINAL_STYLES.blue}>walkthrough</span> for a guided tour.
+            </p>
           </div>
         )
       }
@@ -159,32 +171,32 @@ export function useKodexTerminal() {
       // Simple command processing
       if (cmd === 'help') {
         cmdOutput = (
-          <div className="mb-4">
-            <p className="text-cyber-blue mb-2 font-medium">Available commands:</p>
+          <div className={TERMINAL_STYLES.green}>
+            <p className={`${TERMINAL_STYLES.blue} mb-2 font-medium`}>Available commands:</p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2">
               <div className="flex items-center">
-                <span className="text-cyber-blue bg-cyber-blue/10 px-1.5 py-0.5 rounded font-mono text-sm">help</span> 
-                <span className="ml-3 text-cyber-text/70">Display available commands</span>
+                <span className={`${TERMINAL_STYLES.blue} bg-cyber-blue/10 px-1.5 py-0.5 rounded font-mono ${TERMINAL_STYLES.text}`}>help</span> 
+                <span className={`ml-3 ${TERMINAL_STYLES.text} text-cyber-text/70`}>Display available commands</span>
               </div>
               <div className="flex items-center">
-                <span className="text-cyber-blue bg-cyber-blue/10 px-1.5 py-0.5 rounded font-mono text-sm">walkthrough</span> 
-                <span className="ml-3 text-cyber-text/70">Step-by-step guided tour</span>
+                <span className={`${TERMINAL_STYLES.blue} bg-cyber-blue/10 px-1.5 py-0.5 rounded font-mono ${TERMINAL_STYLES.text}`}>walkthrough</span> 
+                <span className={`ml-3 ${TERMINAL_STYLES.text} text-cyber-text/70`}>Step-by-step guided tour</span>
               </div>
               <div className="flex items-center">
-                <span className="text-cyber-blue bg-cyber-blue/10 px-1.5 py-0.5 rounded font-mono text-sm">whois</span> 
-                <span className="ml-3 text-cyber-text/70">About section + resume</span>
+                <span className={`${TERMINAL_STYLES.blue} bg-cyber-blue/10 px-1.5 py-0.5 rounded font-mono ${TERMINAL_STYLES.text}`}>whois</span> 
+                <span className={`ml-3 ${TERMINAL_STYLES.text} text-cyber-text/70`}>About section + resume</span>
               </div>
               <div className="flex items-center">
-                <span className="text-cyber-blue bg-cyber-blue/10 px-1.5 py-0.5 rounded font-mono text-sm">projects</span> 
-                <span className="ml-3 text-cyber-text/70">Technical portfolio</span>
+                <span className={`${TERMINAL_STYLES.blue} bg-cyber-blue/10 px-1.5 py-0.5 rounded font-mono ${TERMINAL_STYLES.text}`}>projects</span> 
+                <span className={`ml-3 ${TERMINAL_STYLES.text} text-cyber-text/70`}>Technical portfolio</span>
               </div>
               <div className="flex items-center">
-                <span className="text-cyber-blue bg-cyber-blue/10 px-1.5 py-0.5 rounded font-mono text-sm">services</span> 
-                <span className="ml-3 text-cyber-text/70">Freelance offerings</span>
+                <span className={`${TERMINAL_STYLES.blue} bg-cyber-blue/10 px-1.5 py-0.5 rounded font-mono ${TERMINAL_STYLES.text}`}>services</span> 
+                <span className={`ml-3 ${TERMINAL_STYLES.text} text-cyber-text/70`}>Freelance offerings</span>
               </div>
               <div className="flex items-center">
-                <span className="text-cyber-blue bg-cyber-blue/10 px-1.5 py-0.5 rounded font-mono text-sm">writings</span> 
-                <span className="ml-3 text-cyber-text/70">Blog content & thoughts</span>
+                <span className={`${TERMINAL_STYLES.blue} bg-cyber-blue/10 px-1.5 py-0.5 rounded font-mono ${TERMINAL_STYLES.text}`}>writings</span> 
+                <span className={`ml-3 ${TERMINAL_STYLES.text} text-cyber-text/70`}>Blog content & thoughts</span>
               </div>
               <div className="flex items-center">
                 <span className="text-cyber-blue bg-cyber-blue/10 px-1.5 py-0.5 rounded font-mono text-sm">clients</span> 
@@ -206,71 +218,77 @@ export function useKodexTerminal() {
           </div>
         );
       } else if (cmd === 'clear') {
-        // Clear history
+        cmdOutput = (
+          <div className={TERMINAL_STYLES.green}>
+            <p>Terminal cleared. Type help for available commands.</p>
+          </div>
+        );
         setHistory([
           {
-            output: (
-              <div className="mb-4">
-                <p className="text-terminal-green">Terminal cleared. Type help for available commands.</p>
-              </div>
-            )
+            output: cmdOutput
           }
         ]);
-        
-        // Reset input and return early - we've already updated history
         setInput('');
         return;
       } else if (cmd === 'whois') {
         setActiveSection('about');
-        cmdOutput = <div className="mb-4">
-          <p className="text-cyber-blue">Fetching identity data...</p>
-        </div>;
+        cmdOutput = (
+          <div className={TERMINAL_STYLES.green}>
+            <p className={TERMINAL_STYLES.blue}>Fetching identity data...</p>
+          </div>
+        );
       } else if (cmd === 'projects') {
         setActiveSection('projects');
-        cmdOutput = <div className="mb-4">
-          <p className="text-cyber-blue">Accessing project repository...</p>
-        </div>;
+        cmdOutput = (
+          <div className={TERMINAL_STYLES.green}>
+            <p className={TERMINAL_STYLES.blue}>Accessing project repository...</p>
+          </div>
+        );
       } else if (cmd === 'services') {
         setActiveSection('services');
-        cmdOutput = <div className="mb-4">
-          <p className="text-cyber-blue">Loading service offerings...</p>
-        </div>;
+        cmdOutput = (
+          <div className={TERMINAL_STYLES.green}>
+            <p className={TERMINAL_STYLES.blue}>Loading service offerings...</p>
+          </div>
+        );
       } else if (cmd === 'writings') {
         setActiveSection('writings');
-        cmdOutput = <div className="mb-4">
-          <p className="text-cyber-blue">Loading published articles...</p>
-        </div>;
+        cmdOutput = (
+          <div className={TERMINAL_STYLES.green}>
+            <p className={TERMINAL_STYLES.blue}>Loading published articles...</p>
+          </div>
+        );
       } else if (cmd === 'clients') {
         setActiveSection('clients');
-        cmdOutput = <div className="mb-4">
-          <p className="text-cyber-blue">Gathering client testimonials...</p>
-        </div>;
+        cmdOutput = (
+          <div className={TERMINAL_STYLES.green}>
+            <p className={TERMINAL_STYLES.blue}>Gathering client testimonials...</p>
+          </div>
+        );
       } else if (cmd === 'contact') {
         setActiveSection('contact');
-        cmdOutput = <div className="mb-4">
-          <p className="text-cyber-blue">Opening communication channels...</p>
-        </div>;
-      } else if (cmd === 'walkthrough') {
-        // Simply show a message - walkthrough will be handled by the parent component
         cmdOutput = (
-          <div className="mb-4">
-            <p className="text-terminal-green">Starting guided tour. First, let's look at the about section...</p>
-            <p className="mt-2">The about section will be displayed automatically.</p>
+          <div className={TERMINAL_STYLES.green}>
+            <p className={TERMINAL_STYLES.blue}>Opening communication channels...</p>
+          </div>
+        );
+      } else if (cmd === 'walkthrough') {
+        cmdOutput = (
+          <div className={TERMINAL_STYLES.green}>
+            <p>Starting guided tour. First, let's look at the about section...</p>
+            {/* <p className={`${TERMINAL_STYLES.text}`}>The about section will be displayed automatically.</p> */}
           </div>
         );
       } else if (cmd === 'resume') {
-        // Trigger resume download
         downloadResume();
-        
         cmdOutput = (
-          <div className="mb-4">
-            <p className="text-terminal-green">Downloading Nessa Kodo's resume...</p>
+          <div className={TERMINAL_STYLES.green}>
+            <p>Downloading Nessa Kodo's resume...</p>
           </div>
         );
       } else {
-        // Command not recognized
         cmdOutput = (
-          <div className="mb-4 text-error-red">
+          <div className={`${TERMINAL_STYLES.error} ${TERMINAL_STYLES.text}`}>
             Command not recognized: {cmd}
           </div>
         );
@@ -298,6 +316,7 @@ export function useKodexTerminal() {
     input,
     setInput,
     history,
+    setHistory,
     activeSection,
     setActiveSection,
     inputRef,
